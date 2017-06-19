@@ -1,0 +1,29 @@
+{
+  "name": "postit",
+  "version": "1.0.0",
+  "description": "An application that allows friends and colleagues create groups for notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3m3kalionel/PostIt.git"
+  },
+  "author": "Emeka Lionel Okoro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3m3kalionel/PostIt/issues"
+  },
+  "homepage": "https://github.com/3m3kalionel/PostIt#readme",
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.1.0"
+  },
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
