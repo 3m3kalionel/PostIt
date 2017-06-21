@@ -17,19 +17,17 @@ app.post('/api/group', (req, res) => res.send('Create a group'));
 
 
 // An API route that allow users add other users to groups:
-// POST: /api/group/<group id>/user
 app.post('/api/group/:groupid/user', (req, res) => res.send(`Added new user to ${req.params.groupid}.`));
 
 
 // An API route that allows a logged in user post messages to created groups:
-// POST: /api/group/<group id>/message
 app.post('/api/group/:groupid/message', (req, res) => res.send(`Thanks for posting ur message to ${req.params.groupid}`));
 
 // An API route that allows a logged in user retrieve messages that have been
 // posted to groups he/she belongs to:
-// GET: /api/group/<group id>/messages
 app.get('/api/group/:groupid/messages', (req, res) => res.send(`Welcome! here are the messages for ${req.params.groupid}`));
 
+// Root route
 app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));
 
 
