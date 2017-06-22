@@ -1,9 +1,16 @@
-const usersController = require('../controllers').users;
+import usersControllers from '../controllers';
+import loginControllers from '../controllers';
+
+const usersController = usersControllers.users;
+const loginController = loginControllers.login;
+
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Todos API!',
   }));
+
+  app.post('/api/user/signin', loginController.login);
 
   app.post('/api/user/signup', usersController.create);
 
