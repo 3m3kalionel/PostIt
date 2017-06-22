@@ -1,5 +1,5 @@
-const users = require('./users');
-const login = require('./login');
+import users from './users';
+import login from './login';
 
 module.exports = {
   users,
