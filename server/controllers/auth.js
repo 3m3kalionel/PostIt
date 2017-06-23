@@ -12,13 +12,12 @@ passport.deserializeUser((id, done) => {
   User.findById(id, (err, sessionUser) => done(err, sessionUser));
 });
 
-
 passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, password, done) => {
   user.User.findOne({
     where: {
       username
     }
-  }).then((users, err) => {
+  }).then((users) => {
     if (!users) {
       return done(null, false, { message: 'Incorrect username' });
     }
