@@ -2,8 +2,8 @@ const User = require('../models').User;
 
 module.exports = {
   create(req, res) {
-    User.sync({ force: false }).then(function() {
-      return User
+    User.sync({ force: false }).then(() => {
+      User
         .create({
           username: req.body.username,
           password: req.body.password,
