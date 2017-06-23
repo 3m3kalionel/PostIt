@@ -4,14 +4,12 @@ import user from '../models';
 
 const LocalStrategy = passportLocal.Strategy;
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser((sessionUser, done) => {
+  done(null, sessionUser.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, sessionUser) => done(err, sessionUser));
 });
 
 
