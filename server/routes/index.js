@@ -1,9 +1,7 @@
-import usersControllers from '../controllers';
-import loginControllers from '../controllers';
+import authControllers from '../controllers';
 
-const usersController = usersControllers.users;
-const loginController = loginControllers.login;
-
+const usersController = authControllers.users;
+const loginController = authControllers.login;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
