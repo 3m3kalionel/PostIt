@@ -1,5 +1,7 @@
 import helpers from '../helpers';
-const User = require('../models').User;
+import user from '../models';
+
+const User = user.User;
 
 module.exports = {
   create(req, res) {
