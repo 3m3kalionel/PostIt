@@ -1,3 +1,4 @@
+import helpers from '../helpers';
 const User = require('../models').User;
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
       User
         .create({
           username: req.body.username,
-          password: req.body.password,
+          password: helpers.encrypt.encryptPassword(req.body.password),
           email: req.body.email,
         })
         .then(user => res.status(201).send(user))
