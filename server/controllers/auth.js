@@ -23,7 +23,7 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
       return done(null, false, { message: 'Incorrect username' });
     }
 
-    if (!helpers.validate.validatePassword(users.password)) {
+    if (!helpers.validate.validatePassword(users.password, req.body.password)) {
       return done(null, false, { message: ' Incorrect password.' });
     }
 
