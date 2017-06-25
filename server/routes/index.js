@@ -3,6 +3,7 @@ import authControllers from '../controllers';
 const usersController = authControllers.users;
 const loginController = authControllers.login;
 const groupsController = authControllers.group;
+const messagesController = authControllers.messages;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -22,7 +23,7 @@ module.exports = (app) => {
 
 
   // An API route that allows a logged in user post messages to created groups:
-  app.post('/api/group/:groupid/message', (req, res) => res.send(`Thanks for posting ur message to ${req.params.groupid}`));
+  app.post('/api/group/:groupid/message', messagesController.create);
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
