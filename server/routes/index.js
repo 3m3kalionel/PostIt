@@ -2,6 +2,7 @@ import authControllers from '../controllers';
 
 const usersController = authControllers.users;
 const loginController = authControllers.login;
+const groupsController = authControllers.group;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -14,7 +15,7 @@ module.exports = (app) => {
 
   // An API route that allow users create broadcast groups:
   // POST: /api/group
-  app.post('/api/group', (req, res) => res.send('Create a group'));
+  app.post('/api/group', groupsController.create);
 
   // An API route that allow users add other users to groups:
   app.post('/api/group/:groupid/user', (req, res) => res.send(`Added new user to ${req.params.groupid}.`));
