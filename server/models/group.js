@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Group.hasMany(models.Messages, {
+        Group.hasMany(models.Message, {
           foreignKey: 'groupId',
           as: 'groupMesages',
         });
