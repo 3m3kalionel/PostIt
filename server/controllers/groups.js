@@ -2,9 +2,10 @@ import models from '../models';
 
 const Group = models.Group;
 const User = models.User;
+const userGroup = models.UserGroup;
 
-Group.belongsToMany(User, { through: 'userGroup' });
-User.belongsToMany(Group, { through: 'userGroup' });
+Group.belongsToMany(User, { through: 'UserGroup' });
+User.belongsToMany(Group, { through: 'UserGroup' });
 
 module.exports = {
   create(req, res) {
