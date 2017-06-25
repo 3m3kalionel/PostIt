@@ -27,7 +27,7 @@ module.exports = (app) => {
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
-  app.get('/api/group/:groupid/messages', (req, res) => res.send(`Welcome! here are the messages for ${req.params.groupid}`));
+  app.get('/api/group/:groupid/messages', groupsController.list);
 
   // Root route
   app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));
