@@ -1,19 +1,20 @@
 import helpers from '../helpers';
 import user from '../models';
+import bcrypt from 'bcrypt';
 
 const User = user.User;
 
 module.exports = {
   create(req, res) {
-    const passwordHash = helpers.encrypt.encryptPassword(req.body.password).hash;
-    const salt = helpers.encrypt.encryptPassword(req.body.password).salt;
-    console.log('Password hash value', passwordHash);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+    console.log('Password hash value', hash);
     console.log('Salt value', salt);
     User.sync({ force: false }).then(() => {
       User
         .create({
           username: req.body.username,
-          password: passwordHash,
+          password: hash,
           email: req.body.email,
           salt: salt
         })
