@@ -13,7 +13,7 @@ gulp.task('start', () => {
 });
 
 
-gulp.task('coverage', function (cb) {
+gulp.task('coverage', (cb) => {
   gulp.src('src/**/*.js')
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
@@ -24,6 +24,6 @@ gulp.task('coverage', function (cb) {
         .pipe(mocha())
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
-        .on('end');
+        .on('end', cb);
     });
 });
