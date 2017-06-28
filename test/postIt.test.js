@@ -11,6 +11,10 @@ const user1 = {
 };
 
 describe('signup route', () => {
+  // beforeEach(function() {
+    
+  // });
+
   it('should create a new user', (done) => {
     request(app).post('/api/user/signup')
       .send(user1)
