@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'groupId',
           onDelete: 'CASCADE',
         },
-        Message.belongsTo(models.Group, {
+        Message.belongsTo(models.User, {
           foreignKey: 'userId',
           onDelete: 'CASCADE',
         })
