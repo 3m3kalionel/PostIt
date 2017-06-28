@@ -5,13 +5,17 @@ const User = user.User;
 
 module.exports = {
   create(req, res) {
+    const passwordHash = helpers.encrypt.encryptPassword(req.body.password).hash;
+    const salt = helpers.encrypt.encryptPassword(req.body.password).salt;
+    console.log('Password hash value', passwordHash);
+    console.log('Salt value', salt);
     User.sync({ force: false }).then(() => {
       User
         .create({
           username: req.body.username,
-          password: helpers.encrypt.encryptPassword(req.body.password),
+          password: passwordHash,
           email: req.body.email,
-          salt: helpers.encrypt.encryptPassword(req.body.password).salt
+          salt: salt
         })
         .then(user => res.status(201).send(user))
         .catch(error => res.status(400).send(error));
