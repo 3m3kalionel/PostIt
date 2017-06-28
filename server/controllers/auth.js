@@ -1,5 +1,6 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
+import bcrypt from 'bcrypt';
 import user from '../models';
 import helpers from '../helpers';
 
@@ -22,8 +23,10 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
     if (!users) {
       return done(null, false, { message: 'Incorrect username' });
     }
+    // Compare database salt to the hash of incoming password
+    const reqPasswordHash = bcrypt.hashSync(req.body.password, users.salt);
 
-    if (!helpers.validate.validatePassword(users.password, req.body.password)) {
+    if (!(users.password === reqPasswordHash)) {
       return done(null, false, { message: ' Incorrect password.' });
     }
 
