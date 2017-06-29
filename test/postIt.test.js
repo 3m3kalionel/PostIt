@@ -15,7 +15,7 @@ const unregisteredUser = {
   usename: 'falseUser',
   password: '12345',
   email: 'unsignedUser@gmail.com'
-}
+};
 
 describe('signup route', () => {
   beforeEach((done) => {
@@ -49,9 +49,8 @@ describe('signin route', () => {
     request(app).post('/api/user/signin')
       .send(user1)
       .expect((res) => {
-        // expect(res.body).to.be.an.instanceof(Object);
+        expect(res.body).to.be.an.instanceof(Object);
         expect(200);
-        // expect(res.body.username).to.equal(user1.username);
         expect(res.text).to.equal('logged in');
       })
       .end((err, res) => {
@@ -66,18 +65,15 @@ describe('signin route', () => {
     request(app).post('/api/user/signin')
       .send(unregisteredUser)
       .expect((res) => {
-        // expect(res.body).to.be.an.instanceof(Object);
         expect(404);
-        // expect(res.body.username).to.equal(user1.username);
         expect(res.text).to.equal('false');
       })
       .end((err, res) => {
         if (err) { 
           // console.log(res);
-          return done(err); }
+          return done(err);
+        }
         done();
       });
   });
-
-  
 });
