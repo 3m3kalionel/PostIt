@@ -1,8 +1,10 @@
 import chai from 'chai';
 import request from 'supertest';
+import dotenv from 'dotenv';
 import app from '../app';
 import models from '../server/models';
 
+dotenv.config();
 process.env.NODE_ENV = 'test';
 
 const expect = chai.expect;
