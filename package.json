@@ -4,6 +4,7 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha --compilers js:babel-core/register"
   },
   "repository": {
