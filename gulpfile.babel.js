@@ -10,14 +10,6 @@ dotenv.config();
 
 process.env.NODE_ENV = 'test';
 
-gulp.task('start', () => {
-  nodemon({
-    script: 'index.js',
-    env: { NODE_ENV: 'development' }
-  });
-});
-
-
 gulp.task('coverage', (cb) => {
   gulp.src('src/**/*.js')
     .pipe(istanbul())
