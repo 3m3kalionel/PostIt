@@ -4,6 +4,11 @@ import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
 import istanbul from 'gulp-babel-istanbul';
 import injectModules from 'gulp-inject-modules';
+import dotenv from 'dotenv';
+
+process.env.NODE_ENV = 'test';
+
+dotenv.config();
 
 gulp.task('start', () => {
   nodemon({
