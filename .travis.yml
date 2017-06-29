@@ -13,3 +13,13 @@ script:
   - npm run coverage
 after_success:
   - npm run coveralls
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+env:
+  - TRAVIS=traviz CXX=g++-4.8
