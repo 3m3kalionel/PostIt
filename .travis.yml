@@ -23,3 +23,4 @@ addons:
     - g++-4.8
 env:
   - TRAVIS=traviz CXX=g++-4.8
+  - NODE_ENV=test
