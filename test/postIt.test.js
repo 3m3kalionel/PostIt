@@ -28,7 +28,7 @@ describe('signup route', () => {
         expect(res.body).to.be.an.instanceof(Object);
         expect(201);
         expect(res.body.username).to.equal(user1.username);
-        expect(res.body.email).to.equal(user1.email);        
+        expect(res.body.email).to.equal(user1.email);
       })
       .end((err, res) => {
         if (err) { return done(err); }
