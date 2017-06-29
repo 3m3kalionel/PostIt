@@ -3,6 +3,8 @@ import request from 'supertest';
 import app from '../app';
 import models from '../server/models';
 
+process.env.NODE_ENV = 'test';
+
 const expect = chai.expect;
 
 const user1 = {
@@ -19,18 +21,21 @@ const unregisteredUser = {
 
 describe('signup route', () => {
   beforeEach((done) => {
-    models.User.destroy({
-      where: { },
-      truncate: true,
-      cascade: true
-    })
-      .then(() => done());
+    models.sequelize.sync().then(() => {
+      models.User.destroy({
+        where: { },
+        truncate: true,
+        cascade: true
+      })
+        .then(() => done());
+    });
   });
 
   it('should create a new user', (done) => {
     request(app).post('/api/user/signup')
       .send(user1)
       .expect((res) => {
+        console.log(res.body);
         expect(res.body).to.be.an.instanceof(Object);
         expect(201);
         expect(res.body.username).to.equal(user1.username);
