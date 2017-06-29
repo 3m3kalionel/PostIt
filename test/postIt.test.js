@@ -37,7 +37,7 @@ describe('signup route', () => {
         expect(res.body.email).to.equal(user1.email);
       })
       .end((err, res) => {
-        if (err) { return done(err); }
+        if (err) {return done(err); }
         done();
       });
   });
