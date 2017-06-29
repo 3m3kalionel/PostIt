@@ -4,8 +4,8 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-
-    "test": "mocha --compilers js:babel-core/register"
+    "migrate": "sequelize db:migrate",
+    "test": "set NODE_ENV=test&& npm run migrate && mocha --timeout 10000 --compilers js:babel-core/register ./test"
   },
   "repository": {
     "type": "git",
