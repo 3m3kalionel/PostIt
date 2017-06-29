@@ -1,6 +1,7 @@
 import chai from 'chai';
 import request from 'supertest';
 import app from '../app';
+import models from '../server/models';
 
 const expect = chai.expect;
 
@@ -11,9 +12,14 @@ const user1 = {
 };
 
 describe('signup route', () => {
-  // beforeEach(function() {
-    
-  // });
+  beforeEach((done) => {
+    models.User.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
 
   it('should create a new user', (done) => {
     request(app).post('/api/user/signup')
