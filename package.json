@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "gulp test"
+    "test": "gulp test --timeout 15000"
   },
   "repository": {
     "type": "git",
