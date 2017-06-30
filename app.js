@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import http from 'http';
 import routes from './server/routes';
+import models from './server/models';
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
@@ -17,3 +18,5 @@ routes(app);
 
 const server = http.createServer(app);
 server.listen(port, () => console.log('The server is running on port 8080'));
+
+module.exports = server;

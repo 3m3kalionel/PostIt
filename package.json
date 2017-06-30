@@ -4,7 +4,8 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "gulp test --timeout 15000"
   },
   "repository": {
     "type": "git",
@@ -20,17 +21,25 @@
     "babel-core": "^6.25.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
+    "chai": "^4.0.2",
     "eslint": "^4.0.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
     "gulp-babel": "^6.1.2",
-    "gulp-nodemon": "^2.2.1"
+    "gulp-babel-istanbul": "^1.6.0",
+    "gulp-inject-modules": "^1.0.0",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "isparta": "^4.0.0",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "gulp": "^3.9.1",
     "morgan": "^1.8.2",
