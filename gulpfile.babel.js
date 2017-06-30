@@ -14,16 +14,17 @@ gulp.task('start', () => {
   });
 });
 
-
 gulp.task('coverage', (cb) => {
   gulp.src('src/**/*.js')
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
       gulp.src('test/**/*.js')
-        .pipe(babel())
-        .pipe(injectModules())
-        .pipe(mocha())
+        .pipe(mocha({
+          compilers: [
+            'js:babel-core/register',
+          ]
+        }))
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
         .on('end', cb);
