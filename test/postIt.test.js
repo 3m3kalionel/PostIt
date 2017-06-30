@@ -26,6 +26,11 @@ const group1 = {
   description: "Meeting spot for Mixed Martial Arts diehards!!"
 };
 
+const groupMessage = {
+  groupId: 12,
+  content: '11 first team players plus substitutes in every position'
+};
+
 describe('signup route', () => {
   beforeEach((done) => {
     models.sequelize.sync().then(() => {
