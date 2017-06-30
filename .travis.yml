@@ -1,21 +1,18 @@
-sudo: required
-dist: trusty
 language: node_js
 node_js:
-  - node
-
+  - "6"
 services:
   - postgresql
-
 before_script:
-  - npm install
-  - psql -c 'create database doc_manager_test;' -U postgres
-  - dropdb --if-exists doc_manager_test && createdb doc_manager_test
-  - NODE_ENV=test npm run db:migrate:test
-  - npm run coveralls
+  - npm install -g sequelize-cli
+  - psql -c 'create database PostItDb;' -U postgres
 
-after_success:
-- npm run coveralls
-
-after_failure:
-- npm run coveralls  
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+env:
+  - TRAVIS=traviz CXX=g++-4.8

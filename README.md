@@ -35,5 +35,3 @@ The application was developed using [NodeJs](https://nodejs.org) with express fo
 
 #### Licence
 ISC
-
-
