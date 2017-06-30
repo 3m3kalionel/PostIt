@@ -22,8 +22,8 @@ const unregisteredUser = {
 };
 
 const group1 = {
-  name: "MMA Fans",
-  description: "Meeting spot for Mixed Martial Arts diehards!!"
+  name: 'MMA Fans',
+  description: 'Meeting spot for Mixed Martial Arts diehards!!'
 };
 
 const groupMessage = {
@@ -53,7 +53,7 @@ describe('signup route', () => {
         expect(res.body.email).to.equal(user1.email);
       })
       .end((err, res) => {
-        if (err) {return done(err); }
+        if (err) { return done(err); }
         done();
       });
   });
@@ -84,9 +84,7 @@ describe('signin route', () => {
         expect(res.text).to.equal('false');
       })
       .end((err, res) => {
-        if (err) { 
-          return done(err);
-        }
+        if (err) { return done(err); }
         done();
       });
   });
@@ -109,7 +107,7 @@ describe('New broadcast group', () => {
         expect(res.body).to.be.an.instanceof(Object);
         expect(201);
         expect(res.body.name).to.equal(group1.name);
-        expect(res.body.description).to.equal(group1.description); // check for id property also
+        expect(res.body.description).to.equal(group1.description);
         expect(res.body).to.have.property('id');
       })
       .end((err, res) => {
