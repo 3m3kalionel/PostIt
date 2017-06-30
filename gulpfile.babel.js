@@ -4,7 +4,10 @@ import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
 import istanbul from 'gulp-babel-istanbul';
 import injectModules from 'gulp-inject-modules';
+import dotenv from 'dotenv';
+import { Instrumenter } from 'isparta';
 
+<<<<<<< HEAD
 process.env.NODE_ENV = 'test';
 
 gulp.task('start', () => {
@@ -16,6 +19,15 @@ gulp.task('start', () => {
 
 gulp.task('coverage', (cb) => {
   gulp.src('src/**/*.js')
+=======
+dotenv.config();
+
+process.env.NODE_ENV = 'test';
+
+gulp.task('coverage', (done) => {
+  gulp.src(['server/**/*.js'])
+    .pipe(istanbul({ instrumenter: Instrumenter }))
+>>>>>>> 71078f142cc6fea5378d92cd307e797381ef4e79
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
@@ -27,7 +39,7 @@ gulp.task('coverage', (cb) => {
         }))
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
-        .on('end', cb);
+        .on('end', done);
     });
 });
 

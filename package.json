@@ -4,7 +4,8 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "gulp test --timeout 15000"
   },
   "repository": {
     "type": "git",
@@ -31,12 +32,14 @@
     "gulp-inject-modules": "^1.0.0",
     "gulp-mocha": "^4.3.1",
     "gulp-nodemon": "^2.2.1",
+    "isparta": "^4.0.0",
     "mocha": "^3.4.2",
     "supertest": "^3.0.0"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "gulp": "^3.9.1",
     "morgan": "^1.8.2",
