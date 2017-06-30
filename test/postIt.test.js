@@ -134,3 +134,33 @@ describe('Broadcast group', () => {
       });
   });
 });
+
+describe('New group message', () => {
+  beforeEach((done) => {
+    models.Message.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should post to a group', (done) => {
+    request(app).post('/api/group/12/message')
+      .send(groupMessage)
+      .expect(201)
+      .expect((res) => {
+        // expect(res.body).to.be.an.instanceof(Object);
+        // expect('');
+        expect(res.body.groupId).to.equal(groupMessage.groupId);
+        // expect(res.body.description).to.equal(group1.description);
+        expect(res.body.content).to.equal(groupMessage.content);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+  });
+});
