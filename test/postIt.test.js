@@ -21,6 +21,11 @@ const unregisteredUser = {
   email: 'unsignedUser@gmail.com'
 };
 
+const group1 = {
+  name: "MMA Fans",
+  description: "Meeting spot for Mixed Martial Arts diehards!!"
+};
+
 describe('signup route', () => {
   beforeEach((done) => {
     models.sequelize.sync().then(() => {
