@@ -113,3 +113,19 @@ describe('New broadcast group', () => {
       });
   });
 });
+
+describe('Broadcast group', () => {
+  it('should be unique', (done) => {
+    request(app).post('/api/group')
+      .send(group1)
+      .expect((res) => {
+        expect(400);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+  });
+});
