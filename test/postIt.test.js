@@ -37,7 +37,6 @@ describe('signup route', () => {
     request(app).post('/api/user/signup')
       .send(user1)
       .expect((res) => {
-        console.log(res.body);
         expect(res.body).to.be.an.instanceof(Object);
         expect(201);
         expect(res.body.username).to.equal(user1.username);
@@ -62,7 +61,6 @@ describe('signin route', () => {
       })
       .end((err, res) => {
         if (err) { 
-          // console.log(res);
           return done(err); }
         done();
       });
@@ -77,7 +75,6 @@ describe('signin route', () => {
       })
       .end((err, res) => {
         if (err) { 
-          // console.log(res);
           return done(err);
         }
         done();
