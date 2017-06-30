@@ -5,13 +5,15 @@ import mocha from 'gulp-mocha';
 import istanbul from 'gulp-babel-istanbul';
 import injectModules from 'gulp-inject-modules';
 import dotenv from 'dotenv';
+import { Instrumenter } from 'isparta';
 
 dotenv.config();
 
 process.env.NODE_ENV = 'test';
 
-gulp.task('coverage', (cb) => {
-  gulp.src('src/**/*.js')
+gulp.task('coverage', (done) => {
+  gulp.src(['server/**/*.js'])
+    .pipe(istanbul({ instrumenter: Instrumenter }))
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
@@ -23,7 +25,7 @@ gulp.task('coverage', (cb) => {
         }))
         .pipe(istanbul.writeReports())
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
-        .on('end', cb);
+        .on('end', done);
     });
 });
 
