@@ -81,3 +81,30 @@ describe('signin route', () => {
       });
   });
 });
+
+describe('New broadcast group', () => {
+  beforeEach((done) => {
+    models.Group.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should create a new group', (done) => {
+    request(app).post('/api/group')
+      .send(group1)
+      .expect((res) => {
+        expect(res.body).to.be.an.instanceof(Object);
+        expect(201);
+        expect(res.body.name).to.equal(group1.name);
+        expect(res.body.description).to.equal(group1.description); // check for id property also
+        expect(res.body).to.have.property('id');
+      })
+      .end((err, res) => {
+        if (err) { return done(err); }
+        done();
+      });
+  });
+});
