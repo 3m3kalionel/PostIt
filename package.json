@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --timeout 10000 --compilers js:babel-core/register"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
