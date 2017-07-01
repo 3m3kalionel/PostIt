@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate(models) {
-        User.hasMmany(models.Message, {
+        User.hasMany(models.Message, {
           foreignKey: 'userId',
           as: 'userMessages'
         });
