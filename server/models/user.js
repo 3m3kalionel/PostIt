@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'userId',
           as: 'userMessages'
         });
+        User.belongsToMany(models.Group, {
+          as: 'Members',
+          foreignKey: 'groupId',
+          through: 'UserGroup',
+        });
       }
     }
   });
