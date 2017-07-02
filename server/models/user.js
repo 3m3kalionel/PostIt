@@ -15,20 +15,17 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     salt: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate(models) {
-        User.hasMany(models.Message, {
-          foreignKey: 'userId',
-          as: 'userMessages'
-        });
-        User.belongsToMany(models.Group, {
-          as: 'Members',
-          foreignKey: 'groupId',
-          through: 'UserGroup',
-        });
-      }
-    }
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Message, {
+      foreignKey: 'userId'
+    });
+    User.belongsToMany(models.Group, {
+      as: 'Members',
+      foreignKey: 'groupId',
+      through: 'UserGroup',
+    });
+  };
   return User;
 };
