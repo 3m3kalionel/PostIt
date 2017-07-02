@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   });
   Group.associate = (models) => {
     Group.hasMany(models.Message, {
-      foreignKey: 'groupId',
+      foreignKey: 'GroupId',
       as: 'groupMesages',
     });
     Group.belongsToMany(models.User, {
       as: 'Groups',
-      foreignKey: 'userId',
+      foreignKey: 'UserId',
       through: 'UserGroup',
     });
   };
