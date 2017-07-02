@@ -3,20 +3,17 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Message.belongsTo(models.Group, {
-          foreignKey: 'groupId',
-          onDelete: 'CASCADE',
-        },
-        Message.belongsTo(models.User, {
-          foreignKey: 'userId',
-          onDelete: 'CASCADE',
-        })
-        );
-      }
-    }
   });
+  Message.associate = (models) => {
+    Message.belongsTo(models.Group, {
+      foreignKey: 'groupId',
+      onDelete: 'CASCADE',
+    });
+
+    Message.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+    });
+  };
   return Message;
 };
