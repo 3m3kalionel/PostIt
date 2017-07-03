@@ -19,7 +19,7 @@ module.exports = (app) => {
   app.post('/api/group', groupsController.create);
 
   // An API route that allow users add other users to groups:
-  app.post('/api/group/:groupid/user', (req, res) => res.send(`Added new user to ${req.params.groupid}.`));
+  app.post('/api/group/:groupid/user', groupsController.addNewUser);
 
 
   // An API route that allows a logged in user post messages to created groups:

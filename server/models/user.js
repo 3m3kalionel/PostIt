@@ -12,17 +12,20 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     salt: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate(models) {
-        User.hasMmany(models.Message, {
-          foreignKey: 'userId',
-          as: 'userMessages'
-        });
-      }
-    }
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Message, {
+      foreignKey: 'userId'
+    });
+    User.belongsToMany(models.Group, {
+      as: 'Members',
+      foreignKey: 'groupId',
+      through: 'UserGroup',
+    });
+  };
   return User;
 };

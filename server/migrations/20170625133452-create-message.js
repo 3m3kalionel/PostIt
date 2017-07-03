@@ -19,21 +19,11 @@ module.exports = {
     },
     userId: {
       type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Users',
-        key: 'id',
-        as: 'userId',
-      },
+      onDelete: 'CASCADE'
     },
     groupId: {
       type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Groups',
-        key: 'id',
-        as: 'groupId',
-      },
+      onDelete: 'CASCADE'
     },
   }),
   down(queryInterface /* , Sequelize */) {

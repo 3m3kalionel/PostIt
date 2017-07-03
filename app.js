@@ -6,6 +6,8 @@ import http from 'http';
 import routes from './server/routes';
 import models from './server/models';
 
+models.sequelize.sync();
+
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
 
