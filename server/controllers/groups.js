@@ -25,7 +25,7 @@ module.exports = {
           })
           .catch((error) => { res.status(400).send(error); });
       });
-    }).catch((error) => res.send(error));
+    }).catch(error => res.send(error));
   },
   list(req, res) {
     const groupid = req.params.groupid;
@@ -36,4 +36,35 @@ module.exports = {
       .then(todos => res.status(200).send(todos))
       .catch(error => res.status(400).send(error));
   },
+  addNewUser(req, res) {
+    const userId = req.body.userid;
+    const groupId = req.params.groupid;
+    const adderId = req.body.adderid;
+    // User.find({
+    //   where: { username }
+    // }).then((user) => {
+    //   Group.find({ where: { groupid } })
+    //     .then((group) => {
+    //       group.addUser(user);
+    //     })
+    //     .catch(error => res.status(404).send(error));
+    // })
+    //   .catch(error => res.status(404).send(error));
+
+    Group.getUser({ where: { id: adderId } }) // ensures the adder exists
+      .then(() => {
+        User.find({ // ensure the member to be added is a registered user using his username
+          where: { id: userId }
+        }).then((user) => {
+          Group.find({ where: { groupId } }) // find if the group he is to be added exists
+            .then(() => {
+              if (!user) {
+                res.send('user not found');
+              } else {
+                Group.addUser(user);
+              }
+            });
+        }).catch(error => res.status(404).send(error));
+      }).catch(error => res.status(404).send(error));
+  }
 };
