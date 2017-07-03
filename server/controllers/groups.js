@@ -51,20 +51,23 @@ module.exports = {
     // })
     //   .catch(error => res.status(404).send(error));
 
-    Group.getUser({ where: { id: adderId } }) // ensures the adder exists
-      .then(() => {
-        User.find({ // ensure the member to be added is a registered user using his username
-          where: { id: userId }
-        }).then((user) => {
-          Group.find({ where: { groupId } }) // find if the group he is to be added exists
-            .then(() => {
-              if (!user) {
-                res.send('user not found');
-              } else {
-                Group.addUser(user);
-              }
-            });
+    Group.find({ where: { id: groupId } }).then((group) => {
+       // ensure group exists
+      group.getUsers({ where: { id: adderId } }) // ensures the adder exists
+        .then(() => {
+          console.log(userId)
+          User.find({ // ensure the member to be added is a registered user using his username
+            where: { id: userId }
+          }).then((user) => {
+            if (!user) {
+              console.log(user)
+              res.send('user not found');
+            } else {
+              group.addUser(user)
+                .then(() => res.status(200).send(user));
+            }
+          }).catch(error => res.status(404).send(error));
         }).catch(error => res.status(404).send(error));
-      }).catch(error => res.status(404).send(error));
+    });
   }
 };
