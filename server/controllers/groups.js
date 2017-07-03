@@ -40,27 +40,15 @@ module.exports = {
     const userId = req.body.userid;
     const groupId = req.params.groupid;
     const adderId = req.body.adderid;
-    // User.find({
-    //   where: { username }
-    // }).then((user) => {
-    //   Group.find({ where: { groupid } })
-    //     .then((group) => {
-    //       group.addUser(user);
-    //     })
-    //     .catch(error => res.status(404).send(error));
-    // })
-    //   .catch(error => res.status(404).send(error));
+
 
     Group.find({ where: { id: groupId } }).then((group) => {
-       // ensure group exists
-      group.getUsers({ where: { id: adderId } }) // ensures the adder exists
+      group.getUsers({ where: { id: adderId } })
         .then(() => {
-          console.log(userId)
-          User.find({ // ensure the member to be added is a registered user using his username
+          User.find({
             where: { id: userId }
           }).then((user) => {
             if (!user) {
-              console.log(user)
               res.send('user not found');
             } else {
               group.addUser(user)
