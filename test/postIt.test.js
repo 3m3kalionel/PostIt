@@ -28,8 +28,8 @@ const group1 = {
 };
 
 const groupMessage = {
-  groupId: 12,
-  content: '11 first team players plus substitutes in every position'
+  groupId: 1,
+  content: 'Just a test message',
 };
 
 describe('signup route', () => {
@@ -145,7 +145,7 @@ describe('New group message', () => {
   });
 
   it('should post to a group', (done) => {
-    request(app).post('/api/group/12/message')
+    request(app).post('/api/group/1/message')
       .send(groupMessage)
       .expect(201)
       .expect((res) => {
