@@ -23,7 +23,8 @@ const unregisteredUser = {
 
 const group1 = {
   name: 'MMA Fans',
-  description: 'Meeting spot for Mixed Martial Arts diehards!!'
+  description: 'Meeting spot for Mixed Martial Arts diehards!!',
+  email: 'mighty.mouse@ufc.com'
 };
 
 const groupMessage = {
@@ -106,7 +107,7 @@ describe('New broadcast group', () => {
       .expect((res) => {
         expect(res.body).to.be.an.instanceof(Object);
         expect(201);
-        expect(res.body.name).to.equal(group1.name);
+        expect(res.name).to.equal(group1.name);
         expect(res.body.description).to.equal(group1.description);
         expect(res.body).to.have.property('id');
       })
