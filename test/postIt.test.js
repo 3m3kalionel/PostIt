@@ -29,6 +29,7 @@ const group1 = {
 
 const groupMessage = {
   groupId: 1,
+  userId: 1,
   content: 'Just a test message',
 };
 
