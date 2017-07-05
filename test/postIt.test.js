@@ -28,9 +28,7 @@ const group1 = {
 };
 
 const groupMessage = {
-  groupId: 1,
-  userId: 1,
-  content: 'Just a test message',
+  content: 'Just a test message'
 };
 
 describe('signup route', () => {
@@ -149,17 +147,12 @@ describe('New group message', () => {
     request(app).post('/api/group/1/message')
       .send(groupMessage)
       .expect(201)
-      .expect((res) => {
-        // expect(res.body).to.be.an.instanceof(Object);
-        // expect('');
-        expect(res.body.groupId).to.equal(groupMessage.groupId);
-        // expect(res.body.description).to.equal(group1.description);
-        expect(res.body.content).to.equal(groupMessage.content);
-      })
       .end((err, res) => {
         if (err) {
           return done(err);
         }
+        expect(res.body.groupId).to.equal(groupMessage.groupId);
+        expect(res.body.content).to.equal(groupMessage.content);
         done();
       });
   });
