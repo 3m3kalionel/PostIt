@@ -33,12 +33,6 @@ const groupMessage = {
   content: 'Just a test message',
 };
 
-const message = {
-  content: 'wassup peeps',
-  groupId: 1,
-  userId: 1
-}
-
 describe('signup route', () => {
   beforeEach((done) => {
     models.sequelize.sync().then(() => {
@@ -168,5 +162,32 @@ describe('New group message', () => {
         }
         done();
       });
+  });
+});
+
+describe('Message model', () => {
+    const message = {
+    content: 'wassup peeps',
+    groupId: 1,
+    userId: 1
+  }
+
+  beforeEach((done) => {
+    models.Message.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should create a message', (done) => {
+    models.Message.create(message).then((message) => {
+      expect(message).content.to.equal('wassup peeps');
+      done();
+    }).catch((error) => {
+      res.send((error))
+      done();
+    })
   });
 });
