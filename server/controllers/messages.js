@@ -12,7 +12,10 @@ module.exports = {
           groupId: req.params.groupid,
         })
         .then(text => res.status(201).send(text))
-        .catch(error => res.status(400).send(error));
+        .catch(error => {
+          console.log(error.message);
+          res.status(400).send(error);
+        })
     });
   }
 };
