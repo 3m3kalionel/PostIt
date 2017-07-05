@@ -35,6 +35,7 @@ gulp.task('test', () => {
     .pipe(mocha({
       compilers: [
         'js:babel-core/register',
-      ]
+      ],
+      timeout: 100000
     }));
 });
