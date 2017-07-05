@@ -178,9 +178,6 @@ describe('Message model', () => {
     models.Message.create(message).then((message) => {
       expect(message).content.to.equal('wassup peeps');
       done();
-    }).catch((error) => {
-      res.send((error))
-      done();
     })
   });
 });
