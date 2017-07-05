@@ -33,6 +33,12 @@ const groupMessage = {
   content: 'Just a test message',
 };
 
+const message = {
+  content: 'wassup peeps',
+  groupId: 1,
+  userId: 1
+}
+
 describe('signup route', () => {
   beforeEach((done) => {
     models.sequelize.sync().then(() => {
