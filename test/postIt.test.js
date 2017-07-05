@@ -191,3 +191,30 @@ describe('Message model', () => {
     })
   });
 });
+
+describe('User model', () => {
+    const user2 = {
+    username: '3m3ka',
+    password: '12345',
+    email: 'emeka@andela.com'
+  };
+
+  beforeEach((done) => {
+    models.Message.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should create a new user', (done) => {
+    models.User.create(user2).then((user) => {
+      expect(user).name.to.equal('3m3ka');
+      done();
+    }).catch((error) => {
+      res.send(error);
+      done();
+    })
+  });
+});
