@@ -202,9 +202,6 @@ describe('User model', () => {
     models.User.create(user2).then((user) => {
       expect(user).name.to.equal('3m3ka');
       done();
-    }).catch((error) => {
-      res.send(error);
-      done();
-    })
+    });
   });
 });
