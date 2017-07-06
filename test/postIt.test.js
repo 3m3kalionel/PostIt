@@ -190,7 +190,7 @@ describe('User model', () => {
   };
 
   beforeEach((done) => {
-    models.Message.destroy({
+    models.User.destroy({
       where: { },
       truncate: true,
       cascade: true
