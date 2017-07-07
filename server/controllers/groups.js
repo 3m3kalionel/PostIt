@@ -18,10 +18,11 @@ module.exports = {
             description: req.body.description
           }).then((group) => {
             group.addUser(user)
-              .then(() => { 
+              .then(() => {
                 if (!user) {
                   res.send('user not found');
-                } else { return res.send('Hello'); } });
+                } else { return res.send(group); }
+              });
           })
           .catch((error) => { res.status(400).send(error); });
       });
@@ -37,9 +38,9 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
   addNewUser(req, res) {
-    const userId = req.body.userid;
+    const userId = Number(req.body.userId);
     const groupId = req.params.groupid;
-    const adderId = req.body.adderid;
+    const adderId = Number(req.body.adderId);
 
 
     Group.find({ where: { id: groupId } }).then((group) => {

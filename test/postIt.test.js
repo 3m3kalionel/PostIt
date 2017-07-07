@@ -23,12 +23,12 @@ const unregisteredUser = {
 
 const group1 = {
   name: 'MMA Fans',
-  description: 'Meeting spot for Mixed Martial Arts diehards!!'
+  description: 'Meeting spot for Mixed Martial Arts diehards!!',
+  email: 'mighty.mouse@ufc.com'
 };
 
 const groupMessage = {
-  groupId: 12,
-  content: '11 first team players plus substitutes in every position'
+  content: 'Just a test message'
 };
 
 describe('signup route', () => {
@@ -144,21 +144,64 @@ describe('New group message', () => {
   });
 
   it('should post to a group', (done) => {
-    request(app).post('/api/group/12/message')
+    request(app).post('/api/group/1/message')
       .send(groupMessage)
       .expect(201)
-      .expect((res) => {
-        // expect(res.body).to.be.an.instanceof(Object);
-        // expect('');
-        expect(res.body.groupId).to.equal(groupMessage.groupId);
-        // expect(res.body.description).to.equal(group1.description);
-        expect(res.body.content).to.equal(groupMessage.content);
-      })
       .end((err, res) => {
         if (err) {
           return done(err);
         }
+        expect(res.body.groupId).to.equal(groupMessage.groupId);
+        expect(res.body.content).to.equal(groupMessage.content);
         done();
       });
+  });
+});
+
+describe('Message model', () => {
+    const message = {
+    content: 'wassup peeps',
+    groupId: 1,
+    userId: 1
+  }
+
+  beforeEach((done) => {
+    models.Message.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should create a message', (done) => {
+    models.Message.create(message).then((message) => {
+      expect(message).content.to.equal('wassup peeps');
+      done();
+    })
+  });
+});
+
+describe('User model', () => {
+    const user2 = {
+    username: '3m3ka',
+    password: '12345',
+    email: 'emeka@andela.com'
+  };
+
+  beforeEach((done) => {
+    models.User.destroy({
+      where: { },
+      truncate: true,
+      cascade: true
+    })
+      .then(() => done());
+  });
+
+  it('should create a new user', (done) => {
+    models.User.create(user2).then((user) => {
+      expect(user).name.to.equal('3m3ka');
+      done();
+    });
   });
 });
