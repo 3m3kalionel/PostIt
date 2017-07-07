@@ -37,17 +37,21 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
   addNewUser(req, res) {
-    const userId = req.body.userid;
+    const userId = parseInt(req.body.userId);
     const groupId = req.params.groupid;
-    const adderId = req.body.adderid;
+    const adderId = parseInt(req.body.adderId);
 
 
     Group.find({ where: { id: groupId } }).then((group) => {
       group.getUsers({ where: { id: adderId } })
-        .then(() => {
+        .then((adder) => {
+          console.log(adder);
+          console.log('---------------------------------');
           User.find({
             where: { id: userId }
           }).then((user) => {
+            console.log(user);
+      console.log('---------------------------------');
             if (!user) {
               res.send('user not found');
             } else {
