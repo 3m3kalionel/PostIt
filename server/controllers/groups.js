@@ -34,7 +34,7 @@ module.exports = {
       .findAll({
         where: { groupId }
       }).then(messages => res.status(200).send(messages))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
   },
   addNewUser(req, res) {
     const userId = Number(req.body.userId);
