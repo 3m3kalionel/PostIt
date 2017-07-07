@@ -29,13 +29,12 @@ module.exports = {
     }).catch(error => res.send(error));
   },
   list(req, res) {
-    const groupid = req.params.groupid;
-    return Group
+    const groupId = req.params.groupid;
+    return Message
       .findAll({
-        where: { id: groupid }
-      })
-      .then(todos => res.status(200).send(todos))
-      .catch(error => res.status(400).send(error));
+        where: { groupId }
+      }).then(messages => res.status(200).send(messages))
+      .catch(error => res.status(404).send(error));
   },
   addNewUser(req, res) {
     const userId = Number(req.body.userId);
