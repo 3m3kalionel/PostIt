@@ -45,13 +45,9 @@ module.exports = {
     Group.find({ where: { id: groupId } }).then((group) => {
       group.getUsers({ where: { id: adderId } })
         .then((adder) => {
-          console.log(adder);
-          console.log('---------------------------------');
           User.find({
             where: { id: userId }
           }).then((user) => {
-            console.log(user);
-      console.log('---------------------------------');
             if (!user) {
               res.send('user not found');
             } else {
