@@ -9,7 +9,7 @@ import models from './server/models';
 models.sequelize.sync();
 
 const app = express();
-const port = parseInt(process.env.PORT, 10) || 8080;
+const port = parseInt(process.env.PORT, 10) || 8080
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
