@@ -8,12 +8,14 @@ module.exports = {
   create(req, res) {
     const username = req.body.username;
     const email = req.body.email;
+    const password = req.body.password;
+    const validator = /[a-z0-9]{8,}/gi
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
-    //check db for user with the username(done)
-    // if it exists, return a message/ error - user already exists
-    // 
+    if (!validator.test(password)) {
+      return res.status(400).send('Your password should be a minimum of 8 characters');
+    }
 
     User.find({
       where: {
