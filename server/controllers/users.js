@@ -17,7 +17,7 @@ module.exports = {
           email: req.body.email,
           salt: salt
         })
-        .then(user => res.status(201).send(user))
+        .then(newUser => res.status(201).send(newUser))
         .catch(error => res.status(400).send(error));
     });
   }
