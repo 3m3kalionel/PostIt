@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           args: true,
           msg: 'Invalid email address'
-        }
+        },
       }
     },
     salt: DataTypes.STRING
