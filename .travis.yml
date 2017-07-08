@@ -6,6 +6,7 @@ services:
 before_script:
   - npm install -g sequelize-cli
   - psql -c 'create database postitdbtests;' -U postgres
+  - npm run migrate-test
 
 addons:
   apt:

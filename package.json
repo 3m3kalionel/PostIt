@@ -4,7 +4,8 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "scripts": {
     "start": "node index.js",
-    "test": "NODE_ENV=test gulp test --timeout 15000"
+    "test": "NODE_ENV=test gulp test --timeout 15000",
+    "migrate-test": "NODE_ENV=test sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "passport-local": "^1.0.0",
     "pg": "^6.3.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.1.0"
+    "sequelize": "^4.1.0",
+    "sequelize-cli": "^2.7.0"
   }
 }
