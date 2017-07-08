@@ -32,10 +32,8 @@ module.exports = {
           .catch((error) => {
             res.status(400).send(error.errors[0].message);
           });
-      });
+      }).catch(error => res.status(400).send(error.name));
     });
-
-    
   }
 };
 
