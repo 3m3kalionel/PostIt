@@ -32,7 +32,9 @@ module.exports = {
           })
           .then(newUser => res.status(201).send(newUser))
           .catch((error) => {
-            res.status(400).send(error.errors[0].message);
+            res.status(400).json({
+              loginError: error.errors[0].message
+            });
           });
       }).catch(error => res.status(400).send(error.name));
     });
