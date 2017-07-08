@@ -11,6 +11,10 @@ module.exports = {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
+    //check db for user with the username(done)
+    // if it exists, return a message/ error - user already exists
+    // 
+
     User.find({
       where: {
         username
@@ -25,7 +29,9 @@ module.exports = {
             salt
           })
           .then(newUser => res.status(201).send(newUser))
-          .catch(error => res.status(400).send(error));
+          .catch((error) => {
+            res.status(400).send(error.errors[0].message);
+          });
       });
     });
 
