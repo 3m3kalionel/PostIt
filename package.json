@@ -4,7 +4,7 @@
   "description": "An application that allows friends and colleagues create groups for notifications",
   "scripts": {
     "start": "node index.js",
-    "test": "gulp test --timeout 15000"
+    "test": "NODE_ENV=test gulp test --timeout 15000"
   },
   "repository": {
     "type": "git",
