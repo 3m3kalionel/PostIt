@@ -1,10 +1,11 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import bcrypt from 'bcrypt';
-import user from '../models';
+import models from '../models';
 import helpers from '../helpers';
 
 const LocalStrategy = passportLocal.Strategy;
+const User = models.User;
 
 passport.serializeUser((sessionUser, done) => {
   done(null, sessionUser.id);
@@ -15,7 +16,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, password, done) => {
-  user.User.findOne({
+  User.findOne({
     where: {
       username
     }
