@@ -31,7 +31,7 @@ gulp.task('coverage', (done) => {
 });
 
 gulp.task('test', () => {
-  return gulp.src(['test/postIttest.js'])
+  return gulp.src(['test/usertests.js'])
     .pipe(mocha({
       compilers: [
         'js:babel-core/register',
