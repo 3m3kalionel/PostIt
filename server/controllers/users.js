@@ -8,8 +8,7 @@ module.exports = {
   create(req, res) {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    console.log('Password hash value', hash);
-    console.log('Salt value', salt);
+
     User.sync({ force: false }).then(() => {
       User
         .create({
