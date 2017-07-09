@@ -13,19 +13,16 @@ dotenv.config();
 process.env.NODE_ENV = 'test';
 
 gulp.task('coverage', (done) => {
-  gulp.src(['server/**/*.js'])
-    .pipe(istanbul({ instrumenter: Instrumenter }))
-    .pipe(istanbul())
-    .pipe(istanbul.hookRequire())
+  gulp.src(['server/controllers/users.js', '!server/migrations/*.js'])
+    .pipe(istanbul({ includeUntested: true }))
     .on('finish', () => {
-      gulp.src('test/**/*.js')
+      gulp.src('test/usertests.js')
         .pipe(mocha({
           compilers: [
             'js:babel-core/register',
           ]
         }))
         .pipe(istanbul.writeReports())
-        .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
         .on('end', done);
     });
 });

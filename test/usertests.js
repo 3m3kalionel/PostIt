@@ -86,4 +86,15 @@ describe('sign up route', () => {
         done();
       });
   });
+
+  it('disallows creation of a user with password less than 8 characters', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.lessPasswordChar)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.signupError).to.equal('Your password length should be between EIGHT and TWENTY characters');
+        done();
+      });
+  });
 });
