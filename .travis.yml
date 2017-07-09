@@ -17,3 +17,5 @@ addons:
     - g++-4.8
 env:
   - TRAVIS=traviz CXX=g++-4.8
+
+after_success: npm run coverage
