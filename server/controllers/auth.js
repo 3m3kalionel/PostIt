@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
     }
   }).then((users) => {
     if (!users) {
-      return done(null, false, { message: 'Incorrect username' });
+      return done({ message: 'Username not found' }, false);
     }
     // Compare database salt to the hash of incoming password
     const reqPasswordHash = bcrypt.hashSync(req.body.password, users.salt);
@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
     if (users.password === reqPasswordHash) {
       return done(null, users);
     }
-    return done(null, false, { message: ' Incorrect password.' });
+    return done({ message: 'Username and password do not match' }, false);
   }).catch(err => done(err));
 }
 ));
