@@ -3,7 +3,7 @@ import passport from './auth';
 module.exports = {
   login(req, res, next) {
     passport.authenticate('local', (err, user) => {
-      if (err) { return next(err); }
+      if (err) { return res.send(err); }
       if (!user) { return res.status(404).send(user); }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
