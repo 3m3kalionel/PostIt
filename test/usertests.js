@@ -25,7 +25,27 @@ describe('sign up route', () => {
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')
-      .send(user.validUser)
+      .send(user.validUser1)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser2)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser3)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         done();
@@ -35,7 +55,7 @@ describe('sign up route', () => {
   it('takes a unique username', (done) => {
     request(app)
       .post('/api/user/signup')
-      .send(user.validUser)
+      .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.loginError).to.equal('username must be unique');
@@ -71,18 +91,6 @@ describe('sign up route', () => {
       .send(user.nullEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        // expect(res.body.loginError).to.equal('email cannot be null');
-        done();
-      });
-  });
-
-  it('takes a unique username', (done) => {
-    request(app)
-      .post('/api/user/signup')
-      .send(user.validUser)
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('username must be unique');
         done();
       });
   });
@@ -98,3 +106,38 @@ describe('sign up route', () => {
       });
   });
 });
+
+describe('Authentication route', () => {
+  it('logs in registered users', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.validUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.text).to.equal('logged in');
+        done();
+      });
+    done();
+  });
+
+  it('prevents unregistered users from logging in', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.rightUsernameWrongPassword)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Username and password do not match');
+        done();
+      });
+  });
+
+  it('prevents unregistered users from logging in', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.wrongUsername)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Username not found');
+        done();
+      });
+  });
+});
+

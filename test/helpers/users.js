@@ -1,15 +1,37 @@
 module.exports = {
-  validUser: {
+  validUser1: {
     username: 'ibrahim',
     password: '12345678',
     email: 'ibrahim@andela.com',
+  },
+  rightUsernameWrongPassword: {
+    username: 'ibrahim',
+    password: '12345678889'
+  },
+  wrongUsername: {
+    username: 'lol',
+    password: 'e99ehkhee'
+  },
+  validUser2: {
+    username: 'conor',
+    password: '12345678',
+    email: 'conor@andela.com',
+  },
+  validUser3: {
+    username: 'jon',
+    password: '12345678',
+    email: 'jon@andela.com',
+  },
+  invalidUser: {
+    username: 'invalid',
+    password: '12345678'
   },
   nullUsername: {
     password: '12345678',
     email: 'abc@andela.com'
   },
   notUniqueEmail: {
-    username: 'conor',
+    username: 'oladi',
     password: '12345678',
     email: 'ibrahim@andela.com',
   },

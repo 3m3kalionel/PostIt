@@ -21,7 +21,7 @@ module.exports = {
               .then(() => {
                 if (!user) {
                   res.send('user not found');
-                } else { return res.send(group); }
+                } else { return res.status(201).send(group); }
               });
           })
           .catch((error) => { res.status(400).send(error); });
@@ -52,7 +52,7 @@ module.exports = {
               res.send('user not found');
             } else {
               group.addUser(user)
-                .then(() => res.status(200).send(user));
+                .then(() => res.status(200).send('new user added to group'));
             }
           }).catch(error => res.status(404).send(error));
         }).catch(error => res.status(404).send(error));
