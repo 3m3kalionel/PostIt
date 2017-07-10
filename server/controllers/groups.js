@@ -21,7 +21,7 @@ module.exports = {
               .then(() => {
                 if (!user) {
                   res.send('user not found');
-                } else { return res.send(group); }
+                } else { return res.status(201).send(group); }
               });
           })
           .catch((error) => { res.status(400).send(error); });
