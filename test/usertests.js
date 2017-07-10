@@ -91,7 +91,6 @@ describe('sign up route', () => {
       .send(user.nullEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        // expect(res.body.loginError).to.equal('email cannot be null');
         done();
       });
   });
@@ -107,3 +106,47 @@ describe('sign up route', () => {
       });
   });
 });
+
+describe('Authentication route', () => {
+  it('prevents unregistered users from logging in', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.invalidUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+  });
+
+  it('logs in registered users', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.validUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.text).to.equal('logged in');
+        done();
+      });
+    done();
+  });
+  it('prevents unregistered users from logging in', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.rightUsernameWrongPassword)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Username and password do not match');
+        done();
+      });
+  });
+
+  it('prevents unregistered users from logging in', (done) => {
+    request(app)
+      .post('/api/user/signin')
+      .send(user.wrongUsername)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Username not found');
+        done();
+      });
+  });
+});
+
