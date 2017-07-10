@@ -25,7 +25,27 @@ describe('sign up route', () => {
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')
-      .send(user.validUser)
+      .send(user.validUser1)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser2)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser3)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         done();
@@ -35,7 +55,7 @@ describe('sign up route', () => {
   it('takes a unique username', (done) => {
     request(app)
       .post('/api/user/signup')
-      .send(user.validUser)
+      .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.loginError).to.equal('username must be unique');
@@ -72,17 +92,6 @@ describe('sign up route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         // expect(res.body.loginError).to.equal('email cannot be null');
-        done();
-      });
-  });
-
-  it('takes a unique username', (done) => {
-    request(app)
-      .post('/api/user/signup')
-      .send(user.validUser)
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('username must be unique');
         done();
       });
   });
