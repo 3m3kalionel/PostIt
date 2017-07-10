@@ -4,6 +4,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/3m3kalionel/PostIt/badge.svg?branch=feature%2Ftests)](https://coveralls.io/github/3m3kalionel/PostIt?branch=feature%2Ftests)
 
+[![Code Climate](https://codeclimate.com/github/3m3kalionel/PostIt/badges/gpa.svg)](https://codeclimate.com/github/3m3kalionel/PostIt)
+
 PostIt is an application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. It is built using node.js, express and PostgreSQL as the database.
 
 ### Features
