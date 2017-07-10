@@ -1,15 +1,25 @@
 module.exports = {
-  validUser: {
+  validUser1: {
     username: 'ibrahim',
     password: '12345678',
     email: 'ibrahim@andela.com',
+  },
+  validUser2: {
+    username: 'conor',
+    password: '12345678',
+    email: 'conor@andela.com',
+  },
+  validUser3: {
+    username: 'jon',
+    password: '12345678',
+    email: 'jon@andela.com',
   },
   nullUsername: {
     password: '12345678',
     email: 'abc@andela.com'
   },
   notUniqueEmail: {
-    username: 'conor',
+    username: 'oladi',
     password: '12345678',
     email: 'ibrahim@andela.com',
   },
