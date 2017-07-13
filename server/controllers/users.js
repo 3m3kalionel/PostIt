@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import model from '../models';
 
+dotenv.config();
 const User = model.User;
 
 module.exports = {
@@ -33,9 +36,17 @@ module.exports = {
         email,
         salt
       })
-      .then(newUser => res.status(201).send(newUser))
+      .then((newUser) => {
+        const token = jwt.sign({
+          exp: (60 * 60 * 24),
+          data: newUser
+        }, process.env.JWT_SECRET);
+        res.status(201).json({
+          user: newUser,
+          tok: token
+        });
+      })
       .catch((error) => {
-        // res.send(error);
         res.status(400).json({
           loginError: `${error.errors[0].message}`
         });
