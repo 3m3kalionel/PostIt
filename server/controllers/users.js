@@ -38,9 +38,13 @@ module.exports = {
       })
       .then((newUser) => {
         const token = jwt.sign({
-          exp: (60 * 60 * 24),
-          data: newUser
-        }, process.env.JWT_SECRET);
+          username: newUser.username,
+          email: newUser.email
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '2 days'
+        });
         res.status(201).json({
           user: newUser,
           tok: token
