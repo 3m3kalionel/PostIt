@@ -16,6 +16,14 @@ module.exports = {
       return res.status(400).json({
         signupError: 'Your password length should be between EIGHT and TWENTY characters'
       });
+    } else if (!email || email.trim().length === 0) {
+      return res.status(400).json({
+        signupError: 'email field can\'t be empty'
+      });
+    } else if (!username || username.trim().length === 0) {
+      return res.status(400).json({
+        signupError: 'Username can\'t be empty'
+      });
     }
 
     User
@@ -27,8 +35,9 @@ module.exports = {
       })
       .then(newUser => res.status(201).send(newUser))
       .catch((error) => {
+        // res.send(error);
         res.status(400).json({
-          loginError: error.errors[0].message
+          loginError: `${error.errors[0].message}`
         });
       });
   }
