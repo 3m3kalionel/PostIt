@@ -3,9 +3,6 @@ import models from './../models';
 
 const Group = models.Group;
 
-console.log(Group);
-console.log('----------------------');
-
 module.exports = {
   name(req, res, next) {
     Group.findOne({ where: { name: req.body.name } })
