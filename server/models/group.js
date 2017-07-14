@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     description: {
       type: DataTypes.STRING,
@@ -16,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     });
     Group.belongsToMany(models.User, {
       // as: 'Groups',
-      foreignKey: 'userId',
-      through: 'UserGroup',
+      foreignKey: 'groupId',
+      through: 'UserGroups',
     });
   };
   return Group;
