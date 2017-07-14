@@ -29,7 +29,7 @@ module.exports = (app) => {
 
 
   // An API route that allows a logged in user post messages to created groups:
-  app.post('/api/group/:groupid/message', authenticate, messagesController.create);
+  app.post('/api/group/:groupid/message', authenticate, validateGroup.validGroup, messagesController.create);
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
