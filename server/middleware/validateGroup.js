@@ -42,4 +42,17 @@ module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
+
+  validGroup(req, res, next) {
+    const groupId = req.params.groupid;
+    Group.findOne({ where: { id: groupId } })
+      .then((group) => {
+        if (!group) {
+          return res.status(400).json({
+            message: 'group does not exist'
+          });
+        }
+        next();
+      }).catch(error => res.send(error));
+  }
 };
