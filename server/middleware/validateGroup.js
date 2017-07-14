@@ -1,4 +1,3 @@
-// import group from './../models/group';
 import models from './../models';
 
 const Group = models.Group;
