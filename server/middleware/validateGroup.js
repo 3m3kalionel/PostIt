@@ -1,6 +1,7 @@
 import models from './../models';
 
 const Group = models.Group;
+const User = models.User;
 
 module.exports = {
   name(req, res, next) {
@@ -16,5 +17,29 @@ module.exports = {
         }
       })
       .catch(err => res.status(400).send(err));
-  }
+  },
+
+  user(req, res, next) {
+    const groupId = req.params.groupid;
+    User.findOne({ where: { id: req.body.userId } })
+      .then((user) => {
+        if (!user) {
+          return res.json({
+            message: 'user does not exist'
+          });
+        }
+        Group.findOne({ where: { id: groupId } }).then((group) => {
+          group.getUsers({ where: { id: user.id } })
+            .then((validUser) => {
+              if (validUser.length > 0) {
+                return res.status(400).json({
+                  message: 'user already exists'
+                });
+              }
+              next();
+            });
+        });
+      })
+      .catch(error => res.status(400).send(error));
+  },
 };
