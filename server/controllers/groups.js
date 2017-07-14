@@ -65,25 +65,7 @@ module.exports = {
   addNewUser(req, res) {
     const userId = Number(req.body.userId);
     const groupId = req.params.groupid;
-    // const adderId = Number(req.body.adderId);
 
-
-    // Group.find({ where: { id: groupId } }).then((group) => { // search if the group exists
-    //   group.getUsers({ where: { id: adderId } })  // check and see if the adder is a group member
-    //     .then(() => {
-    //       User.find({
-    //         where: { id: userId } // check and see if the person is in the user model
-    //       }).then((user) => {
-    //         if (!user) {
-    //           res.send('user not found');
-    //         } else {
-    //           // console.log(`group id is ${group.id}`);
-    //           group.addUser(user)
-    //             .then(() => res.status(200).send('new user added to group'));
-    //         }
-    //       }).catch(error => res.status(404).send(error));
-    //     }).catch(error => res.status(404).send(error));
-    // });
 
     Group.find({ where: { id: groupId } }).then((group) => {
       group.getUsers({ where: { email: req.decoded.email } })
@@ -97,6 +79,15 @@ module.exports = {
             if (!user) {
               res.send('user not found');
             } else {
+              (group.getUsers({
+                where: { id: userId }
+              })).then((existingUser) => {
+                if (existingUser) {
+                  return res.status(400).json({
+                    message: 'user is already a member'
+                  });
+                }
+              }).catch(error => res.status(400).send(error));
               group.addUser(user)
                 .then(() => res.status(200).json({
                   msg: 'new user added to group'
