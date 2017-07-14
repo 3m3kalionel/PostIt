@@ -3,6 +3,7 @@ import authControllers from '../controllers';
 import authenticate from '../middleware/authenticate';
 import validateGroup from '../middleware/validateGroup';
 
+
 const usersController = authControllers.users;
 const loginController = authControllers.login;
 const groupsController = authControllers.group;
@@ -24,7 +25,7 @@ module.exports = (app) => {
   app.post('/api/group', authenticate, validateGroup.name, groupsController.create);
 
   // An API route that allow users add other users to groups:
-  app.post('/api/group/:groupid/user', authenticate, groupsController.addNewUser);
+  app.post('/api/group/:groupid/user', authenticate, validateGroup.name, validateGroup.user, groupsController.addNewUser);
 
 
   // An API route that allows a logged in user post messages to created groups:
