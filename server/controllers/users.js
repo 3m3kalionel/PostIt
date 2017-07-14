@@ -28,33 +28,34 @@ module.exports = {
         signupError: 'Username can\'t be empty'
       });
     }
-
-    User
-      .create({
-        username,
-        password: hash,
-        email,
-        salt
-      })
-      .then((newUser) => {
-        const token = jwt.sign({
-          username: newUser.username,
-          email: newUser.email
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: '2 days'
+    User.sync({ force: false }).then(() => {
+      User
+        .create({
+          username,
+          password: hash,
+          email,
+          salt
+        })
+        .then((newUser) => {
+          const token = jwt.sign({
+            username: newUser.username,
+            email: newUser.email
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '2 days'
+          });
+          res.status(201).json({
+            user: newUser,
+            tok: token
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            loginError: `${error.errors[0].message}`
+          });
         });
-        res.status(201).json({
-          user: newUser,
-          tok: token
-        });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          loginError: `${error.errors[0].message}`
-        });
-      });
+    });
   }
 };
 
