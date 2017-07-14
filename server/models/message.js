@@ -1,6 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define('Message', {
-    content: DataTypes.STRING,
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     userId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER
   });
