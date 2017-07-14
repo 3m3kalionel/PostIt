@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import authControllers from '../controllers';
 import authenticate from '../middleware/authenticate';
+import validateGroup from '../middleware/validateGroup';
 
 const usersController = authControllers.users;
 const loginController = authControllers.login;
@@ -20,7 +21,7 @@ module.exports = (app) => {
 
   // An API route that allow users create broadcast groups:
   // POST: /api/group
-  app.post('/api/group', authenticate, groupsController.create);
+  app.post('/api/group', authenticate, validateGroup.name, groupsController.create);
 
   // An API route that allow users add other users to groups:
   app.post('/api/group/:groupid/user', authenticate, groupsController.addNewUser);
