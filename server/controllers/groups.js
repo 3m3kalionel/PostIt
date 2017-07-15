@@ -3,7 +3,6 @@ import models from '../models';
 const Group = models.Group;
 const User = models.User;
 const Message = models.Message;
-const userGroup = models.UserGroup;
 
 module.exports = {
   create(req, res) {
@@ -43,6 +42,21 @@ module.exports = {
           .getUsers({
             where: { }
           }).then(members => res.status(200).json(members))
+          .catch(error => res.status(404).send(error));
+      }).catch(error => res.send(error));
+  },
+
+  listGroups(req, res) {
+    const userId = req.params.groupid;
+
+    User.findOne({ where: { id: userId } })
+      .then((user) => {
+        user
+          .getGroups({
+            where: { }
+          }).then((groups) => {
+            res.status(200).json(groups);
+          })
           .catch(error => res.status(404).send(error));
       }).catch(error => res.send(error));
   },

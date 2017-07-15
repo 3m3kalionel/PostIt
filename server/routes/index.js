@@ -38,6 +38,9 @@ module.exports = (app) => {
   // An API route that allows a logged in user list users in a group that he/she belongs to
   app.get('/api/group/:groupid/users', authenticate, validateGroup.validGroup, groupsController.listMembers);
 
+  // An API route that allows a logged in user list all groups that he/she belongs to
+  app.get('/api/group/:groupid/groups', authenticate, validateGroup.validGroup, groupsController.listGroups);
+
   // Root route
   app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));
 };
