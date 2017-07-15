@@ -22,9 +22,9 @@ module.exports = {
         });
         res.status(201).json({
           user,
-          tok: token
+          tok: token,
+          status: `${req.body.username} successfully logged in`
         });
-        return res.status(200).send('logged in');
       });
     })(req, res, next);
   }
