@@ -4,14 +4,6 @@ module.exports = {
     password: '12345678',
     email: 'ibrahim@andela.com',
   },
-  rightUsernameWrongPassword: {
-    username: 'ibrahim',
-    password: '12345678889'
-  },
-  wrongUsername: {
-    username: 'lol',
-    password: 'e99ehkhee'
-  },
   validUser2: {
     username: 'conor',
     password: '12345678',
@@ -21,6 +13,14 @@ module.exports = {
     username: 'jon',
     password: '12345678',
     email: 'jon@andela.com',
+  },
+  rightUsernameWrongPassword: {
+    username: 'ibrahim',
+    password: '12345678889'
+  },
+  wrongUsername: {
+    username: 'lol',
+    password: 'e99ehkhee'
   },
   invalidUser: {
     username: 'invalid',
