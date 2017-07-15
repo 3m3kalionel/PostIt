@@ -19,6 +19,21 @@ module.exports = {
       .catch(err => res.status(400).send(err));
   },
 
+  isEmptyContent(req, res, next) {
+    const description = req.body.description;
+    const name = req.body.name;
+    if (!name || name.trim().length === 0) {
+      return res.status(400).json({
+        errorMessage: 'Please enter a group name'
+      });
+    } else if (!description || description.trim().length === 0) {
+      return res.status(400).json({
+        errorMessage: 'Please provide a description about the group'
+      });
+    }
+    next();
+  },
+
   user(req, res, next) {
     const groupId = req.params.groupid;
     User.findOne({ where: { id: req.body.userId } })
@@ -41,6 +56,23 @@ module.exports = {
         });
       })
       .catch(error => res.status(400).send(error));
+  },
+
+  isGroupMember(req, res, next) {
+    Group.findOne({ where: { id: req.params.groupid } })
+      .then((group) => {
+        group.getUsers( { where: { id: req.decoded.id } } )
+          .then((user) => {
+            console.log(user, '-----------------------------');
+            if (user.length < 1) {
+              return res.status(400).json({
+                success: false,
+                message: 'not a member of this group'
+              });
+            }
+            return next();
+          });
+      });
   },
 
   validGroup(req, res, next) {

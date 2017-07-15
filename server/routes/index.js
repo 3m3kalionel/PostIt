@@ -22,14 +22,14 @@ module.exports = (app) => {
 
   // An API route that allow users create broadcast groups:
   // POST: /api/group
-  app.post('/api/group', authenticate, validateGroup.name, groupsController.create);
+  app.post('/api/group', authenticate, validateGroup.name, validateGroup.isEmptyContent, groupsController.create);
 
   // An API route that allow users add other users to groups:
-  app.post('/api/group/:groupid/user', authenticate, validateGroup.name, validateGroup.user, groupsController.addNewUser);
+  app.post('/api/group/:groupid/user', authenticate, validateGroup.isGroupMember, validateGroup.name, validateGroup.user, groupsController.addNewUser);
 
 
   // An API route that allows a logged in user post messages to created groups:
-  app.post('/api/group/:groupid/message', authenticate, validateGroup.validGroup, messagesController.create);
+  app.post('/api/group/:groupid/message', authenticate, validateGroup.isGroupMember, validateGroup.validGroup, messagesController.create);
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
