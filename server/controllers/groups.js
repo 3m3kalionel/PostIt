@@ -7,7 +7,7 @@ const userGroup = models.UserGroup;
 
 module.exports = {
   create(req, res) {
-    Group.sync({ force: false }).then(() => {
+    models.sequelize.sync({ force: false }).then(() => {
       return Group
         .create({
           name: req.body.name,
@@ -16,7 +16,8 @@ module.exports = {
           return User.findOne({ where: { email: req.decoded.email } }).then((user) => {
             return group.addUser(user)
               .then(() => res.status(201).json({
-                message: 'Group created'
+                message: 'Group created',
+                group
               }));
           });
         })
@@ -26,10 +27,10 @@ module.exports = {
 
   list(req, res) {
     const groupId = req.params.groupid;
-    return Message
+    Message
       .findAll({
         where: { groupId }
-      }).then(messages => res.status(200).send(messages))
+      }).then(messages => res.status(200).json(messages))
       .catch(error => res.status(404).send(error));
   },
 
@@ -43,7 +44,8 @@ module.exports = {
       }).then((user) => {
         group.addUser(user)
           .then(() => res.status(201).json({
-            message: 'user added to group'
+            success: true,
+            message: `${user.username} added to group`
           }));
       }).catch(error => res.status(404).send(error));
     });

@@ -1,6 +1,5 @@
 import models from '../models';
 
-const Group = models.group;
 const Message = models.Message;
 
 module.exports = {
@@ -13,7 +12,6 @@ module.exports = {
       })
       .then((message) => {
         res.status(201).json({
-          success: 'true',
           message
         });
       });
