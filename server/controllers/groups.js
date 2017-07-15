@@ -34,6 +34,19 @@ module.exports = {
       .catch(error => res.status(404).send(error));
   },
 
+  listMembers(req, res) {
+    const groupId = req.params.groupid;
+
+    Group.findOne({ where: { id: groupId } })
+      .then((group) => {
+        return group
+          .getUsers({
+            where: { }
+          }).then(members => res.status(200).json(members))
+          .catch(error => res.status(404).send(error));
+      }).catch(error => res.send(error));
+  },
+
   addNewUser(req, res) {
     const userId = Number(req.body.userId);
     const groupId = req.params.groupid;
