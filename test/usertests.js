@@ -69,7 +69,7 @@ describe('sign up route', () => {
       .send(user.nullUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('username cannot be null');
+        expect(res.body.signupError).to.equal('Username can\'t be empty');
         done();
       });
   });
