@@ -4,13 +4,13 @@ module.exports = {
     const password = req.body.password;
     const validator = /[a-z0-9]{8,20}/gi;
 
-    if (username.trim().length === 0) {
+    if (username !== undefined && username.trim().length === 0) {
       return res.status(400).json({
-        signupError: 'Username can\'t be empty'
+        signinError: 'Username can\'t be empty'
       });
     } else if (!validator.test(password)) {
       return res.status(400).json({
-        signupError: 'Your password length should be between EIGHT and TWENTY characters'
+        signinError: 'Your password length should be between EIGHT and TWENTY characters'
       });
     }
     next();

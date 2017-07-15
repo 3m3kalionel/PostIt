@@ -19,7 +19,7 @@ module.exports = (app) => {
 
   app.post('/api/user/signin', validateUser.signin, loginController.login);
 
-  app.post('/api/user/signup', validateUser.signup, usersController.create);
+  app.post('/api/user/signup', validateUser.signup, validateUser.signin, usersController.create);
 
   // An API route that allow users create broadcast groups:
   // POST: /api/group

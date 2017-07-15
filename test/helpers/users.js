@@ -22,10 +22,22 @@ module.exports = {
     username: 'lol',
     password: 'e99ehkhee'
   },
+  emptyStringUsername: {
+    username: '',
+    password: '12345678',
+    email: 'hello@andela.com'
+
+  },
   invalidUser: {
     username: 'invalid',
     password: '12345678'
   },
+  emptyStringEmailUser: {
+    username: 'invalid',
+    password: '12345678',
+    email: ''
+  },
+
   nullUsername: {
     password: '12345678',
     email: 'abc@andela.com'
@@ -39,9 +51,24 @@ module.exports = {
     username: 'jonjones',
     password: '12345678'
   },
-  lessPasswordChar: {
+  lessPasswordCharUser: {
     username: 'userLessPassword',
     password: '1234',
     email: 'userLessPassword@andela.com',
+  },
+  poorFormatEmailUser: {
+    username: 'dummy',
+    password: '12345678',
+    email: 'dummy'
+  },
+  poorFormatEmailUser2: {
+    username: 'dummy',
+    password: '12345678',
+    email: 'dummy@andela'
+  },
+  poorFormatEmailUser3: {
+    username: 'dummy',
+    password: '12345678',
+    email: 'dummy.andela.com'
   }
 };
