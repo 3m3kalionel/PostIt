@@ -1,16 +1,20 @@
+import models from './../models';
+
+const User = models.User;
+
 module.exports = {
   signin(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const validator = /[a-z0-9]{8,20}/gi;
 
-    if (username.trim().length === 0) {
+    if (username !== undefined && username.trim().length === 0) {
       return res.status(400).json({
-        signupError: 'Username can\'t be empty'
+        signinError: 'Username can\'t be empty'
       });
     } else if (!validator.test(password)) {
       return res.status(400).json({
-        signupError: 'Your password length should be between EIGHT and TWENTY characters'
+        signinError: 'Your password length should be between EIGHT and TWENTY characters'
       });
     }
     next();
@@ -25,5 +29,18 @@ module.exports = {
       });
     }
     next();
+  },
+
+  validUser(req, res, next) {
+    const userId = req.params.userid;
+    User.findOne({ where: { id: userId } })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            errorMessage: 'user does not exist'
+          });
+        }
+        next();
+      }).catch(error => res.status(500).send(error));
   }
 };

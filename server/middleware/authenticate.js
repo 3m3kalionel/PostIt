@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     // verifies secret and checks exp
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
+        return res.json({ success: false, errorMessage: 'Failed to authenticate token.', status: 400 });
       }
       // if everything is good, save to request for use in other routes
       req.decoded = decoded;
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
     // return an error
     return res.status(403).send({
       success: false,
-      message: 'No token provided.'
+      errorMessage: 'No token provided.'
     });
   }
 };

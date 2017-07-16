@@ -7,12 +7,6 @@ import user from './helpers/users';
 
 const expect = chai.expect;
 
-// user signup
-// valid usernames, unique usernames, not null username entries
-// correct and incorrect passwords
-// validate emails - not null, unique and valid patterns
-// password length
-
 before((done) => {
   models.sequelize.sync({ force: true }).then(() => {
     done(null);
@@ -22,12 +16,15 @@ before((done) => {
 });
 
 describe('sign up route', () => {
+  //  valid details,
+
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(201);
+        expect(res.body.user.username).to.equal(user.validUser1.username);
         done();
       });
   });
@@ -52,7 +49,20 @@ describe('sign up route', () => {
       });
   });
 
-  it('takes a unique username', (done) => {
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser10)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  // user signup edge cases - username
+  // unique usernames, null username entries, empty string usernames
+
+  it('only takes a unique username', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.validUser1)
@@ -63,18 +73,33 @@ describe('sign up route', () => {
       });
   });
 
-  it('rejects a user without a usernme', (done) => {
+  it('rejects a user without a username', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.nullUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signupError).to.equal('Username can\'t be empty');
+        expect(res.body.loginError).to.equal('username cannot be null');
         done();
       });
   });
 
-  it('rejects a user with an existing email', (done) => {
+  it('rejects an empty string username ', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.emptyStringUsername)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.signinError).to.equal('Username can\'t be empty');
+        done();
+      });
+  });
+
+
+  // user signup edgecases - email
+  // validate emails -  not unique email, null emails, and invalid patterns
+
+  it('only accepts a unique email', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.notUniqueEmail)
@@ -91,17 +116,52 @@ describe('sign up route', () => {
       .send(user.nullEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
+        expect(res.body.signupError).to.equal('email field can\'t be empty');
         done();
       });
   });
 
-  it('disallows creation of a user with password less than 8 characters', (done) => {
+  it('rejects a poorly formatted email address', (done) => {
     request(app)
       .post('/api/user/signup')
-      .send(user.lessPasswordChar)
+      .send(user.poorFormatEmailUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signupError).to.equal('Your password length should be between EIGHT and TWENTY characters');
+        expect(res.body.loginError).to.equal('Invalid email address format');
+        done();
+      });
+  });
+
+  it('rejects a poorly formatted email address', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.poorFormatEmailUser2)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.loginError).to.equal('Invalid email address format');
+        done();
+      });
+  });
+
+  it('rejects a poorly formatted email address', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.poorFormatEmailUser3)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.loginError).to.equal('Invalid email address format');
+        done();
+      });
+  });
+
+  // user signup edge cases - password
+  it('rejects user with a password of less than 8 characters', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.lessPasswordCharUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.signinError).to.equal('Your password length should be between EIGHT and TWENTY characters');
         done();
       });
   });
@@ -114,7 +174,7 @@ describe('Authentication route', () => {
       .send(user.validUser)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.text).to.equal('logged in');
+        expect(res.body.status).to.equal(`${req.body.username} successfully logged in`);
         done();
       });
     done();

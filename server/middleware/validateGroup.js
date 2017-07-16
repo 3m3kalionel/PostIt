@@ -12,11 +12,11 @@ module.exports = {
         } else {
           res.status(400).json({
             success: false,
-            message: 'Group name already exists'
+            errorMessage: 'Group name already exists'
           });
         }
       })
-      .catch(err => res.status(400).send(err));
+      .catch(err => res.status(500).send(err));
   },
 
   isEmptyContent(req, res, next) {
@@ -24,10 +24,12 @@ module.exports = {
     const name = req.body.name;
     if (!name || name.trim().length === 0) {
       return res.status(400).json({
+        success: false,
         errorMessage: 'Please enter a group name'
       });
     } else if (!description || description.trim().length === 0) {
       return res.status(400).json({
+        success: false,
         errorMessage: 'Please provide a description about the group'
       });
     }
@@ -39,7 +41,8 @@ module.exports = {
     User.findOne({ where: { id: req.body.userId } })
       .then((user) => {
         if (!user) {
-          return res.json({
+          return res.status(404).json({
+            success: false,
             message: 'user does not exist'
           });
         }
@@ -48,6 +51,7 @@ module.exports = {
             .then((validUser) => {
               if (validUser.length > 0) {
                 return res.status(400).json({
+                  success: false,
                   message: 'user already exists'
                 });
               }
@@ -55,19 +59,18 @@ module.exports = {
             });
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(500).send(error));
   },
 
   isGroupMember(req, res, next) {
     Group.findOne({ where: { id: req.params.groupid } })
       .then((group) => {
-        group.getUsers( { where: { id: req.decoded.id } } )
+        group.getUsers({ where: { id: req.decoded.id } })
           .then((user) => {
-            console.log(user, '-----------------------------');
             if (user.length < 1) {
               return res.status(400).json({
                 success: false,
-                message: 'not a member of this group'
+                errorMessage: 'not a member of this group'
               });
             }
             return next();
@@ -80,11 +83,11 @@ module.exports = {
     Group.findOne({ where: { id: groupId } })
       .then((group) => {
         if (!group) {
-          return res.status(400).json({
-            message: 'group does not exist'
+          return res.status(404).json({
+            errorMessage: 'group does not exist'
           });
         }
         next();
-      }).catch(error => res.send(error));
+      }).catch(error => res.status(500).send(error));
   }
 };

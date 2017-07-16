@@ -15,6 +15,7 @@ module.exports = {
           return User.findOne({ where: { email: req.decoded.email } }).then((user) => {
             return group.addUser(user)
               .then(() => res.status(201).json({
+                success: true,
                 message: 'Group created',
                 group
               }));
@@ -41,13 +42,12 @@ module.exports = {
         return group
           .getUsers({
             where: { }
-          }).then(members => res.status(200).json(members))
-          .catch(error => res.status(404).send(error));
-      }).catch(error => res.send(error));
+          }).then(members => res.status(200).json(members));
+      }).catch(error => res.status(404).send(error));
   },
 
   listGroups(req, res) {
-    const userId = req.params.groupid;
+    const userId = req.params.userid;
 
     User.findOne({ where: { id: userId } })
       .then((user) => {
