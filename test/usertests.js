@@ -165,6 +165,17 @@ describe('sign up route', () => {
         done();
       });
   });
+
+  it('rejects user with a password of more than 20 characters', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.lessPasswordCharUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.signinError).to.equal('Your password length should be between EIGHT and TWENTY characters');
+        done();
+      });
+  });
 });
 
 describe('Authentication route', () => {

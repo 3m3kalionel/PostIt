@@ -178,6 +178,34 @@ describe('group route', () => {
       });
   });
 
+  // add members edge case - no userId specified
+  it('prevents adding a user with no userId', (done) => {
+    request(app)
+      .post('/api/group/2/user')
+      .set('x-access-token', userToken)
+      .send()
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.success).to.equal(false);
+        expect(res.body.errorMessage).to.equal('Please specify a user[userId]');
+        done();
+      });
+  });
+
+  // add members edge case - no userId specified
+  it('prevents adding a user with an alphanumeric id', (done) => {
+    request(app)
+      .post('/api/group/2/user')
+      .set('x-access-token', userToken)
+      .send({ userId: '235t' })
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.success).to.equal(false);
+        expect(res.body.errorMessage).to.equal('user does not exist');
+        done();
+      });
+  });
+
   // add members edge case - adder not a group member  
   it('prevents a non-group member from adding users', (done) => {
     request(app)
@@ -252,6 +280,32 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.message.content).to.equal(group.validMessage2.content);
+        done();
+      });
+  });
+
+  // post message edge case - empty message
+  it('prevents a logged in user from posting empty messages', (done) => {
+    request(app)
+      .post('/api/group/1/message')
+      .set('x-access-token', userToken2)
+      .send({ content: '' })
+      .end((err, res) => {
+        expect(res.body.success).to.equal(false);
+        expect(res.body.errorMessage).to.equal('Please enter a message');
+        done();
+      });
+  });
+
+  // post message edge case - null. no content specified
+  it('prevents a logged in user from posting empty messages', (done) => {
+    request(app)
+      .post('/api/group/1/message')
+      .set('x-access-token', userToken2)
+      .send({ })
+      .end((err, res) => {
+        expect(res.body.success).to.equal(false);
+        expect(res.body.errorMessage).to.equal('Please enter a message');
         done();
       });
   });

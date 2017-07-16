@@ -61,6 +61,11 @@ module.exports = {
     password: '1234',
     email: 'userLessPassword@andela.com',
   },
+  morePasswordCharUser: {
+    username: 'userLessPassword',
+    password: '123451234512345123452',
+    email: 'userLessPassword@andela.com',
+  },
   poorFormatEmailUser: {
     username: 'dummy',
     password: '12345678',
