@@ -41,12 +41,14 @@ module.exports = {
     const enteredId = req.body.userId;
 
     if (enteredId === undefined || !enteredId) {
-      return res.status(404).json({
+      return res.status(400).json({
+        success: false,
         errorMessage: 'Please specify a user[userId]'
       });
     } else if (isNaN(enteredId) === true) {
       return res.status(404).json({
-        message: 'user does not exist'
+        success: false,
+        errorMessage: 'user does not exist'
       });
     }
     User.findOne({ where: { id: enteredId } })
@@ -54,6 +56,7 @@ module.exports = {
         Group.findOne({ where: { id: groupId } }).then((group) => {
           if (user === null) {
             return res.status(404).json({
+              success: false,
               message: 'user does not exist'
             });
           }
