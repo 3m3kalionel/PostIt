@@ -12,7 +12,12 @@ module.exports = {
       return res.status(400).json({
         signinError: 'Username can\'t be empty'
       });
-    } else if (!validator.test(password)) {
+    } else if (!password) {
+      return res.status(400).json({
+        signinError: 'Please enter a password'
+      });
+    }
+    else if (!validator.test(password) || password.length > 20) {
       return res.status(400).json({
         signinError: 'Your password length should be between EIGHT and TWENTY characters'
       });
