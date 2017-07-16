@@ -3,6 +3,7 @@ import authControllers from '../controllers';
 import authenticate from '../middleware/authenticate';
 import validateGroup from '../middleware/validateGroup';
 import validateUser from '../middleware/validateUser';
+import validateMessage from '../middleware/validateMessage';
 
 
 const usersController = authControllers.users;
@@ -30,7 +31,7 @@ module.exports = (app) => {
 
 
   // An API route that allows a logged in user post messages to created groups:
-  app.post('/api/group/:groupid/message', authenticate, validateGroup.isGroupMember, validateGroup.validGroup, messagesController.create);
+  app.post('/api/group/:groupid/message', authenticate, validateGroup.isGroupMember, validateMessage.isNull, validateGroup.validGroup, messagesController.create);
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:

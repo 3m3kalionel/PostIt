@@ -38,15 +38,25 @@ module.exports = {
 
   user(req, res, next) {
     const groupId = req.params.groupid;
-    User.findOne({ where: { id: req.body.userId } })
+    const enteredId = req.body.userId;
+
+    if (enteredId === undefined || !enteredId) {
+      return res.status(404).json({
+        errorMessage: 'Please specify a user[userId]'
+      });
+    } else if (isNaN(enteredId) === true) {
+      return res.status(404).json({
+        message: 'user does not exist'
+      });
+    }
+    User.findOne({ where: { id: enteredId } })
       .then((user) => {
-        if (!user) {
-          return res.status(404).json({
-            success: false,
-            message: 'user does not exist'
-          });
-        }
         Group.findOne({ where: { id: groupId } }).then((group) => {
+          if (user === null) {
+            return res.status(404).json({
+              message: 'user does not exist'
+            });
+          }
           group.getUsers({ where: { id: user.id } })
             .then((validUser) => {
               if (validUser.length > 0) {

@@ -214,7 +214,6 @@ describe('group route', () => {
       .send({ userId: 100 })
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('user does not exist');
         done();
       });
