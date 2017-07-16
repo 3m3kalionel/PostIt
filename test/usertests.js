@@ -16,40 +16,51 @@ before((done) => {
 });
 
 describe('sign up route', () => {
+  //  valid details,
+
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.validUser1)
       .end((err, res) => {
-        console.log(user.validUser1);
         expect(res.status).to.equal(201);
         expect(res.body.user.username).to.equal(user.validUser1.username);
         done();
       });
   });
 
-  // it('creates a user on signup', (done) => {
-  //   request(app)
-  //     .post('/api/user/signup')
-  //     .send(user.validUser2)
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(201);
-  //       done();
-  //     });
-  // });
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser2)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
 
-  // it('creates a user on signup', (done) => {
-  //   request(app)
-  //     .post('/api/user/signup')
-  //     .send(user.validUser3)
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(201);
-  //       done();
-  //     });
-  // });
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser3)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
 
-// user signup
-// valid usernames, unique usernames, not null username entries
+  it('creates a user on signup', (done) => {
+    request(app)
+      .post('/api/user/signup')
+      .send(user.validUser10)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
+  // user signup edge cases - username
+  // unique usernames, null username entries, empty string usernames
 
   it('only takes a unique username', (done) => {
     request(app)
@@ -85,8 +96,8 @@ describe('sign up route', () => {
   });
 
 
-  // correct and incorrect passwords
-  // validate emails - not null, unique and valid patterns
+  // user signup edgecases - email
+  // validate emails -  not unique email, null emails, and invalid patterns
 
   it('only accepts a unique email', (done) => {
     request(app)
@@ -143,25 +154,14 @@ describe('sign up route', () => {
       });
   });
 
-  it('disallows creation of a user with password less than 8 characters', (done) => {
+  // user signup edge cases - password
+  it('rejects user with a password of less than 8 characters', (done) => {
     request(app)
       .post('/api/user/signup')
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.signinError).to.equal('Your password length should be between EIGHT and TWENTY characters');
-        done();
-      });
-  });
-
-  // "signupError": "email field can't be empty"
-  it('rejects an empty string email', (done) => {
-    request(app)
-      .post('/api/user/signup')
-      .send(user.nullEmail)
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body.signupError).to.equal('email field can\'t be empty');
         done();
       });
   });
@@ -175,7 +175,6 @@ describe('Authentication route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(`${req.body.username} successfully logged in`);
-        // status: `${req.body.username} successfully logged in`
         done();
       });
     done();

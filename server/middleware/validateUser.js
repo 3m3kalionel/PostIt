@@ -1,3 +1,7 @@
+import models from './../models';
+
+const User = models.User;
+
 module.exports = {
   signin(req, res, next) {
     const username = req.body.username;
@@ -25,5 +29,18 @@ module.exports = {
       });
     }
     next();
+  },
+
+  validUser(req, res, next) {
+    const userId = req.params.userid;
+    User.findOne({ where: { id: userId } })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({
+            errorMessage: 'user does not exist'
+          });
+        }
+        next();
+      }).catch(error => res.status(500).send(error));
   }
 };

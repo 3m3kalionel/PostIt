@@ -13,7 +13,7 @@ const messagesController = authControllers.messages;
 dotenv.config();
 
 module.exports = (app) => {
-  app.get('/api', (req, res) => res.status(200).send({
+  app.get('/api', (req, res) => res.status(200).json({
     message: 'Welcome to the Postit API!',
   }));
 
@@ -26,7 +26,7 @@ module.exports = (app) => {
   app.post('/api/group', authenticate, validateGroup.name, validateGroup.isEmptyContent, groupsController.create);
 
   // An API route that allow users add other users to groups:
-  app.post('/api/group/:groupid/user', authenticate, validateGroup.isGroupMember, validateGroup.name, validateGroup.user, groupsController.addNewUser);
+  app.post('/api/group/:groupid/user', authenticate, validateGroup.isGroupMember, validateGroup.user, groupsController.addNewUser);
 
 
   // An API route that allows a logged in user post messages to created groups:
@@ -34,13 +34,13 @@ module.exports = (app) => {
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
-  app.get('/api/group/:groupid/messages', authenticate, validateGroup.validGroup, groupsController.list);
+  app.get('/api/group/:groupid/messages', authenticate, validateGroup.validGroup, validateGroup.isGroupMember, groupsController.list);
 
   // An API route that allows a logged in user list users in a group that he/she belongs to
-  app.get('/api/group/:groupid/users', authenticate, validateGroup.validGroup, groupsController.listMembers);
+  app.get('/api/group/:groupid/users', authenticate, validateGroup.validGroup, validateGroup.isGroupMember, groupsController.listMembers);
 
   // An API route that allows a logged in user list all groups that he/she belongs to
-  app.get('/api/group/:groupid/groups', authenticate, validateGroup.validGroup, groupsController.listGroups);
+  app.get('/api/group/:userid/groups', authenticate, validateUser.validUser, groupsController.listGroups);
 
   // Root route
   app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));

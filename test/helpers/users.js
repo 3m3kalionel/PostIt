@@ -9,6 +9,11 @@ module.exports = {
     password: '12345678',
     email: 'conor@andela.com',
   },
+  validUser10: {
+    username: 'victor',
+    password: '12345678',
+    email: 'victor@andela.com',
+  },
   validUser3: {
     username: 'jon',
     password: '12345678',
