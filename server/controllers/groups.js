@@ -48,14 +48,14 @@ module.exports = {
 
   listGroups(req, res) {
     const userId = req.decoded.id;
-
+    console.log(userId);
     User.findOne({ where: { id: userId } })
       .then((user) => {
         user
           .getGroups({
             where: { }
           }).then((groups) => {
-            if (groups.length === 0) {
+            if (Object.keys(groups).length === 0) {
               return res.status(200).json({
                 message: 'User does not belong to any group'
               });
