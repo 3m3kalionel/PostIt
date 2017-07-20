@@ -47,7 +47,7 @@ module.exports = {
   },
 
   listGroups(req, res) {
-    const userId = req.params.userid;
+    const userId = req.decoded.id;
 
     User.findOne({ where: { id: userId } })
       .then((user) => {
