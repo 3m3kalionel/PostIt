@@ -30,14 +30,20 @@ module.exports = {
           {
             expiresIn: '2 days'
           });
-          res.status(201).json({
-            user: newUser,
-            tok: token
+          return res.status(201).json({
+            user: {
+              id: newUser.id,
+              username: newUser.username,
+              email: newUser.email,
+              updatedAt: newUser.updatedAt,
+              createdAt: newUser.createdAt
+            },
+            token
           });
         })
         .catch((error) => {
           res.status(400).json({
-            loginError: `${error.errors[0].message}`
+            Error: error.errors[0].message
           });
         });
     });

@@ -20,10 +20,10 @@ module.exports = {
         {
           expiresIn: '2 days'
         });
-        res.status(201).json({
+        res.status(200).json({
+          status: `${req.body.username} successfully logged in`,
           user,
-          tok: token,
-          status: `${req.body.username} successfully logged in`
+          token,
         });
       });
     })(req, res, next);

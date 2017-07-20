@@ -10,16 +10,16 @@ module.exports = {
 
     if (username !== undefined && username.trim().length === 0) {
       return res.status(400).json({
-        signinError: 'Username can\'t be empty'
+        Error: 'Username can\'t be empty'
       });
     } else if (!password) {
       return res.status(400).json({
-        signinError: 'Please enter a password'
+        Error: 'Please enter a password'
       });
     }
     else if (!validator.test(password) || password.length > 20) {
       return res.status(400).json({
-        signinError: 'Your password length should be between EIGHT and TWENTY characters'
+        Error: 'Your password length should be between EIGHT and TWENTY characters'
       });
     }
     next();
@@ -30,7 +30,7 @@ module.exports = {
 
     if (!email || email.trim().length === 0) {
       return res.status(400).json({
-        signupError: 'email field can\'t be empty'
+        Error: 'email field can\'t be empty'
       });
     }
     next();
@@ -42,7 +42,7 @@ module.exports = {
       .then((user) => {
         if (!user) {
           return res.status(404).json({
-            errorMessage: 'user does not exist'
+            Error: 'user does not exist'
           });
         }
         next();

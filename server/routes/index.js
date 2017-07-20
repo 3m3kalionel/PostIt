@@ -27,7 +27,7 @@ module.exports = (app) => {
   app.post('/api/group', authenticate, validateGroup.name, validateGroup.isEmptyContent, groupsController.create);
 
   // An API route that allow users add other users to groups:
-  app.post('/api/group/:groupid/user', authenticate, validateGroup.isGroupMember, validateGroup.user, groupsController.addNewUser);
+  app.post('/api/group/:groupid/user', authenticate, validateGroup.validGroup, validateGroup.isGroupMember, validateGroup.user, groupsController.addNewUser);
 
 
   // An API route that allows a logged in user post messages to created groups:
@@ -41,7 +41,7 @@ module.exports = (app) => {
   app.get('/api/group/:groupid/users', authenticate, validateGroup.validGroup, validateGroup.isGroupMember, groupsController.listMembers);
 
   // An API route that allows a logged in user list all groups that he/she belongs to
-  app.get('/api/group/:userid/groups', authenticate, validateUser.validUser, groupsController.listGroups);
+  app.get('/api/groups', authenticate, groupsController.listGroups);
 
   // Root route
   app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));
