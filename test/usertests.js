@@ -16,8 +16,6 @@ before((done) => {
 });
 
 describe('sign up route', () => {
-  //  valid details,
-
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')
@@ -68,7 +66,7 @@ describe('sign up route', () => {
       .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('username must be unique');
+        expect(res.body.Error).to.equal('username must be unique');
         done();
       });
   });
@@ -79,7 +77,7 @@ describe('sign up route', () => {
       .send(user.nullUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('username cannot be null');
+        expect(res.body.Error).to.equal('username cannot be null');
         done();
       });
   });
@@ -105,7 +103,7 @@ describe('sign up route', () => {
       .send(user.notUniqueEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('email must be unique');
+        expect(res.body.Error).to.equal('email must be unique');
         done();
       });
   });
@@ -127,7 +125,7 @@ describe('sign up route', () => {
       .send(user.poorFormatEmailUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('Invalid email address format');
+        expect(res.body.Error).to.equal('Invalid email address format');
         done();
       });
   });
@@ -138,7 +136,7 @@ describe('sign up route', () => {
       .send(user.poorFormatEmailUser2)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('Invalid email address format');
+        expect(res.body.Error).to.equal('Invalid email address format');
         done();
       });
   });
@@ -149,7 +147,7 @@ describe('sign up route', () => {
       .send(user.poorFormatEmailUser3)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.loginError).to.equal('Invalid email address format');
+        expect(res.body.Error).to.equal('Invalid email address format');
         done();
       });
   });
@@ -182,13 +180,12 @@ describe('Authentication route', () => {
   it('logs in registered users', (done) => {
     request(app)
       .post('/api/user/signin')
-      .send(user.validUser)
+      .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.status).to.equal(`${req.body.username} successfully logged in`);
+        expect(res.body.status).to.equal('ibrahim successfully logged in');
         done();
       });
-    done();
   });
 
   it('prevents unregistered users from logging in', (done) => {
