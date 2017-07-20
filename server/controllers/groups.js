@@ -55,10 +55,15 @@ module.exports = {
           .getGroups({
             where: { }
           }).then((groups) => {
-            res.status(200).json(groups);
+            if (groups.length === 0) {
+              return res.status(200).json({
+                message: 'User does not belong to any group'
+              });
+            }
+            return res.status(200).json(groups);
           })
-          .catch(error => res.status(404).send(error));
-      }).catch(error => res.send(error));
+          .catch(error => res.status(500).send(error));
+      }).catch(error => res.status(500).send(error));
   },
 
   addNewUser(req, res) {
@@ -74,7 +79,7 @@ module.exports = {
             success: true,
             message: `${user.username} added to group`
           }));
-      }).catch(error => res.status(404).send(error));
-    });
+      });
+    }).catch(error => res.status(500).send(error));
   }
 };
