@@ -88,7 +88,7 @@ describe('sign up route', () => {
       .send(user.emptyStringUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signinError).to.equal('Username can\'t be empty');
+        expect(res.body.Error).to.equal('Username can\'t be empty');
         done();
       });
   });
@@ -114,7 +114,7 @@ describe('sign up route', () => {
       .send(user.nullEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signupError).to.equal('email field can\'t be empty');
+        expect(res.body.Error).to.equal('email field can\'t be empty');
         done();
       });
   });
@@ -159,7 +159,7 @@ describe('sign up route', () => {
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signinError).to.equal('Your password length should be between EIGHT and TWENTY characters');
+        expect(res.body.Error).to.equal('Your password length should be between EIGHT and TWENTY characters');
         done();
       });
   });
@@ -170,7 +170,7 @@ describe('sign up route', () => {
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.signinError).to.equal('Your password length should be between EIGHT and TWENTY characters');
+        expect(res.body.Error).to.equal('Your password length should be between EIGHT and TWENTY characters');
         done();
       });
   });

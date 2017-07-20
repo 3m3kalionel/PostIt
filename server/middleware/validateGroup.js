@@ -12,7 +12,7 @@ module.exports = {
         } else {
           res.status(400).json({
             success: false,
-            errorMessage: 'Group name already exists'
+            Error: 'Group name already exists'
           });
         }
       })
@@ -25,12 +25,12 @@ module.exports = {
     if (!name || name.trim().length === 0) {
       return res.status(400).json({
         success: false,
-        errorMessage: 'Please enter a group name'
+        Error: 'Please enter a group name'
       });
     } else if (!description || description.trim().length === 0) {
       return res.status(400).json({
         success: false,
-        errorMessage: 'Please provide a description about the group'
+        Error: 'Please provide a description about the group'
       });
     }
     next();
@@ -43,12 +43,12 @@ module.exports = {
     if (enteredId === undefined || !enteredId) {
       return res.status(400).json({
         success: false,
-        errorMessage: 'Please specify a user[userId]'
+        Error: 'Please specify a user[userId]'
       });
     } else if (isNaN(enteredId) === true) {
       return res.status(404).json({
         success: false,
-        errorMessage: 'user does not exist'
+        Error: 'user does not exist'
       });
     }
     User.findOne({ where: { id: enteredId } })
@@ -83,7 +83,7 @@ module.exports = {
             if (user.length < 1) {
               return res.status(400).json({
                 success: false,
-                errorMessage: 'not a member of this group'
+                Error: 'not a member of this group'
               });
             }
             return next();
@@ -97,7 +97,7 @@ module.exports = {
       .then((group) => {
         if (!group) {
           return res.status(404).json({
-            errorMessage: 'group does not exist'
+            Error: 'group does not exist'
           });
         }
         next();

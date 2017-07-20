@@ -26,7 +26,7 @@ describe('group route', () => {
       .post('/api/user/signin')
       .send(user.validUser1)
       .end((err, res) => {
-        userToken = res.body.tok;
+        userToken = res.body.token;
         done();
       });
   });
@@ -36,7 +36,7 @@ describe('group route', () => {
       .post('/api/user/signin')
       .send(user.validUser2)
       .end((err, res) => {
-        userToken2 = res.body.tok;
+        userToken2 = res.body.token;
         done();
       });
   });
@@ -46,7 +46,7 @@ describe('group route', () => {
       .post('/api/user/signin')
       .send(user.validUser3)
       .end((err, res) => {
-        userToken3 = res.body.tok;
+        userToken3 = res.body.token;
         done();
       });
   });
@@ -56,7 +56,7 @@ describe('group route', () => {
       .post('/api/user/signin')
       .send(user.validUser10)
       .end((err, res) => {
-        userToken10 = res.body.tok;
+        userToken10 = res.body.token;
         done();
       });
   });
@@ -78,7 +78,7 @@ describe('group route', () => {
       .post('/api/group')
       .set('x-access-token', userToken)
       .send(group.validGroup2)
-      .end((err, res) => {   
+      .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.group.name).to.equal(group.validGroup2.name);
         done();
@@ -106,7 +106,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('Group name already exists');
+        expect(res.body.Error).to.equal('Group name already exists');
         done();
       });
   });
@@ -120,7 +120,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('Please enter a group name');
+        expect(res.body.Error).to.equal('Please enter a group name');
         done();
       });
   });
@@ -134,7 +134,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('Please provide a description about the group');
+        expect(res.body.Error).to.equal('Please provide a description about the group');
         done();
       });
   });
@@ -187,7 +187,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('Please specify a user[userId]');
+        expect(res.body.Error).to.equal('Please specify a user[userId]');
         done();
       });
   });
@@ -201,7 +201,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('user does not exist');
+        expect(res.body.Error).to.equal('user does not exist');
         done();
       });
   });
@@ -215,7 +215,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('not a member of this group');
+        expect(res.body.Error).to.equal('not a member of this group');
         done();
       });
   });
@@ -255,7 +255,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(403);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('No token provided.');
+        expect(res.body.Error).to.equal('No token provided.');
         done();
       });
   });
@@ -319,7 +319,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('not a member of this group');
+        expect(res.body.Error).to.equal('not a member of this group');
         done();
       });
   });
@@ -354,7 +354,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('not a member of this group');
+        expect(res.body.Error).to.equal('not a member of this group');
         done();
       });
   });
@@ -367,7 +367,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('not a member of this group');
+        expect(res.body.Error).to.equal('not a member of this group');
         done();
       });
   });
@@ -379,7 +379,7 @@ describe('group route', () => {
       .set('x-access-token', '88887hg')
       .end((err, res) => {
         expect(res.body.success).to.equal(false);
-        expect(res.body.errorMessage).to.equal('Failed to authenticate token.');
+        expect(res.body.Error).to.equal('Failed to authenticate token.');
         done();
       });
   });
@@ -391,7 +391,7 @@ describe('group route', () => {
       .set('x-access-token', userToken2)
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body.errorMessage).to.equal('group does not exist');
+        expect(res.body.Error).to.equal('group does not exist');
         done();
       });
   });
@@ -414,7 +414,7 @@ describe('group route', () => {
       .set('x-access-token', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body.errorMessage).to.equal('user does not exist');
+        expect(res.body.Error).to.equal('user does not exist');
         done();
       });
   });
