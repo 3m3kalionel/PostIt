@@ -43,7 +43,7 @@ module.exports = {
     if (enteredId === undefined || !enteredId) {
       return res.status(400).json({
         success: false,
-        Error: 'Please specify a user[userId]'
+        Error: 'Please specify a user'
       });
     } else if (isNaN(enteredId) === true) {
       return res.status(404).json({

@@ -187,7 +187,7 @@ describe('group route', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.Error).to.equal('Please specify a user[userId]');
+        expect(res.body.Error).to.equal('Please specify a user');
         done();
       });
   });
@@ -398,23 +398,11 @@ describe('group route', () => {
 
   it('allows a logged in user list all the groups he/she belongs to', (done) => {
     request(app)
-      .get('/api/group/1/groups')
+      .get('/api/groups')
       .set('x-access-token', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an.instanceof(Array);
-        done();
-      });
-  });
-
-  // list members edge case - invalid user id
-  it('throws an error if the user id is invalid', (done) => {
-    request(app)
-      .get('/api/group/150/groups')
-      .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(404);
-        expect(res.body.Error).to.equal('user does not exist');
         done();
       });
   });
