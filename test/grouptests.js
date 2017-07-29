@@ -2,9 +2,23 @@ import chai from 'chai';
 import request from 'supertest';
 import mocha from 'mocha';
 import app from '../app';
+import bcrypt from 'bcrypt';
 import models from '../server/models';
 import group from './helpers/groups';
 import user from './helpers/users';
+
+
+const salt = bcrypt.genSaltSync(10);
+
+const hashedUsers = ([user.validUser1, user.validUser2, user.validUser3, user.validUser10])
+  .map((thisUser) => {
+    const returnedUser = {
+      ...thisUser,
+      salt,
+      password: bcrypt.hashSync(thisUser.password, salt)
+    };
+    return returnedUser;
+  });
 
 const expect = chai.expect;
 let userToken;
@@ -12,51 +26,39 @@ let userToken2;
 let userToken3;
 let userToken10;
 
-before((done) => {
-  models.sequelize.sync({ force: true }).then(() => {
-    done(null);
-  }).catch((errors) => {
-    done(errors);
-  });
+const promisify = currentUser => new Promise((resolve) => {
+  request(app)
+    .post('/api/user/signin')
+    .send(currentUser)
+    .end((err, res) => {
+      resolve(res.body.token);
+    });
 });
 
 describe('group route', () => {
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser1)
-      .end((err, res) => {
-        userToken = res.body.token;
+  before((done) => {
+    models.sequelize.sync({ force: true })
+      .then(() => models.User.bulkCreate(hashedUsers))
+      .then(() => promisify(user.validUser1))
+      .then((token) => {
+        userToken = token;
+        return promisify(user.validUser2);
+      }, (err) => {
+        console.log(err, 'this is an error');
+      })
+      .then((token) => {
+        userToken2 = token;
+        return promisify(user.validUser3);
+      })
+      .then((token) => {
+        userToken3 = token;
+        return promisify(user.validUser10);
+      })
+      .then((token) => {
+        userToken10 = token;
         done();
-      });
-  });
-
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser2)
-      .end((err, res) => {
-        userToken2 = res.body.token;
-        done();
-      });
-  });
-
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser3)
-      .end((err, res) => {
-        userToken3 = res.body.token;
-        done();
-      });
-  });
-
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser10)
-      .end((err, res) => {
-        userToken10 = res.body.token;
+      }).catch((err) => {
+        console.log(err, 'this are the errors we have');
         done();
       });
   });
@@ -407,17 +409,6 @@ describe('group route', () => {
       });
   });
 
-  it('responds with a message for a random route', (done) => {
-    request(app)
-      .get('/api/whateva')
-      .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.text).to.equal('Sorry, the page u requested does not exist');
-        done();
-      });
-  });
-
   it('responds with a welcome message for the home route', (done) => {
     request(app)
       .get('/api')
@@ -429,4 +420,3 @@ describe('group route', () => {
       });
   });
 });
-
