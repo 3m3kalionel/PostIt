@@ -409,17 +409,6 @@ describe('group route', () => {
       });
   });
 
-  it('responds with a message for a random route', (done) => {
-    request(app)
-      .get('/api/whateva')
-      .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.text).to.equal('Sorry, the page u requested does not exist');
-        done();
-      });
-  });
-
   it('responds with a welcome message for the home route', (done) => {
     request(app)
       .get('/api')
