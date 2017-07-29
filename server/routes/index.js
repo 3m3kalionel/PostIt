@@ -5,7 +5,9 @@ import validateGroup from '../middleware/validateGroup';
 import validateUser from '../middleware/validateUser';
 import validateMessage from '../middleware/validateMessage';
 
+import path from 'path';
 
+const publicPath = path.resolve(__dirname, '../../public');
 const usersController = authControllers.users;
 const loginController = authControllers.login;
 const groupsController = authControllers.group;
@@ -44,5 +46,5 @@ module.exports = (app) => {
   app.get('/api/groups', authenticate, groupsController.listGroups);
 
   // Root route
-  app.get('*', (req, res) => res.send('Sorry, the page u requested does not exist'));
+  app.get('*', (req, res) => res.sendFile(path.join(publicPath, 'index.html')));
 };
