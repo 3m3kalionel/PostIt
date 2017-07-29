@@ -7,15 +7,14 @@ import user from './helpers/users';
 
 const expect = chai.expect;
 
-before((done) => {
-  models.sequelize.sync({ force: true }).then(() => {
-    done(null);
-  }).catch((errors) => {
-    done(errors);
-  });
-});
-
 describe('sign up route', () => {
+  before((done) => {
+    models.sequelize.sync({ force: true }).then(() => {
+      done(null);
+    }).catch((errors) => {
+      done(errors);
+    });
+  });
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/user/signup')

@@ -5,6 +5,18 @@ import app from '../app';
 import models from '../server/models';
 import group from './helpers/groups';
 import user from './helpers/users';
+import bcrypt from 'bcrypt';
+
+const salt = bcrypt.genSaltSync(10);
+
+const hashedUsers = ([user.validUser1, user.validUser2, user.validUser3, user.validUser10]).map((thisUser) => {
+  const returnedUser = {
+    ...thisUser,
+    salt,
+    password: bcrypt.hashSync(thisUser.password, salt)
+  };
+  return returnedUser;
+});
 
 const expect = chai.expect;
 let userToken;
@@ -12,56 +24,85 @@ let userToken2;
 let userToken3;
 let userToken10;
 
-before((done) => {
-  models.sequelize.sync({ force: true }).then(() => {
-    done(null);
-  }).catch((errors) => {
-    done(errors);
-  });
+const promisify = currentUser => new Promise((resolve) => {
+  request(app)
+    .post('/api/user/signin')
+    .send(currentUser)
+    .end((err, res) => {
+      console.log(err, 'is there an error');
+      console.log(res.body.token, 'token body');
+      resolve(res.body.token);
+    });
 });
 
 describe('group route', () => {
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser1)
-      .end((err, res) => {
-        userToken = res.body.token;
+  before((done) => {
+    models.sequelize.sync({ force: true })
+      .then(() => models.User.bulkCreate(hashedUsers))
+      .then(() => promisify(user.validUser1))
+      .then((token) => {
+        userToken = token;
+        return promisify(user.validUser2);
+      })
+      .then((token) => {
+        userToken2 = token;
+        return promisify(user.validUser3);
+      })
+      .then((token) => {
+        userToken3 = token;
+        return promisify(user.validUser10);
+      })
+      .then((token) => {
+        userToken10 = token;
+        done();
+      }).catch((err) => {
+        console.log(err, 'this are the errors we have');
         done();
       });
   });
 
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser2)
-      .end((err, res) => {
-        userToken2 = res.body.token;
-        done();
-      });
-  });
+  // it('logs in a user', (done) => {
+  //   request(app)
+  //     .post('/api/user/signin')
+  //     .send(user.validUser1)
+  //     .end((err, res) => {
+  //       userToken = res.body.token;
+  //       done();
+  //     });
+  // });
 
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser3)
-      .end((err, res) => {
-        userToken3 = res.body.token;
-        done();
-      });
-  });
+  // it('logs in a user', (done) => {
+  //   request(app)
+  //     .post('/api/user/signin')
+  //     .send(user.validUser2)
+  //     .end((err, res) => {
+  //       userToken2 = res.body.token;
+  //       done();
+  //     });
+  // });
 
-  it('logs in a user', (done) => {
-    request(app)
-      .post('/api/user/signin')
-      .send(user.validUser10)
-      .end((err, res) => {
-        userToken10 = res.body.token;
-        done();
-      });
-  });
+  // it('logs in a user', (done) => {
+  //   request(app)
+  //     .post('/api/user/signin')
+  //     .send(user.validUser3)
+  //     .end((err, res) => {
+  //       userToken3 = res.body.token;
+  //       done();
+  //     });
+  // });
+
+  // it('logs in a user', (done) => {
+  //   request(app)
+  //     .post('/api/user/signin')
+  //     .send(user.validUser10)
+  //     .end((err, res) => {
+  //       userToken10 = res.body.token;
+  //       done();
+  //     });
+  // });
 
   it('allows a user create a broadcast group', (done) => {
+    console.log(userToken, 'this is the token');
     request(app)
       .post('/api/group')
       .set('x-access-token', userToken)

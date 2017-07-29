@@ -4,9 +4,9 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import http from 'http';
 import routes from './server/routes';
-import models from './server/models';
+// import models from './server/models';
 
-models.sequelize.sync();
+// models.sequelize.sync();
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;

@@ -7,7 +7,7 @@ dotenv.config();
 module.exports = {
   login(req, res, next) {
     passport.authenticate('local', (err, user) => {
-      if (err) { return res.send(err); }
+      if (err) { return res.status(500).send(err); }
       if (!user) { return res.status(404).send(user); }
       req.logIn(user, (err) => {
         if (err) { return next(err); }

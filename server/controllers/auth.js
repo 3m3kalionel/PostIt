@@ -20,15 +20,15 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
     where: {
       username
     }
-  }).then((users) => {
-    if (!users) {
+  }).then((user) => {
+    if (!user) {
       return done({ message: 'Username not found' }, false);
     }
     // Compare database salt to the hash of incoming password
-    const reqPasswordHash = bcrypt.hashSync(req.body.password, users.salt);
+    const reqPasswordHash = bcrypt.hashSync(req.body.password, user.salt);
 
-    if (users.password === reqPasswordHash) {
-      return done(null, users);
+    if (user.password === reqPasswordHash) {
+      return done(null, user);
     }
     return done({ message: 'Username and password do not match' }, false);
   }).catch(err => done(err));
