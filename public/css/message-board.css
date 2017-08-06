@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+  background-image: url("../images/chat_background.png");
+  background-color: red;
+  width: 100%;
+  height: 100%
+}
+
+#chat-input {
+    margin-bottom: 15px;
+    /*z-index: 999;*/
+    margin-left: 300px;
+    margin-right: 85px;
+    position: absolute;
+    bottom: 0px;
+}
+
+
+textarea:focus {
+    /*resize: none;*/
+    height: 40px;
+}
+
+#slide-out {
+    margin-top: 64px;
+    /*z-index: 0 !important;*/
+}
+
+.modal {
+    max-height: 90%;
+    width: 40%;
+}
+
+.chat-messages {
+    width: 100%;
+}
+
+nav li {
+    display: inline-block;
+}
+
+#signup form .row {
+    line-height: 10px;
+}
+
+
+
+
+/*#messages {
+    width: 100%;
+}*/
+
+
+/*div #users {
+    border: 1px red dotted;
+}*/
+
+/*.users-nav {
+    z-index: 0 !important;
+    position: absolute !important;
+    right: 0px;
+}*/
+
+/*div, ul.rightside-navigation {
+    z-index: 0 !important;
+}*/
+
+/*ul.rightside-navigation {
+    margin-top: 64px
+}*/
