@@ -2,20 +2,24 @@
     box-sizing: border-box;
 }
 
-body {
-  background-image: url("../images/landing_page_background.jpg");
-  width: 100%;
+.central-position {
+  display: flex;
+  justify-content: center;
+  /*align-content: center;*/
+}
+
+.item {
+  align-self: center;
+  /*margin-top: auto;*/
 }
 
 #chat-input {
     margin-bottom: 15px;
-    /*z-index: 999;*/
     margin-left: 300px;
     margin-right: 85px;
     position: absolute;
     bottom: 0px;
 }
-
 
 textarea:focus {
     /*resize: none;*/

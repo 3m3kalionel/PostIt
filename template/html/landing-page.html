@@ -3,12 +3,12 @@
 
     <head>
         <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css" type="text/css">
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../css/landing-page.css">
+        <link rel="stylesheet" href="../css/landing-page.css" type="text/css">
     </head>
 
     <body>
@@ -23,75 +23,52 @@
                 <!--</div>-->
             </div>
         </nav>
+        
 
-        <div id="signup" class="modal">
-            <div class="modal-content">
-                <div class="col s12 m12 l6">
-                  <h4 class="header2">Sign up for PostIt!&reg;</h4>
-                  <div class="row">
-                    <form class="col s12">
-                        <div class="row">
-
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">person_outline</i>
-                                <input id="icon_prefix" type="text" class="validate">
-                                <label for="username">Username</label>
-                            </div>
-                                
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">mail_outline</i>
-                                <input id="email" type="email" class="validate">
-                                <label for="email" data-error="wrong email format" data-success="right">Email</label>
-                            </div>
-
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">lock_outline</i>
-                                <input id="material_icons" type="password" class="validate">
-                            </div>
-
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">phone_outline</i>
-                                <input id="icon_telephone" type="number" class="validate">
-                                <label for="icon_telephone">Telephone</label>
-                            </div>
-                            
-                            <button class="btn waves-effect waves-light right" type="submit" name="action">Submit</button>
-                        </div>
-                    </form>
-                </div>
-              </div>
+        <div class="row">
+            <div class="col m12">
+                <h1>Welcome. Meet PostIt!, your second commui
             </div>
 
-            <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-            </div>
-        </div>  <!-- close modal -->
+        </div>
 
-        <div id="sign-in" class="modal">
-            <div class="modal-content">
+        <div class="row valign-wrapper">
+            <form class="col s6">
                 <div class="row">
-                    <form class="col s12">
-                    <div class="row">
-                        <div class="input-field col s12">
-                        <input id="username" type="text" class="validate">
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">person_outline</i>
+                        <input id="icon_prefix" type="text" class="validate">
                         <label for="username">Username</label>
-                        </div>
-
-                        <div class="input-field col s12">
-                        <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
-                        </div>
-
-                        <button class="btn waves-effect waves-light right" type="submit" name="action">Submit</button>
                     </div>
-                    </form>
-                </div>
-            </div>
+                    
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">mail_outline</i>
+                        <input id="email" type="email" class="validate">
+                        <label for="email" data-error="wrong email format" data-success="right">Email</label>
+                    </div>
 
-            <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-            </div>
-        </div>  <!-- close modal -->
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">lock_outline</i>
+                        <input id="material_icons" type="password" class="validate">
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">phone_outline</i>
+                        <input id="icon_telephone" type="number" class="validate">
+                        <label for="icon_telephone">Telephone</label>
+                    </div>
+                    
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">Submit</button>
+                </div>
+            </form>
+
+            
+            
+        </div>
+
+        
+            
 
 
         <!-- Compiled and minified JavaScript -->
