@@ -50,6 +50,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-loader": "^7.1.1",
     "babel-polyfill": "^6.8.0",
@@ -62,6 +63,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "gulp": "^3.9.1",
+    "history": "^4.6.3",
     "jquery": "^2.2.3",
     "jsonwebtoken": "^7.4.1",
     "morgan": "^1.8.2",
@@ -72,9 +74,9 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^4.4.5",
-    "react-router": "^2.4.0",
-    "react-router-redux": "^4.0.4",
-    "redux": "^3.5.2",
+    "react-router": "^4.1.2",
+    "redux": "^3.7.2",
+    "redux-immutable-state-invariant": "^2.0.0",
     "redux-thunk": "^2.0.1",
     "sequelize": "^4.1.0",
     "sequelize-cli": "^2.7.0",
