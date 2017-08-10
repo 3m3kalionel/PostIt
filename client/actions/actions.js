@@ -1,0 +1,10 @@
+export const UPDATE_USER = 'POST_IT_UPDATE_USER';
+export const SIGN_UP = 'POST_IT_SIGN_UP';
+export const SIGN_UP_ERROR = 'POST_IT_SIGN_UP_ERROR';
+
+export const SIGN_IN = 'POST_IT_SIGN_IN';
+export const SIGN_IN_ERROR = 'POST_IT_SIGN_IN_ERROR';
+
+export const GET_USER_GROUPS = 'GET_USER_GROUPS';
+export const GET_USER_GROUPS_ERROR = 'GET_USER_GROUPS_ERROR';
+

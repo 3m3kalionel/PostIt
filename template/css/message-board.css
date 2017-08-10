@@ -46,6 +46,11 @@ nav li {
     line-height: 10px;
 }
 
+nav {
+    position: fixed;
+    z-index: 5999;
+}
+
 
 
 
