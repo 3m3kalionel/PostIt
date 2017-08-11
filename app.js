@@ -3,13 +3,12 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import http from 'http';
-import routes from './server/routes';
-// import models from './server/models';
-
 import path from 'path';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackConfig from './webpack.config.dev';
+import routes from './server/routes';
+// import models from './server/models';
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
