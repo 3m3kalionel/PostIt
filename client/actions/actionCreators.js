@@ -44,9 +44,10 @@ export const signup = data => dispatch =>
     dispatch(signupError(error.response.data));
   });
 
-export const mSignUp = (data, dispatch) =>
-  axios.post('/api/user/signup', data).then((response) => {
-    dispatch(signupAction(response));
+export const mSignUp = (data) => (dispatch) =>
+  axios.post('/api/user/signup', data).then(({ data: { user, token } }) => {
+    localStorage.setItem('token', token);
+    dispatch(signupAction({ user, token }));
   }).catch((error) => {
     dispatch(signupError(error.response.data));
   });
@@ -58,21 +59,23 @@ export const mSignUp = (data, dispatch) =>
 //     dispatch(signinError(error.response.data));
 //   });
 
-export const signin = (data, dispatch) =>
-  axios.post('/api/user/signin', data).then((response) => {
-    dispatch(signinAction(response));
-    console.log('response - ', response);
+export const signin = data => dispatch =>
+  axios.post('/api/user/signin', data).then(({ data: { user, token } }) => {
+    localStorage.setItem('token', token);
+    dispatch(signinAction({ user, token }));
   }).catch((error) => {
     dispatch(signinError(error.response.data));
   });
 
-export const getUserGroups = (data, dispatch) =>
-  axios.get('/api/groups', data).then((response) => {
-    dispatch(getUserGroupsAction(response));
+export const getUserGroups = () => (dispatch) => {
+  const token = localStorage.getItem('token');
+  return axios
+  .get('/api/groups', { headers: { 'x-access-token': token } }).then((response) => {
+    dispatch(getUserGroupsAction(response.data));
   }).catch((error) => {
-    dispatch(getUserGroupsError(error.response.data));
+    dispatch(getUserGroupsError(error.response));
   });
-
+}
 // export const signIn = (payload) => {
 //   console.log('cfcf', payload);
 //   return dispatch => axios.post('/api/user/signin', {

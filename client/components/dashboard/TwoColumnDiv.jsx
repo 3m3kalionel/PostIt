@@ -6,7 +6,7 @@ import ChatArea from './ChatArea.jsx';
 import ChatInput from './ChatInput.jsx';
 import DashboardNavbar from './DashboardNavbar.jsx';
 import GroupsDiv from './GroupsDiv.jsx';
-import GroupList from './GroupList.jsx';
+import GroupList from './ShowGroups.jsx';
 import MessageList from './MessageList.jsx';
 import Navbar from './Navbar.jsx';
 // import TwoColumnDiv from './TwoColumnDiv.jsx';

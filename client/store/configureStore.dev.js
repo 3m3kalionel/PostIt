@@ -1,11 +1,11 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-import userReducer from '../reducers';
+// import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import rootReducer from '../reducers';
 
-const rootReducer = combineReducers({
-  userReducer
-});
+// const rootReducer = combineReducers({
+//   userReducer
+// });
 
 
 const store = createStore(

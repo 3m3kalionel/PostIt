@@ -57,6 +57,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types';
 import { signin } from '../../actions/actionCreators';
 
 class Signin extends Component {
@@ -81,7 +83,9 @@ class Signin extends Component {
   onSubmit(event) {
     event.preventDefault();
     // this.props.signinRequest(this.state);
-    signin(this.state, this.props.dispatch);
+    this.props.signin(this.state).then(() => {
+      this.props.history.push('/dashboard')
+    });
   }
 
   render() {
@@ -118,5 +122,4 @@ class Signin extends Component {
 //     signinRequest: userDetails => dispatch(signin(userDetails))
 //   }
 // }
-
-export default connect(null)(Signin);
+export default withRouter(connect(null, { signin })(Signin));

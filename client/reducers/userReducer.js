@@ -1,4 +1,3 @@
-import { UPDATE_USER } from '../actions/actions';
 import initialState from './initialState';
 import * as actionTypes from '../actions/actions';
 

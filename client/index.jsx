@@ -36,8 +36,8 @@ import '../template/css/landing-page.css';
 
 
 ReactDOM.render(
-  <Provider store ={store}>
-    <Router history ={history}>
+  <Provider store={store}>
+    <Router history={createBrowserHistory()}>
       <Switch>
         <Route exact path="/" component={App}/>        
         <Route exact path="/dashboard" component={Dashboard}/>

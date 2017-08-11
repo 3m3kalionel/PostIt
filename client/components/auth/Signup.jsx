@@ -134,7 +134,7 @@ class Signup extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    mSignUp(this.state, this.props.dispatch).then((response) => {
+    this.props.mSignUp(this.state).then((response) => {
       // console.log('*********^^^^^^', this.props)
     });
 
@@ -218,5 +218,5 @@ class Signup extends Component {
 //   }
 // }
 
-export default connect(null)(Signup);
+export default connect(null, { mSignUp })(Signup);
 // export default connect(mapStateToProps, mapDispatchToProps)(Signup);
