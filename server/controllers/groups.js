@@ -55,11 +55,11 @@ module.exports = {
           .getGroups({
             where: { }
           }).then((groups) => {
-            if (Object.keys(groups).length === 0) {
-              return res.status(200).json({
-                message: 'User does not belong to any group'
-              });
-            }
+            // if (groups.length === 0) {
+            //   return res.status(200).json({
+            //     message: 'User does not belong to any group'
+            //   });
+            // }
             return res.status(200).json(groups);
           })
           .catch(error => res.status(500).send(error));
@@ -74,10 +74,12 @@ module.exports = {
       User.findOne({
         where: { id: userId }
       }).then((user) => {
+        const { id, username, email } = user;
         group.addUser(user)
           .then(() => res.status(201).json({
             success: true,
-            message: `${user.username} added to group`
+            message: `${user.username} added to group`,
+            user: { id, username, email }
           }));
       });
     }).catch(error => res.status(500).send(error));

@@ -20,10 +20,11 @@ module.exports = {
         {
           expiresIn: '2 days'
         });
+        const { id, username, password, email } = user;
         res.status(200).json({
           status: `${req.body.username} successfully logged in`,
-          user,
-          token,
+          user: { id, username, password, email },
+          token
         });
       });
     })(req, res, next);
