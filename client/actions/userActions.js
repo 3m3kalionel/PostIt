@@ -27,6 +27,7 @@ export const signIn = userData => (
     axios.post('/api/user/signin', userData)
       .then(({ data: { user: loggedInUser, token } }) => {
         setToken(token);
+        localStorage.setItem('postit-token', token);
         dispatch({
           type: user.AUTH_SUCCESS,
           user: loggedInUser

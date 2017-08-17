@@ -4,7 +4,9 @@ const saveToken = (token) => {
   localStorage.setItem('postit-token', token);
 };
 
-const retrieveToken = () => localStorage.getItem('postit-token');
+export const retrieveToken = () => {
+  return localStorage.getItem('postit-token');
+}
 
 const setToken = (token) => {
   if (token) {

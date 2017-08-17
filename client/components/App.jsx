@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 
-export default class App extends React.Component {
+import Header from './common/Header.jsx';
+import LandingPage from './auth/LandingPage';
+
+import Dashboard from './dashboard/Dashboard.jsx';
+import DashboardNavbar from './dashboard/DashboardNavbar';
+
+
+class App extends Component {
+  renderHeader() {
+    const location = window.location.pathname;
+    if (location === '/') {
+      return <Header />;
+    }
+    return <DashboardNavbar />
+  }
 
   render() {
     return (
       <div>
-        <h2>This app is under construction</h2>
+        {this.renderHeader()}
+        {this.props.children}
       </div>
     );
   }
 }
+
+export default App;

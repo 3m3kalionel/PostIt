@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import { message, ERROR_OCCURRED } from './actionTypes';
 
-export const createMessage = messageData => (
+export const createMessage = (groupId, messageData) => (
   dispatch => (
-    axios.post('/api/group/:groupid/message', messageData)
+    axios.post(`/api/group/${groupId}/message`, messageData)
       .then(({ data: { message: newMessage } }) => {
         dispatch({
           type: message.CREATE_SUCCESS,
@@ -20,13 +20,14 @@ export const createMessage = messageData => (
   )
 );
 
-export const listMessages = () => (
+export const listMessages = groupid => (
   dispatch => (
-    axios.get('/api/group/:groupid/messages')
+    axios.get(`/api/group/${groupid}/messages`)
       .then(({ data }) => {
         dispatch({
           type: message.LIST_SUCCESS,
-          list: data
+          list: data,
+          groupId: groupid
         });
       })
       .catch(({ response: { data } }) => {
