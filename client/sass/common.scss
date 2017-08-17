@@ -1,0 +1,295 @@
+$base-color: rgb(38, 166, 154);
+// $text-color: #212121;
+
+
+// * {
+//   box-sizing: border-box;
+// }
+
+// html,
+// body,
+// #app,
+// .app {
+//   height: 100%;
+// }
+
+// body {
+//   color: $text-color;
+// }
+
+// .app {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .page-wrapper {
+//   display: flex;
+//   flex-direction: row;
+//   flex-grow: 1;  
+// }
+
+// nav {
+//   background-color: $base-color;
+// }
+
+// .card {
+//   border: 1px solid #cfcfcf;
+//   width: 40%;
+//   margin: auto;
+// }
+
+// div#button-div {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+// }
+
+// // 
+
+// #chat-input {
+//   height: 100%
+// }
+
+// nav {
+//     li {
+//         display: inline-block;
+//     }
+// }
+
+// /* Dashboard */
+// #chat-input {
+//   bottom: 0px;
+//   display: flex;
+//   flex-direction: column;
+//   margin: 15px;
+//   padding-left: 300px;
+// }
+
+// @media only screen and (max-width : 992px) {
+//   #chat-input {
+//     padding-left: 0;
+//   }
+// }
+
+// #two-section-page {
+//   align-items: bottom;
+//   display: flex;
+//   flex-direction: column;
+//   flex-grow: 1;
+//   margin-bottom: 0;
+//   width: 100%;
+// }
+
+// textarea:focus {
+//     /*resize: none;*/
+//     height: 40px;
+// }
+
+// #slide-out {
+//     margin-top: 64px;
+//     /*z-index: 0 !important;*/
+// }
+
+// .modal {
+//     max-height: 90%;
+//     width: 40%;
+// }
+
+// .chat-messages {
+//     width: 100%;
+// }
+
+// nav li {
+//     display: inline-block;
+// }
+
+
+
+// #signup form .row {
+//     line-height: 10px;
+// }
+
+// nav {
+//     z-index: 5999;
+// }
+
+// #message-list {
+//   overflow: scroll;
+// }
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+// body,
+.row,
+#chat-input {
+  height: 100%;
+  width : 100%;
+}
+
+nav {
+  background-color: $base-color;
+}
+
+.tabs .indicator {
+  background-color: $base-color !important;
+}
+
+h3,
+li a {
+  color: $base-color;
+}
+
+body {
+  background-color: #F3F3F3;
+  // background-image: url("../images/chat_background.png");
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+    
+#chat-input {
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  #chat-input {
+    padding-left: 0;
+  }
+}
+
+#two-section-page {
+  align-items: bottom;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-bottom: 0;
+  width: 90%;
+}
+
+textarea:focus {
+    /*resize: none;*/
+    height: 40px;
+}
+
+#slide-out {
+    margin-top: 64px;
+    /*z-index: 0 !important;*/
+}
+
+.modal {
+    max-height: 90%;
+    width: 40%;
+}
+
+.chat-messages {
+    width: 100%;
+}
+
+nav li {
+    display: inline-block;
+}
+
+
+
+#signup form .row {
+    line-height: 10px;
+}
+
+nav {
+    z-index: 5999;
+}
+
+#message-list {
+  overflow: scroll;
+}
+
+.main-card {
+  width: 40%;
+  margin: auto;
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+
+/* Landing Page */
+
+.page-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  margin-top: 2rem;  
+}
+
+.card {
+  border: 1px solid #cfcfcf;
+}
+
+div#button-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*Dashboard*/
+.messages {
+  // position: absolute;
+  top: 3.5rem;
+}
+
+#dashboard-navbar{
+  position: fixed;
+}
+
+.message-list-container {
+  margin-top: 64px;
+}
+
+#message-input {
+  // position: fixed;
+  background: #F5F1EE
+}
+
+div.card-content {
+  background: #F5F1EE;
+  color: black
+}
+
+a.btn-floating {
+  background: grey;
+}
+
+// button.btn,
+// #message-input
+//  {
+//   position: absolute;
+//   bottom: 30px;
+// }
+
+// #message-input {
+//   width: 70%;
+//   display: inline-block;
+// }
+
+// #chat-input {
+//   // background: red;
+//   z-index: 99000;
+//   height: 100vh;
+// }

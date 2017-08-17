@@ -3,13 +3,11 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import http from 'http';
-import routes from './server/routes';
-// import models from './server/models';
-
 import path from 'path';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackConfig from './webpack.config.dev';
+import routes from './server/routes';
+// import models from './server/models';
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
@@ -21,10 +19,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 if (process.env.NODE_ENV === 'development') {
   const webpackCompiler = webpack(webpackConfig);
-  const webpackDevMiddlewareConfig = webpackDevMiddleware(webpackCompiler, {
+  app.use(require('webpack-dev-middleware')(webpackCompiler, {
     publicPath: webpackConfig.output.publicPath
-  });
-  app.use(webpackDevMiddlewareConfig);
+  }));
+  app.use(require('webpack-hot-middleware')(webpackCompiler, {
+    log: false,
+    path: '/__webpack_hmr',
+    heartbeat: 2 * 1000
+  }));
 }
 app.use(express.static(publicPath)); // set up our public path for our app
 

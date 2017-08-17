@@ -4,8 +4,18 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "browser": true,
+    "jquery": true
   },
+  "globals": {
+    "Materialize": false
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
   "rules": {
     "one-var": 0,
     "one-var-declaration-per-line": 0,

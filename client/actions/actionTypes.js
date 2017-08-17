@@ -1,0 +1,20 @@
+export const user = {
+  AUTH_SUCCESS: 'AUTHENTICATION_SUCCESS',
+};
+
+export const group = {
+  CREATE_SUCCESS: 'CREATE_GROUP_SUCCESS',
+  LIST_SUCCESS: 'LIST_GROUPS_SUCCESS',
+};
+
+export const member = {
+  ADD_SUCCESS: 'ADD_MEMBER_SUCCESS',
+  LIST_SUCCESS: 'LIST_MEMBERS_SUCCESS',
+};
+
+export const message = {
+  CREATE_SUCCESS: 'CREATE_MESSAGE_SUCCESS',
+  LIST_SUCCESS: 'LIST_MESSAGES_SUCCESS',
+};
+
+export const ERROR_OCCURRED = 'ERROR_OCCURRED';
