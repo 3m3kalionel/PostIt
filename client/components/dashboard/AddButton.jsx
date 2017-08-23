@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import CreateGroupModal from './CreateGroupModal.jsx';
-import AddUserModal from './AddUserModal.jsx';
+// import CreateGroupModal from './CreateGroupModal.jsx';
+// import AddUserModal from './AddUserModal.jsx';
 import AddUserButton from './AddUserButton.jsx';
 import CreateGroupButton from './CreateGroupButton.jsx';
 
@@ -18,24 +18,24 @@ class AddButton extends Component {
     );
   }
 
-  renderUser () {
-    return (
-      <AddUserModal />
-    )
-  }
+  // renderUser () {
+  //   return (
+  //     <AddUserModal />
+  //   )
+  // }
 
-  renderGroup () {
-    return (
-      <CreateGroupModal />
-    )
-  }
+  // renderGroup () {
+  //   return (
+  //     <CreateGroupModal />
+  //   )
+  // }
 
   render () {
     return (
       <div>
         {this.renderButton()}
-        {this.renderUser()}
-        {this.renderGroup()}
+        {/*{this.renderUser()}
+        {this.renderGroup()}*/}
       </div>
     );
   }

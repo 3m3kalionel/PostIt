@@ -16,13 +16,17 @@ class ChatArea extends Component {
     );
   }
 
-  renderUserModal () {
+
+// should the list items be contained in a div? 
+// create the method to handle user searrch here. pass the method as a prop to addUserModal. Pass the list of results to AddUserModal 
+
+  renderAddUserModal () {
     return (
-      <AddUserModal />
+      <AddUserModal groupId={this.props.groupId} />
     )
   }
 
-  renderGroupModal () {
+  renderCreateGroupModal () {
     return (
       <CreateGroupModal />
     )
@@ -32,11 +36,13 @@ class ChatArea extends Component {
     return (
       <div>
         {this.renderChatArea()}
-        {this.renderUserModal()}
-        {this.renderGroupModal()}
+        {this.renderAddUserModal()}
+        {this.renderCreateGroupModal()}
       </div>
     );
   }
 }
 
 export default ChatArea;
+
+// nothing

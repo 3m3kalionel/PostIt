@@ -6,11 +6,11 @@ class ChatInput extends React.Component {
     this.state = {
       message: ''
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.clearMessage = this.clearMessage.bind(this);
   }
 
-  handleChange(event) {
+  handleInputChange(event) {
     this.setState({ message: event.target.value });
   }
 
@@ -21,22 +21,19 @@ class ChatInput extends React.Component {
   render() {
     const { onSubmit } = this.props;
     const { message } = this.state;
-    console.log('message', message);
     return (
       <div>
-
-        {/*<div id="message-input" class="col l12">
-          <textarea></textarea>
-        </div>*/}
-        <div id="message-input" class="col l12">
-          <textarea type="text" onChange={this.handleChange} value={message} ></textarea>
-          </div>
-          <button className="waves-effect waves-light btn" onClick={() => onSubmit(message, this.clearMessage)}>
-            Send
-          </button>
+        <div id="message-input" className="col l12">
+          <textarea type="text" onChange={this.handleInputChange} value={message} ></textarea>
+        </div>
+        <button className="waves-effect waves-light btn" onClick={() => onSubmit(message, this.clearMessage)}>
+          Send
+        </button>
       </div>
     );
   }
 }
 
 export default ChatInput;
+
+// nothing

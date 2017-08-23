@@ -4,9 +4,9 @@ import { listGroups } from '../../actions/groupActions.js';
 
 
 class GroupsDiv extends Component {
-  componentDidMount(){
-    this.props.getGroups();
-  }
+  // componentDidMount(){
+  //   this.props.getGroups();
+  // }
 
   render() {
     return (
@@ -28,14 +28,15 @@ GroupsDiv.defaultProps = {
   groups: []
 };
 
-const mapStateToProps = state => {
-  return {
-    groups: state.user.groups
-  }
-};
+// const mapStateToProps = state => {
+//   return {
+//     groups: state.user.groups
+//   }
+// };
 
-const mapDispatchToProps = dispatch => ({
-  getGroups: () => dispatch(listGroups())
-});
+// const mapDispatchToProps = dispatch => ({
+//   getGroups: () => dispatch(listGroups())
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupsDiv);
+// export default connect(mapStateToProps, mapDispatchToProps)(GroupsDiv);
+export default GroupsDiv;

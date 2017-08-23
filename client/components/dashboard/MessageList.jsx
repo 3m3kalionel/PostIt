@@ -4,24 +4,16 @@ import { listMessages } from '../../actions/messageActions';
 import { bindActionCreators } from 'redux';
 
 class MessageList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: 'No messages to display',
-      groupId: null
-    }
-  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.groupId !== nextProps.groupId){
       this.props.getMessages(nextProps.groupId);
     }
-   }
+  }
 
-    render () {
-    const { messages } = this.props.group;
-    let messageComponent;
-    console.log('msg', messages);
+  render () {
+  const { messages } = this.props.group;
+  let messageComponent;
     if (Array.isArray(messages) && messages.length > 0) {
       messageComponent = messages.map((message) => {
         return (

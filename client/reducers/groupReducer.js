@@ -45,7 +45,6 @@ const groupReducer = (state = {}, action = {}) => {
       //   }
       // };
     case message.LIST_SUCCESS:
-      console.log(state, 'reducer', action);
       return {
         ...state,
         [action.groupId]: {
