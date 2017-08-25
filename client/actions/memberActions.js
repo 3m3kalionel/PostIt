@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { setToken } from '../utils/manageToken';
 import { member, ERROR_OCCURRED } from './actionTypes';
 
 export const addMember = (groupId, userId) => (
@@ -43,8 +42,7 @@ export const listMembers = groupId => (
 
 export const searchUsers = (username) => {
   return (dispatch) => {
-    setToken();
-    axios.post('/api/users', username)
+    axios.get(`/api/users?q=${username}`)
       .then(({ data }) => {
         dispatch({
           type: member.SEARCH_SUCCESS,
