@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { listMessages } from '../../actions/messageActions';
+import { listMembers } from '../../actions/memberActions';
 import { bindActionCreators } from 'redux';
 
 class MessageList extends Component {
@@ -8,6 +9,7 @@ class MessageList extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.groupId !== nextProps.groupId){
       this.props.getMessages(nextProps.groupId);
+      this.props.getMembers(nextProps.groupId);
     }
   }
 
@@ -56,7 +58,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getMessages: (bindActionCreators)(listMessages, dispatch)
+    getMessages: (bindActionCreators)(listMessages, dispatch),
+    getMembers: (bindActionCreators)(listMembers, dispatch)
   }
 }
 

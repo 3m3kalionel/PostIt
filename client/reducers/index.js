@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   errors: errorReducer,
   groups: groupReducer,
-  results: memberReducer
+  members: memberReducer
 });
 
 export default rootReducer;

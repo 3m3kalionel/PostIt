@@ -1,7 +1,7 @@
 import { member } from '../actions/actionTypes';
 
 const memberReducer = (state = {}, action = {}) => {
-  switch (member.type) {
+  switch (action.type) {
     case member.SEARCH_SUCCESS:
       return {
         ...state,
