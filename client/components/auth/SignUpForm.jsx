@@ -12,6 +12,7 @@ class SignUpForm extends Component {
       username: "",
       email: "",      
       password: "",
+      phone: "",
       passwordConfirm: ""
     };
 
@@ -22,9 +23,9 @@ class SignUpForm extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.signUp(this.state)
-    .then(() => {
-      browserHistory.push('/dashboard')
-    });
+      .then(() => {
+        browserHistory.push('/dashboard')
+      });
   }
 
   handleInputChange(event) {
@@ -38,20 +39,24 @@ class SignUpForm extends Component {
       <form className="auth-form" onSubmit={this.onSubmit}>
         <h3>Welcome</h3>
         <div className="input-field">
-          <input onChange={this.handleInputChange} id="username" type="text" className="validate" required/>
+          <input onChange={this.handleInputChange} id="username" type="text" className="validate" required />
           <label htmlFor="username">Username</label>
         </div>
         <div className="input-field">
-          <input onChange={this.handleInputChange} id="email" type="email" className="validate" required/>
+          <input onChange={this.handleInputChange} id="email" type="email" className="validate" required />
           <label htmlFor="email">Email</label>
         </div>
         <div className="input-field">
-          <input onChange={this.handleInputChange} id="password" type="password" className="validate" required/>
+          <input onChange={this.handleInputChange} id="password" type="password" className="validate" required />
           <label htmlFor="password">Password</label>
         </div>
         <div className="input-field">
-          <input onChange={this.handleInputChange} id="passwordConfirm" type="password" className="validate" required/>
+          <input onChange={this.handleInputChange} id="passwordConfirm" type="password" className="validate" required />
           <label htmlFor="password-confirm">Confirm Password</label>
+        </div>
+        <div className="input-field">
+          <input onChange={this.handleInputChange} id="phone" type="number" className="validate" required />
+          <label htmlFor="phone">Phone Number</label>
         </div>
         <div id="button-div">
           <button className="btn" type="submit">Submit</button>

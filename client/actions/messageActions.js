@@ -11,10 +11,10 @@ export const createMessage = (groupId, messageData) => (
           message: newMessage
         });
       })
-      .catch(({ response: { data } }) => {
+      .catch((error) => {
         dispatch({
           type: ERROR_OCCURRED,
-          error: data
+          error,
         });
       })
   )

@@ -10,6 +10,7 @@ module.exports = {
   create(req, res) {
     const username = req.body.username;
     const email = req.body.email;
+    const phone = req.body.phone;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -19,6 +20,7 @@ module.exports = {
           username,
           password: hash,
           email,
+          phone,
           salt
         })
         .then((newUser) => {
@@ -42,6 +44,8 @@ module.exports = {
           });
         })
         .catch((error) => {
+          console.log(req.body);
+          console.log("Error===___=_++_++>>", error);
           res.status(400).json({
             Error: error.errors[0].message
           });
