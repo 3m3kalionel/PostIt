@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
+    verificationCode: DataTypes.STRING,
     phone: {
       type: DataTypes.STRING,
       allowNull: false,

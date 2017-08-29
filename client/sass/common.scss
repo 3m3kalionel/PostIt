@@ -205,3 +205,16 @@ div.empty-area p {
   margin-top: 40%;
   margin-left: 60%;
 }
+
+a#forgot-password {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+a#forgot-password:hover {
+    color: #2bbbad;
+    border-bottom: 1px #2bbbad dotted;
+}

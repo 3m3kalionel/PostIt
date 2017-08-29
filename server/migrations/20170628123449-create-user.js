@@ -22,6 +22,10 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      verificationCode: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       phone: {
         type: Sequelize.STRING,
         allowNull: false,

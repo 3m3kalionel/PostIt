@@ -43,6 +43,9 @@ class SignInForm extends Component {
           <input onChange={this.handleInputChange} id="password" type="password" className="validate" required/>
           <label htmlFor="password">Password</label>
         </div>
+        <div>
+          <a className="waves-effect waves-light" id="forgot-password">Forgot Password?</a>
+        </div>
         <div id="button-div">
           <button className="btn" type="submit">Submit</button>
         </div>

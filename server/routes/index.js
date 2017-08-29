@@ -48,6 +48,12 @@ module.exports = (app) => {
   // An API route that allows a logged in user list all groups that he/she belongs to
   app.get('/api/groups', authenticate, groupsController.listGroups);
 
+  // An API route that verifies a registered user that has forgotten his password
+  app.post('/api/user/verify', usersController.verifyUser);
+
+  // An API route that reset's a registered user's password
+  app.post('/api/user/reset', usersController.resetPassword);
+
   // Root route
   app.get('*', (req, res) => res.sendFile(path.join(publicPath, 'index.html')));
 };
