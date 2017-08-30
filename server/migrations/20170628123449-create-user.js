@@ -22,6 +22,15 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      verificationCode: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       salt: {
         type: Sequelize.STRING
       },

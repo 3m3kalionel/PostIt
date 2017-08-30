@@ -1,6 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { createGroup } from '../../actions/groupActions.js';
 
 class CreateGroupModal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      description: ''
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  handleInputChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  onClick(event) {
+    event.preventDefault();
+    this.props.createGroup(this.state);
+  }
+
   render() {
     return (
       <div id="new-group" className="modal">
@@ -10,17 +37,17 @@ class CreateGroupModal extends Component {
               <div className="row">
                 <div className="input-field col s12">
                   <i className="material-icons prefix">account_circle</i>
-                  <input id="icon_prefix" type="text" className="validate" />
+                  <input onChange={this.handleInputChange} id="name" type="text" className="validate" />
                   <label htmlFor="icon_prefix">Group name</label>
                 </div>
                 <div className="input-field col s12">
                   <i className="material-icons prefix">edit</i>
-                  <input id="icon_telephone" type="tel" className="validate" />
+                  <input onChange={this.handleInputChange} id="description" type="tel" className="validate" />
                   <label htmlFor="icon_telephone">Description</label>
                 </div>
                 <div className="row">
                   <div className="input-field col s12">
-                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action">Submit
+                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action" onClick={this.onClick}>Submit
                       <i className="mdi-content-send right" />
                     </button>
                   </div>
@@ -37,4 +64,14 @@ class CreateGroupModal extends Component {
   }
 }
 
-export default CreateGroupModal;
+const mapStateToProps = state => ({
+  error: state.errors.error
+});
+
+const mapDispatchToProps = dispatch => ({
+    createGroup: (groupData) => dispatch(createGroup(groupData))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps) (CreateGroupModal);
+
+// get the input, mdtp. use the createGroup functio to call the create group function with the state of the input field. 

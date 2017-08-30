@@ -16,8 +16,7 @@ module.exports = {
       return res.status(400).json({
         Error: 'Please enter a password'
       });
-    }
-    else if (!validator.test(password) || password.length > 20) {
+    } else if (!validator.test(password) || password.length > 20) {
       return res.status(400).json({
         Error: 'Your password length should be between EIGHT and TWENTY characters'
       });

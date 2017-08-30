@@ -20,6 +20,15 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
+    verificationCode: DataTypes.STRING,
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      // validate: {
+      //   msg: 'Number already in use'
+      // }
+    },
     salt: DataTypes.STRING
   });
 

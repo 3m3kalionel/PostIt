@@ -30,22 +30,21 @@ const groupReducer = (state = {}, action = {}) => {
         }
       };
     case message.CREATE_SUCCESS:
-      return { ...state,
+      // return { ...state,
+      //   [action.message.groupId]: {
+      //     messages: [...state[action.message.groupId].messages, action.message]
+      //   } };
+      return {
+        ...state,
         [action.message.groupId]: {
-          messages: [...state[action.message.groupId].messages, action.message]
-        } };
-      // return {
-      //   ...state,
-      //   [action.groupId]: {
-      //     ...state[action.groupId],
-      //     messages: [
-      //       ...state[action.groupId].messages,
-      //       action.message
-      //     ]
-      //   }
-      // };
+          ...state[action.message.groupId],
+          messages: [
+            ...state[action.message.groupId].messages,
+            action.message
+          ]
+        }
+      };
     case message.LIST_SUCCESS:
-      console.log(state, 'reducer', action);
       return {
         ...state,
         [action.groupId]: {

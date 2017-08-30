@@ -32,7 +32,6 @@ export const listGroups = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
         const data = error.response ? error.response.data : error;
         dispatch({
           type: ERROR_OCCURRED,

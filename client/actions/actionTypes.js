@@ -1,5 +1,7 @@
 export const user = {
   AUTH_SUCCESS: 'AUTHENTICATION_SUCCESS',
+  VERIFY_SUCCESS: 'VERIFY_USER_SUCCESS',
+  RESET_SUCCESS: 'RESET_PASSWORD_SUCCESS'
 };
 
 export const group = {
@@ -10,6 +12,7 @@ export const group = {
 export const member = {
   ADD_SUCCESS: 'ADD_MEMBER_SUCCESS',
   LIST_SUCCESS: 'LIST_MEMBERS_SUCCESS',
+  SEARCH_SUCCESS: 'SEARCH_USERS_SUCCESS'
 };
 
 export const message = {
