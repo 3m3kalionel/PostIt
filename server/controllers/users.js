@@ -112,16 +112,25 @@ module.exports = {
   resetPassword(req, res) {
     User.findOne({
       where: {
-        verificationCode: req.body.verificationCode
+        verificationCode: req.body.verificationCode,
       }
     }).then((user) => {
-      // hash password and save it in the variable newPassword
-      user.password = req.body.newPassword;
-      user.save();
-      res.json({
-        success: true,
-        message: 'password reset'
-      });
-    });
-  }
+      if (user === null) {
+        return res.json({message: 'invalid verification token'});
+      } else {
+        const password = bcrypt.hashSync(req.body.newPassword);
+          user.update({
+            password
+          }).then({
+            // res.json({
+            //   success: true,
+            //   message: 'password reset'
+            })
+          }
+        }).catch(error => res.status(500).json({
+          success: true,
+          message: 'internal server error'
+        }))
+      }
+      
 };

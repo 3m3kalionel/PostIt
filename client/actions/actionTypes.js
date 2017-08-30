@@ -1,5 +1,7 @@
 export const user = {
   AUTH_SUCCESS: 'AUTHENTICATION_SUCCESS',
+  VERIFY_SUCCESS: 'VERIFY_USER_SUCCESS',
+  RESET_SUCCESS: 'RESET_PASSWORD_SUCCESS'
 };
 
 export const group = {

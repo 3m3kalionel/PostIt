@@ -18,11 +18,12 @@ const tp = nodemailer.createTransport({
 
 function mailVerificationCode(username, userEmail, verificationCode) {
   const url = process.env.URL;
+  // const url = `http://${req.headers.host}/api/user/reset`;
   const message = {
     to: userEmail,
     subject: 'PostIt-Alert',
     html: `<b>Hello,</b> ${username}.<p>Here's the verification code to reset your password: <strong>${verificationCode}</strong></p>
-        <p>Click this <a href="${url}"> link</a> to redirect and update your password</p>`
+        <p>Click this <a href=${url}> link</a> to redirect and update your password</p>`
   };
 
   console.log('Sending Mail'); // eslint-disable-line

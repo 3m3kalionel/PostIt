@@ -19,16 +19,16 @@ class SignInForm extends Component {
 
   handleInputChange(event) {
     this.setState({
-      [event.target.id] : event.target.value,
-    })
+      [event.target.id]: event.target.value,
+    });
   }
 
   onSubmit(event) {
     event.preventDefault();
     this.props.signIn(this.state)
-    .then(() => {
-      browserHistory.push('/dashboard')
-    });
+      .then(() => {
+        browserHistory.push('/dashboard')
+      });
   }
 
   render() {
@@ -43,7 +43,7 @@ class SignInForm extends Component {
           <input onChange={this.handleInputChange} id="password" type="password" className="validate" required/>
           <label htmlFor="password">Password</label>
         </div>
-        <div>
+        <div onClick={() => this.props.forgotPassword()}>
           <a className="waves-effect waves-light" id="forgot-password">Forgot Password?</a>
         </div>
         <div id="button-div">
@@ -60,6 +60,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   signIn: userData => dispatch(signIn(userData))
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

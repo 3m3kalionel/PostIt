@@ -42,3 +42,66 @@ export const signIn = userData => (
   )
 );
 
+export const resetPassword = resetDetails => (
+  dispatch => (
+    axios.post('/api/user/reset', resetDetails)
+      .then(({ data }) => {
+        if (data.message === 'invalid verification token') {
+          dispatch({
+            type: ERROR_OCCURRED,
+            error: data.message
+          });
+        } else {
+          dispatch({
+            type: user.RESET_SUCCESS,
+            response: data.success
+          });
+        }
+        return data.message;
+      })
+      .catch(({ response: { data } }) => {
+        dispatch({
+          type: ERROR_OCCURRED,
+          error: data
+        });
+      })
+  )
+);
+
+export const verifyUser = userEmail => (
+  dispatch => (
+    axios.post('/api/user/verify', userEmail)
+      .then(({ data }) => {
+        dispatch({
+          type: user.VERIFY_SUCCESS,
+          response: data.success
+        });
+      })
+      .catch(({ response: { data } }) => {
+        dispatch({
+          type: ERROR_OCCURRED,
+          error: data
+        });
+      })
+  )
+);
+
+export const listMembers = groupId => (
+  dispatch => (
+    axios.get(`/api/group/${groupId}/users`)
+      .then(({ data }) => {
+        dispatch({
+          type: member.LIST_SUCCESS,
+          list: data,
+          groupId
+        });
+      })
+      .catch(({ response: { data } }) => {
+        dispatch({
+          type: ERROR_OCCURRED,
+          error: data
+        });
+      })
+  )
+);
+
