@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
+import path from 'path'
+
 import authControllers from '../controllers';
 import authenticate from '../middleware/authenticate';
 import validateGroup from '../middleware/validateGroup';
 import validateUser from '../middleware/validateUser';
 import validateMessage from '../middleware/validateMessage';
-
-import path from 'path';
 
 const publicPath = path.resolve(__dirname, '../../public');
 const usersController = authControllers.users;
@@ -50,9 +50,6 @@ module.exports = (app) => {
 
   // An API route that verifies a registered user that has forgotten his password
   app.post('/api/user/verify', usersController.verifyUser);
-
-  // An API route that reset's a registered user's password
-  app.post('/api/user/reset', usersController.resetPassword);
 
   // Root route
   app.get('*', (req, res) => res.sendFile(path.join(publicPath, 'index.html')));

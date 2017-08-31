@@ -155,7 +155,7 @@ class ChatArea extends Component {
   /**
    * 
    * @method renderUserModal
-   * @returns {Component} a modal component
+   * @returns {Object} a modal component
    * @memberof ChatArea
    */
   renderUserModal() {
@@ -165,7 +165,6 @@ class ChatArea extends Component {
   }
 
   /**
-   * 
    * @method renderCreateGroupModal
    * @returns {Component} a modal comoponent
    * @memberof ChatArea
@@ -177,8 +176,7 @@ class ChatArea extends Component {
   }
 
   /**
-   * 
-   * @returns {Object} a JSX object
+   * @returns {Object} component
    * @memberof ChatArea
   */
   render() {
