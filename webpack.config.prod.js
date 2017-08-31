@@ -1,11 +1,11 @@
-import path from 'path';
-import webpack from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
 
 const PUBLIC_PATH = path.join(__dirname, 'public');
 const SRC_DIRECTORY = path.join(__dirname, 'client');
 
 
-export default {
+module.exports = {
   devtool: 'source-map',
   entry: [
     path.join(SRC_DIRECTORY, 'index.jsx'),
