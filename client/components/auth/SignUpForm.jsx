@@ -134,9 +134,8 @@ const mapDispatchToProps = dispatch => ({
   signUp: userData => dispatch(signUp(userData))
 });
 
-SignInForm.propTypes = {
-  signIn: Proptypes.func.isRequired,
-  forgotPassword: Proptypes.func.isRequired
+SignUpForm.propTypes = {
+  signUp: Proptypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
