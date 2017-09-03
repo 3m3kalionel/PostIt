@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import Header from './common/Header.jsx';
-import LandingPage from './auth/LandingPage';
-
-import Dashboard from './dashboard/Dashboard.jsx';
+import Header from './common/Header';
 import DashboardNavbar from './dashboard/DashboardNavbar';
 
 
@@ -19,7 +16,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="postit-app">
         {this.renderHeader()}
         {this.props.children}
       </div>

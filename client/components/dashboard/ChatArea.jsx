@@ -143,7 +143,7 @@ class ChatArea extends Component {
       </div>
     );
     return (
-      <div className="col m8" id="chat-input">
+      <div id="chat-input">
         <MessageList groupId={this.props.groupId} />
         <ChatInput onSubmit={this.props.sendMessage} />
         <PriorityButtons />
@@ -181,7 +181,7 @@ class ChatArea extends Component {
   */
   render() {
     return (
-      <div>
+      <div className="chat-container">
         {this.renderChatArea()}
         {this.renderUserModal()}
         {this.renderGroupModal()}
@@ -190,8 +190,12 @@ class ChatArea extends Component {
   }
 }
 
+ChatArea.defaultProps = {
+  groupId: ''
+};
+
 ChatArea.propTypes = {
-  groupId: Proptypes.string.isRequired,
+  groupId: Proptypes.string,
   sendMessage: Proptypes.func.isRequired,
   defaultPriority: Proptypes.string.isRequired,
   setPriority: Proptypes.func.isRequired

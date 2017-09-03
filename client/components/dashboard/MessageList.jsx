@@ -7,64 +7,58 @@ import { listMessages } from '../../actions/messageActions';
 import { listMembers } from '../../actions/memberActions';
 
 /**
- * 
+  * React component that displays the messages
  * @class MessageList
  * @extends {Component}
  */
 class MessageList extends Component {
   /**
-   * 
-   * @param {any} nextProps 
+   * @param{object} nextProps
    * @memberof MessageList
+   * @returns {void}
    */
   componentWillReceiveProps(nextProps) {
-    if (this.props.groupId !== nextProps.groupId){
+    if (this.props.groupId !== nextProps.groupId) {
       this.props.getMessages(nextProps.groupId);
       this.props.getMembers(nextProps.groupId);
     }
   }
 
   /**
-   * 
-   * @returns {Object} a JSX Object
+   * @returns {Object} component
    * @memberof MessageList
    */
   render() {
     const { messages } = this.props.group;
     let messageComponent;
     if (Array.isArray(messages) && messages.length > 0) {
-      messageComponent = messages.map((message) => {
-        return (
-          <div className="card blue-grey darken-1" key={message.id}>
+      messageComponent = messages.map(message => (
+        <li key={message.id}>
+          <div className="card blue-grey darken-1">
             <div className="card-content">
               <p>{message.content}</p>
             </div>
           </div>
-        );
-      });
+        </li>
+      ));
     } else {
       // messageComponent = <div>
       //   <p>No message to display</p>
       // </div>
       return (
         <div id="no-messages">
-          <p>There has been no activity in this group. Be the first to post a message.</p>
+          <p>No group messages to display.
+             Select a group or click the<q>plus</q> button to start.</p>
         </div>
       );
     }
 
     return (
-      <div className="messages message-list-container">
-        <ul id="message-list">
-          <li>
-            <div className="row">
-              <div className="col l12">
-                {messageComponent}
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+      // <div className="messages message-list-container">
+      <ul id="message-list">
+        {messageComponent}
+      </ul>
+      // </div>
     );
   }
 }
@@ -86,11 +80,20 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+MessageList.defaultProps = {
+  groupId: '',
+  group: {}
+};
+
 MessageList.propTypes = {
-  groupId: Proptypes.string.isRequired,
+  groupId: Proptypes.string,
   getMembers: Proptypes.func.isRequired,
   getMessages: Proptypes.func.isRequired,
-  group: Proptypes.object.isRequired
+  group: Proptypes.oneOfType([
+    Proptypes.object,
+    Proptypes.array,
+    Proptypes.string
+  ])
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

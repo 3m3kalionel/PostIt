@@ -34,16 +34,13 @@ function sendMail(messageBody, user) {
     html: `<b>Hello,</b> ${user.username}. <p>Here's a new notification from PostIt... </p>
           <p>message: <b>${messageBody.content}</b></p><p>from: <b>${messageBody.content}</b></p>`,
 
-    // watchHtml: `<b>Hello</b> ${user.username}`,
-
     attachments: []
   };
 
   console.log('Sending Mail'); // eslint-disable-line
   return tp.sendMail(message, (error, info) => {
     if (error) {
-    console.log('Error occurred'); // eslint-disable-line
-    console.log(error.message); // eslint-disable-line
+    console.log('Error occurred', error.message); // eslint-disable-line
       return;
     }
   console.log('Message sent successfully!'); // eslint-disable-line

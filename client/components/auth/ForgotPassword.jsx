@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { verifyUser } from '../../actions/userActions';
 
@@ -57,7 +57,7 @@ class ForgotPassword extends Component {
   */
   render() {
     return (
-      <div className="reset-container0">
+      <div className="page-wrapper">
         <form onSubmit={this.onSubmit}>
           <h4>forgot password</h4>
           <div className="input-field col-s6">
@@ -89,8 +89,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 ForgotPassword.propTypes = {
-  verifyUser: Proptypes.func.isRequired,
-  revertForgotPassword: Proptypes.func.isRequired
+  verifyUser: PropTypes.func.isRequired,
+  revertForgotPassword: PropTypes.func.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(ForgotPassword);
