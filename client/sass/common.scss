@@ -8,7 +8,6 @@ html,
 body,
 #app,
 .postit-app,
-.page-wrapper,
 #two-section-page,
 .chat-container,
 #chat-input {
@@ -173,15 +172,15 @@ div a.btn {
 
 div.user-list {
   li:nth-child(even) {
-    background-color: rgb(245,245,245);
+    background-color: #ffffff;
     padding: 5px;
   }
 }
 
 div.user-list {
   li:nth-child(odd) {
-    background-color: #ffffff;
-    padding: 5px;
+    background-color: rgb(245,245,245);
+    padding: 8px;
   }
 }
 
@@ -219,6 +218,19 @@ a#forgot-password {
 a#forgot-password:hover {
     color: #2bbbad;
     border-bottom: 1px #2bbbad dotted;
+}
+
+button.btn.waves-effect.waves-light.right {
+    height: 30px;
+    margin-top: -5px;
+    background: none;
+    box-shadow: none;
+    color:#13534D;
+    padding: none;
+}
+
+button.btn.waves-effect.waves-light.right:hover {
+    color: #26A69A;
 }
 
 .reset-password-div {

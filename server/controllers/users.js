@@ -177,7 +177,6 @@ module.exports = {
           message: 'Invalid verification token'
         });
       }
-      console.log('A PASSWORD JUST ARRIVED', req.body);
       const password = bcrypt.hashSync(req.body.newPassword, user.salt);
       user.update({ password });
     }).catch(error => res.status(500).json({

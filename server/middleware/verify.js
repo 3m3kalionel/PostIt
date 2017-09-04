@@ -18,7 +18,6 @@ const tp = nodemailer.createTransport({
 
 function mailVerificationCode(username, userEmail, token) {
   const url = `${process.env.URL}/${token}`;
-  // const url = `http://${req.headers.host}/api/user/reset`;
   const message = {
     to: userEmail,
     subject: 'PostIt-Alert',

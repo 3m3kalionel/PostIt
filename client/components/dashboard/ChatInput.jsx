@@ -63,8 +63,4 @@ class ChatInput extends Component {
   }
 }
 
-// ChatInput.propTypes = {
-//   onSubmit : Proptype.isRequired
-// };
-
 export default ChatInput;

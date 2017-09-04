@@ -57,7 +57,7 @@ class ForgotPassword extends Component {
   */
   render() {
     return (
-      <div className="page-wrapper">
+      <div className="reset-container0">
         <form onSubmit={this.onSubmit}>
           <h4>forgot password</h4>
           <div className="input-field col-s6">
@@ -75,8 +75,11 @@ class ForgotPassword extends Component {
           <div id="button-div">
             <button className="btn" type="submit">Submit</button>
           </div>
-          <div id="button-div" onClick={() => this.props.revertForgotPassword()}>
-            <button className="btn" type="submit">cancel</button>
+          <div
+            id="button-div"
+            onClick={() => this.props.revertForgotPassword()}
+          >
+            <button className="btn">cancel</button>
           </div>
         </form>
       </div>

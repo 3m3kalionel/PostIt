@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
     heartbeat: 2 * 1000
   }));
 }
-app.use(express.static('public')); // set up our public path for our app
+app.use(express.static('public'));
 
 app.use(passport.session());
 routes(app);

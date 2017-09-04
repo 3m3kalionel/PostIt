@@ -96,7 +96,8 @@ class ResetPassword extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  resetPassword: (token, resetDetails) => dispatch(resetPassword(token, resetDetails))
+  resetPassword: (token, resetDetails) =>
+    dispatch(resetPassword(token, resetDetails))
 });
 
 ResetPassword.propTypes = {

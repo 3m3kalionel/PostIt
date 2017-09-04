@@ -42,9 +42,6 @@ class MessageList extends Component {
         </li>
       ));
     } else {
-      // messageComponent = <div>
-      //   <p>No message to display</p>
-      // </div>
       return (
         <div id="no-messages">
           <p>No group messages to display.
@@ -54,11 +51,9 @@ class MessageList extends Component {
     }
 
     return (
-      // <div className="messages message-list-container">
       <ul id="message-list">
         {messageComponent}
       </ul>
-      // </div>
     );
   }
 }

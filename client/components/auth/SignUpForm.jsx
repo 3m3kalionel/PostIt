@@ -129,7 +129,7 @@ class SignUpForm extends Component {
           <label htmlFor="phone">Phone Number</label>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Submit</button>
+          <button className="btn" type="submit">Sign up</button>
           <GoogleLogin
             clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
             buttonText="Login"

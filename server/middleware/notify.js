@@ -14,7 +14,7 @@ const tp = nodemailer.createTransport({
 }, {
   from: 'Post-IT <no-reply@pangalink.net>',
   headers: {
-    'X-Laziness-level': 1000 // just an example header, no need to use this
+    'X-Laziness-level': 1000
   }
 });
 

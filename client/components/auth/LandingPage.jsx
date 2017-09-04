@@ -83,7 +83,9 @@ class LandingPage extends Component {
         <div className="card main-card">
           <div className="card-tabs">
             <ul className="tabs tabs-fixed-width">
-              <li className="tab"><a href="#signup-form" className="active">Sign Up</a></li>
+              <li
+                className="tab"
+              ><a href="#signup-form" className="active">Sign Up</a></li>
               <li className="tab"><a href="#signin-form">Sign In</a></li>
             </ul>
           </div>
@@ -92,7 +94,9 @@ class LandingPage extends Component {
               <SignUpForm />
             </div>
             <div id="signin-form">
-              <SignInForm forgotPassword={this.forgotPassword} />
+              <SignInForm
+                forgotPassword={this.forgotPassword}
+              />
             </div>
           </div>
         </div>

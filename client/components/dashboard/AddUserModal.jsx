@@ -23,6 +23,24 @@ class AddUserModal extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  /**
+   * @param {object} nextProps
+   * @memberof AddUserModel
+   * @return {undefined}
+   */
+  componentWillReceiveProps(nextProps) {
+    const { members: memberList } = this.props.group;
+    const { members: newMemberList } = nextProps.group;
+
+    if (newMemberList.length > memberList.length) {
+      this.setState({
+        query: ''
+      }, () => {
+        this.props.search(this.state.query);
+      });
+    }
+  }
+
   handleInputChange(event) {
     event.preventDefault();
     this.setState({
@@ -46,7 +64,7 @@ class AddUserModal extends Component {
             <li className="username">
               {result.username}
               <button
-                className="btn cyan waves-effect waves-light right"
+                className="btn waves-effect waves-light right"
                 name={result.id}
                 onClick={this.onClick}
               >Add</button>
@@ -70,7 +88,8 @@ class AddUserModal extends Component {
                     className="validate"
                     name="query"
                     value={this.state.query}
-                    onChange={this.handleInputChange} />
+                    onChange={this.handleInputChange}
+                  />
                   <label htmlFor="icon_prefix">Username</label>
                 </div>
 

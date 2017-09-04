@@ -96,10 +96,13 @@ class SignInForm extends Component {
         <div
           onClick={() => this.props.forgotPassword()}
         >
-          <a className="waves-effect waves-light" id="forgot-password">Forgot Password?</a>
+          <a
+            className="waves-effect waves-light"
+            id="forgot-password"
+          >Forgot Password?</a>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Submit</button>
+          <button className="btn" type="submit">Login</button>
           <GoogleLogin
             clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
             buttonText="Login"
