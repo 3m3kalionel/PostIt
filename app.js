@@ -7,7 +7,6 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackConfig from './webpack.config.dev';
 import routes from './server/routes';
-// import models from './server/models';
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;

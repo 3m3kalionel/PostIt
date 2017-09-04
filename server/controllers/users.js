@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import shortid from 'shortid';
 import dotenv from 'dotenv';
 
 import model from '../models';
@@ -17,6 +16,12 @@ module.exports = {
     const phone = req.body.phone;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
+    if (!req.body.password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please Input your password'
+      });
+    }
 
     User.sync({ force: false }).then(() => {
       User
@@ -41,6 +46,7 @@ module.exports = {
               id: newUser.id,
               username: newUser.username,
               email: newUser.email,
+              phone: newUser.phone,
               updatedAt: newUser.updatedAt,
               createdAt: newUser.createdAt
             },
@@ -48,13 +54,61 @@ module.exports = {
           });
         })
         .catch((error) => {
-          console.log(req.body);
-          console.log("Error===___=_++_++>>", error);
           res.status(400).json({
             Error: error.errors[0].message
           });
         });
     });
+  },
+
+  googleSignup(req, res) {
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+      .then((user) => {
+        if (!user) {
+          User.create(user)
+            .then((googleUser) => {
+              const token = jwt.sign({
+                googleUser
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: '2 days'
+              });
+              return res.status(201).json({
+                user: {
+                  id: googleUser.id,
+                  username: googleUser.userame,
+                  email: googleUser.email
+                },
+                token
+              });
+            })
+            .catch(error => res.status(500).json({
+              success: false,
+              message: 'Internal server error'
+            }));
+        } else {
+          const token = jwt.sign({
+            user
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '2 days'
+          });
+          return res.status(200).json({
+            user: {
+              id: user.id,
+              username: user.username,
+              email: user.email
+            },
+            token
+          });
+        }
+      });
   },
 
   listAll(req, res) {
@@ -68,7 +122,8 @@ module.exports = {
           username: {
             $iLike: `%${query}%`
           }
-        }
+        },
+        attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
       })
         .then((result) => {
           res.status(200).json(result);
@@ -81,25 +136,22 @@ module.exports = {
         });
     }
   },
+
   verifyUser(req, res) {
-    const code = shortid.generate();
     User.findOne({
       where: {
         email: req.body.email
       }
     }).then((user) => {
-      user.verificationCode = code;
-      user.save().then((newUser) => {
-        mailVerificationCode(newUser.username, newUser.email, newUser.verificationCode);
-        res.status(200).json({
-          success: true,
-          message: 'verification email sent'
-        });
-      }).catch((error) => {
-        res.status(500).json({
-          success: false,
-          message: 'server error'
-        });
+      const token = jwt.sign({
+        email: user.email
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' });
+      mailVerificationCode(user.username, user.email, token);
+      res.status(200).json({
+        success: true,
+        message: 'verification email sent'
       });
     }).catch((error) => {
       res.status(400).json({
@@ -109,28 +161,28 @@ module.exports = {
     });
   },
 
+
   resetPassword(req, res) {
+    const encodedEmail = req.params.token;
+    const decode = jwt.decode(encodedEmail);
+    const email = decode.email;
     User.findOne({
       where: {
-        verificationCode: req.body.verificationCode,
+        email
       }
     }).then((user) => {
-      if (user === null) {
-        return res.json({message: 'invalid verification token'});
-      } else {
-        const password = bcrypt.hashSync(req.body.newPassword);
-          user.update({
-            password
-          }).then({
-            // res.json({
-            //   success: true,
-            //   message: 'password reset'
-            })
-          }
-        }).catch(error => res.status(500).json({
-          success: true,
-          message: 'internal server error'
-        }))
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid verification token'
+        });
       }
-      
+      console.log('A PASSWORD JUST ARRIVED', req.body);
+      const password = bcrypt.hashSync(req.body.newPassword, user.salt);
+      user.update({ password });
+    }).catch(error => res.status(500).json({
+      success: false,
+      message: error.message
+    }));
+  }
 };

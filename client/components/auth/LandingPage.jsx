@@ -34,6 +34,16 @@ class LandingPage extends Component {
   }
 
   /**
+   * makes jquery function available on component mount
+   * @method componentDidMount
+   * @memberof LandingPage
+   * @return {void}
+   */
+  componentDidUpdate() {
+    $('ul.tabs').tabs();
+  }
+
+  /**
    * changes the state of the component
     * @method revertForgotPassword
     * @memberof LandingPage

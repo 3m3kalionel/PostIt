@@ -5,7 +5,6 @@ import groupReducer from './groupReducer';
 import memberReducer from './memberReducer';
 
 const rootReducer = combineReducers({
-  // list reducers here
   user: userReducer,
   errors: errorReducer,
   groups: groupReducer,

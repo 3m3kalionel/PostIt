@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
-// import retrieveToken from './utils/manageToken.js'
 import LandingPage from './components/auth/LandingPage';
-import Dashboard from './components/dashboard/Dashboard';
+import TwoSectionDiv from './components/dashboard/TwoSectionDiv';
 import ResetPassword from './components/auth/ResetPassword';
 
 const onEnter = (next, replace, cb) => {
@@ -23,8 +22,8 @@ const logout = (next, replace) => {
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} onEnter={onEnter} />
-    <Route path="dashboard" component={Dashboard} onEnter={onEnter} />
+    <Route path="dashboard" component={TwoSectionDiv} onEnter={onEnter} />
     <Route path="logout" onEnter={logout} />
-    <Route path="user/reset" component={ResetPassword} />
+    <Route path="user/reset/:token" component={ResetPassword} />
   </Route>
 );

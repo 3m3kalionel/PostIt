@@ -30,10 +30,6 @@ const groupReducer = (state = {}, action = {}) => {
         }
       };
     case message.CREATE_SUCCESS:
-      // return { ...state,
-      //   [action.message.groupId]: {
-      //     messages: [...state[action.message.groupId].messages, action.message]
-      //   } };
       return {
         ...state,
         [action.message.groupId]: {

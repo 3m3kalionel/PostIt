@@ -2,7 +2,6 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import bcrypt from 'bcrypt';
 import models from '../models';
-// import helpers from '../helpers';
 
 const LocalStrategy = passportLocal.Strategy;
 const User = models.User;

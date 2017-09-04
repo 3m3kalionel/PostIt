@@ -51,8 +51,8 @@ class ChatInput extends Component {
     const { onSubmit } = this.props;
     const { message } = this.state;
     return (
-      <div>
-        <div id="message-input" className="col l12">
+      <div className="input-container">
+        <div id="message-input">
           <textarea type="text" onChange={this.handleInputChange} value={message} />
         </div>
         <button className="waves-effect waves-light btn" onClick={() => onSubmit(message, this.clearMessage)}>

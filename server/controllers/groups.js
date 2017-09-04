@@ -41,25 +41,19 @@ module.exports = {
       .then((group) => {
         return group
           .getUsers({
-            where: { }
+            attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
           }).then(members => res.status(200).json(members));
       }).catch(error => res.status(404).send(error));
   },
 
   listGroups(req, res) {
     const userId = req.decoded.id;
-    console.log(userId);
     User.findOne({ where: { id: userId } })
       .then((user) => {
         user
           .getGroups({
             where: { }
           }).then((groups) => {
-            // if (groups.length === 0) {
-            //   return res.status(200).json({
-            //     message: 'User does not belong to any group'
-            //   });
-            // }
             return res.status(200).json(groups);
           })
           .catch(error => res.status(500).send(error));

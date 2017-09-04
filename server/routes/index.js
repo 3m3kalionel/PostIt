@@ -51,6 +51,8 @@ module.exports = (app) => {
   // An API route that verifies a registered user that has forgotten his password
   app.post('/api/user/verify', usersController.verifyUser);
 
+  app.post('/api/user/reset/:token', usersController.resetPassword);
+
   // Root route
   app.get('*', (req, res) => res.sendFile(path.join(publicPath, 'index.html')));
 };

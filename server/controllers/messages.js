@@ -5,7 +5,6 @@ const Message = models.Message;
 
 module.exports = {
   create(req, res) {
-    console.log('hjhjhjhjhjhj++++++=====>>>>', req.body);
     Message
       .create({
         content: req.body.content,

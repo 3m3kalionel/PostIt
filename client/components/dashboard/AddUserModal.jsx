@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addMember, searchUsers } from '../../actions/memberActions.js';
+import { addMember, searchUsers } from '../../actions/memberActions';
 
+/**
+ * React component that adds a registered user to a groups
+ * @class ForgotPassword
+ * @extends {Component}
+ */
 class AddUserModal extends Component {
+  /**
+   * Creates an instance of ForgotPassword
+   * @param {Object} props 
+   * @memberof ForgotPassword
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -12,14 +22,6 @@ class AddUserModal extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onClick = this.onClick.bind(this);
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (Array.isArray(nextProps.group.members) && nextProps.group.members.length > this.props.group.members.length) {
-  //     Materialize.toast('User added successfully');
-  //   } else {
-  //     Materialize.toast('Failed to add user');
-  //   }
-  // }
 
   handleInputChange(event) {
     event.preventDefault();
@@ -51,7 +53,7 @@ class AddUserModal extends Component {
             </li>
           </ul>
         </div>
-      )
+      );
     });
 
     return (
@@ -73,21 +75,17 @@ class AddUserModal extends Component {
                 </div>
 
                 {searchComponent}
-
-                {/*<div className="row">
-                  <div className="input-field col s12">
-                    <button className="btn cyan waves-effect waves-light right">Add</button>
-                  </div>
-                </div>*/}
               </div>
             </form>
-
-            
 
           </div>
         </div>
         <div className="modal-footer">
-          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+          <a
+            href="#!"
+            className="modal-action modal-close waves-effect waves-green btn-flat"
+          >Cancel
+          </a>
         </div>
       </div>
     );
@@ -98,14 +96,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     group: state.groups[ownProps.groupId],
     searchResults: state.members.result
-  }
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addMember: (groupId, userId) => dispatch(addMember(groupId, userId)),
     search: (username) => dispatch(searchUsers(username))
-  }
+  };
 }
 
 AddUserModal.defaultProps = {
@@ -113,6 +111,6 @@ AddUserModal.defaultProps = {
     members: []
   },
   searchResults: []
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

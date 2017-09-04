@@ -42,11 +42,11 @@ export const signIn = userData => (
   )
 );
 
-export const resetPassword = resetDetails => (
-  dispatch => (
-    axios.post('/api/user/reset', resetDetails)
+export const resetPassword = (token, resetDetails) => {
+  return dispatch => (
+    axios.post(`/api/user/reset/${token}`, resetDetails)
       .then(({ data }) => {
-        if (data.message === 'invalid verification token') {
+        if (data.message === 'Invalid verification token') {
           dispatch({
             type: ERROR_OCCURRED,
             error: data.message
@@ -65,8 +65,8 @@ export const resetPassword = resetDetails => (
           error: data
         });
       })
-  )
-);
+  );
+};
 
 export const verifyUser = userEmail => (
   dispatch => (

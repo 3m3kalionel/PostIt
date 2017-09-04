@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import { resetPassword } from '../../actions/userActions';
 
@@ -19,9 +20,8 @@ class ResetPassword extends Component {
     super(props);
 
     this.state = {
-      verificationcode: '',
-      newpassword: '',
-      retypenewpassword: ''
+      newPassword: '',
+      retypeNewPassword: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,14 +37,8 @@ class ResetPassword extends Component {
   */
   onSubmit(event) {
     event.preventDefault();
-    const resetDetails = {
-      verificationcode: this.state.verificationcode,
-      newpassword: this.state.newpassword
-    };
-    this.props.resetPassword(resetDetails)
-      .then((response) => {
-        console.log(response);
-      });
+    const token = this.props.params.token;
+    this.props.resetPassword(token, this.state);
   }
 
   /**
@@ -72,21 +66,11 @@ class ResetPassword extends Component {
           <h4>Reset password</h4>
           <div className="input-field col-s6">
             <input
-              id="verificationcode"
-              type="text"
-              placeholder="enter verification code"
-              name="verificationcode"
-              onChange={this.handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="input-field col-s6">
-            <input
               id="newpassword"
               type="password"
               placeholder="enter new password"
-              name="newpassword"
+              name="newPassword"
+              onChange={this.handleInputChange}
               required
             />
           </div>
@@ -96,7 +80,8 @@ class ResetPassword extends Component {
               id="retypenewpassword"
               type="password"
               placeholder="retype your password"
-              name="retypenewpassword"
+              name="retypeNewPassword"
+              onChange={this.handleInputChange}
               required
             />
           </div>
@@ -111,7 +96,7 @@ class ResetPassword extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  resetPassword: resetDetails => dispatch(resetPassword(resetDetails))
+  resetPassword: (token, resetDetails) => dispatch(resetPassword(token, resetDetails))
 });
 
 ResetPassword.propTypes = {

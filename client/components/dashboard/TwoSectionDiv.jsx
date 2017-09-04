@@ -5,6 +5,8 @@ import Proptypes from 'prop-types';
 
 import GroupsDiv from './GroupsDiv';
 import ChatArea from './ChatArea';
+// import DashboardNavbar from './DashboardNavbar';
+import TwoSectionDiv from './TwoSectionDiv';
 import { createMessage } from '../../actions/messageActions';
 import { listGroups } from '../../actions/groupActions';
 
@@ -36,6 +38,9 @@ class TwoColumnDiv extends Component {
    */
   componentDidMount() {
     this.props.listGroups();
+    // componentDidMount() {
+    $('.modal').modal();
+  // }
   }
 
   /**
@@ -86,7 +91,7 @@ class TwoColumnDiv extends Component {
    */
   render() {
     return (
-      <div className="row" id="two-section-page">
+      <div id="two-section-page">
         <GroupsDiv selectGroup={this.selectGroup} groups={this.props.groups} />
         <ChatArea groupId={this.state.selectedGroup} sendMessage={this.sendMessage} setPriority={this.setPriority} defaultPriority={this.state.priority} />
       </div>

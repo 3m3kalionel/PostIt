@@ -1,15 +1,19 @@
 $base-color: rgb(38, 166, 154);
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
-// body,
-.row,
+body,
+#app,
+.postit-app,
+.page-wrapper,
+#two-section-page,
+.chat-container,
 #chat-input {
   height: 100%;
-  width : 100%;
+  min-height: 500px;
 }
 
 nav {
@@ -27,34 +31,28 @@ li a {
 
 body {
   background-color: #F3F3F3;
-  // background-image: url("../images/chat_background.png");
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
 }
-    
-#chat-input {
-  bottom: 0px;
+
+.postit-app {
   display: flex;
   flex-direction: column;
-  margin: 15px;
-  padding-left: 300px;
+}
+
+#chat-input {
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (max-width : 992px) {
-  #chat-input {
+  #two-section-page {
     padding-left: 0;
   }
 }
 
 #two-section-page {
-  align-items: bottom;
-  display: flex;
-  flex-direction: column;
+  padding-left: 300px;
   flex-grow: 1;
-  margin-bottom: 0;
-  width: 90%;
+  width: 100%;
 }
 
 textarea:focus {
@@ -63,8 +61,11 @@ textarea:focus {
 }
 
 #slide-out {
-    margin-top: 64px;
-    /*z-index: 0 !important;*/
+    margin-top: 56px;
+
+    @media only screen and (min-width: 601px) {
+        margin-top: 64px;
+    }
 }
 
 .modal {
@@ -86,17 +87,25 @@ nav li {
     line-height: 10px;
 }
 
-nav {
-    z-index: 5999;
+#no-messages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
+#no-messages,
 #message-list {
+  height: 100%;
   overflow: scroll;
 }
 
 .main-card {
   width: 40%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 .clearfix:after {
@@ -116,7 +125,7 @@ nav {
 
 .page-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-grow: 1;
   margin-top: 2rem;  
 }
@@ -129,25 +138,20 @@ div#button-div {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 20px;
 }
 
-/*Dashboard*/
-.messages {
-  // position: absolute;
-  top: 3.5rem;
+.chat-container {
+  padding: 0 10px;
 }
 
-#dashboard-navbar{
-  position: fixed;
-}
+.input-container {
+  display: flex;
 
-.message-list-container {
-  margin-top: 64px;
-}
-
-#message-input {
-  // position: fixed;
-  background: #F5F1EE
+  #message-input {
+    background: #F5F1EE;
+    width: 100%;
+  }
 }
 
 div.card-content {
@@ -181,17 +185,15 @@ div.user-list {
   }
 }
 
- #groups {
-   li:nth-child(even) {
-     background-color: rgb(245,245,245);
-   }
- }
+#slide-out {
+  li:nth-child(even) {
+    background-color: rgb(245,245,245);
+  }
 
- #groups {
-   li:nth-child(odd) {
-     background-color: #ffffff;
-   }
- }
+  li:nth-child(odd) {
+    background-color: #ffffff;
+  }
+}
 
 ul.member-list li span{
   float: right;
@@ -211,7 +213,7 @@ a#forgot-password {
     border: none;
     box-shadow: none;
     font-size: 13px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 a#forgot-password:hover {
@@ -228,3 +230,15 @@ a#forgot-password:hover {
   margin: 0 auto;
 }
 
+.card-content input[type=text],
+.card-content input[type=number],
+.card-content input[type=email],
+.card-content input[type=password],
+.card-content input[type=tel],
+ {
+  margin-bottom: 3px
+}
+.tabs .tab a:hover, .tabs .tab a.active, .tabs .tab a {
+    background-color: transparent;
+    color: $base-color;
+}
