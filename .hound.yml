@@ -1,6 +1,6 @@
 eslint:
   enabled: true
-  config_file: .eslintrc.rc
+  config_file: .eslintrc
   exclude:
   - 'node_modules/**'
   - 'coverage/**' 
