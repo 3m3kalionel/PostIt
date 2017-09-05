@@ -35,7 +35,8 @@ module.exports = {
         .then((newUser) => {
           const token = jwt.sign({
             username: newUser.username,
-            email: newUser.email
+            email: newUser.email,
+            id: newUser.id
           },
           process.env.JWT_SECRET,
           {

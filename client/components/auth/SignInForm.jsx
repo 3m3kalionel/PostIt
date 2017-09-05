@@ -6,14 +6,6 @@ import GoogleLogin from 'react-google-login';
 
 import { signIn } from '../../actions/userActions';
 
-const responseGoogle = (response) => {
-  console.log('googleResponse', response);
-  const userObject = {
-    username: response.profileObj.name,
-    email: response.profileObj.email
-  };
-};
-
 /**
  * React component that displays the sign in form
  * @class SignInForm
@@ -103,12 +95,6 @@ class SignInForm extends Component {
         </div>
         <div id="button-div">
           <button className="btn" type="submit">Login</button>
-          <GoogleLogin
-            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-          />
         </div>
       </form>
     );
