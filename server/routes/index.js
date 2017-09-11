@@ -20,9 +20,14 @@ module.exports = (app) => {
     message: 'Welcome to the Postit API!',
   }));
 
+  // An API route that allows users to log into to the application
   app.post('/api/user/signin', validateUser.signin, loginController.login);
 
+  // An API route that allows users to sign up and create accounts
   app.post('/api/user/signup', validateUser.signup, validateUser.signin, usersController.create);
+
+  // An API route that allows users to sign up / sign in via their gmail accounts
+  app.post('/api/user/google_auth', usersController.googleAuth);
 
   // An API route that allow users create broadcast groups:
   // POST: /api/group

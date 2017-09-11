@@ -14,7 +14,6 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       email: {
@@ -28,7 +27,6 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       salt: {

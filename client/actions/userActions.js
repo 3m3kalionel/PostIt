@@ -42,6 +42,25 @@ export const signIn = userData => (
   )
 );
 
+export const googleAuth = userData => (
+  dispatch => (
+    axios.post('/api/user/google_auth', userData)
+      .then(({ data: { user: newUser, token } }) => {
+        setToken(token);
+        dispatch({
+          type: user.AUTH_SUCCESS,
+          user: newUser
+        });
+      })
+      .catch(({ response: { data } }) => {
+        dispatch({
+          type: ERROR_OCCURRED,
+          error: data
+        });
+      })
+  )
+);
+
 export const resetPassword = (token, resetDetails) => {
   return dispatch => (
     axios.post(`/api/user/reset/${token}`, resetDetails)
