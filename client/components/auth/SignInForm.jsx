@@ -13,8 +13,8 @@ import { signIn } from '../../actions/userActions';
  */
 class SignInForm extends Component {
   /**
-   * Creates an instance of ForgotPassword.
-   * @param {Object} props 
+   * Creates an instance of SignInForm.
+   * @param {object} props 
    * @memberof SigninForm
    */
   constructor(props) {
@@ -32,9 +32,9 @@ class SignInForm extends Component {
   /**
   * triggers an action that signs the user into the app
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof SignInForm
-  * @return {void}
+  * @returns {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -47,9 +47,9 @@ class SignInForm extends Component {
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
-  * @memberof SigninForm
-  * @return {void}
+  * @param {object} event
+  * @memberof SignInForm
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -58,8 +58,8 @@ class SignInForm extends Component {
   }
 
   /**
-   * @returns {Object} component
-   * @memberof SigninForm
+   * @returns {object} component
+   * @memberof SignInForm
   */
   render() {
     return (

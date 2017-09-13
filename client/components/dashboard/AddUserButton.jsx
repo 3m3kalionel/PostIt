@@ -5,7 +5,10 @@ const AddUserButton = () => (
     <li>
       <a
         href="#user-to-group"
-        className="btn-floating rgb(243, 243, 243, 1) modal-trigger"
+        className="btn-floating modal-trigger tooltipped float-button"
+        data-position="left"
+        data-delay="50"
+        data-tooltip="add user to group"
       >
         <i
           className="large material-icons"

@@ -15,7 +15,7 @@ class MessageList extends Component {
   /**
    * @param{object} nextProps
    * @memberof MessageList
-   * @returns {void}
+   * @returns {undefined}
    */
   componentWillReceiveProps(nextProps) {
     if (this.props.groupId !== nextProps.groupId) {
@@ -34,7 +34,7 @@ class MessageList extends Component {
     if (Array.isArray(messages) && messages.length > 0) {
       messageComponent = messages.map(message => (
         <li key={message.id}>
-          <div className="card blue-grey darken-1">
+          <div className="card">
             <div className="card-content">
               <p>{message.content}</p>
             </div>

@@ -43,6 +43,9 @@ module.exports = (app) => {
   app.get('/api/group/:groupid/users', authenticate, validateGroup.validGroup, validateGroup.isGroupMember, groupsController.listMembers);
 
   // An API route that allows a logged in user search for a user
+  // app.get('/api/users', usersController.listAll);
+
+  // An API route that allows a logged in user search for a user
   app.get('/api/users', usersController.listAll);
 
   // An API route that allows a logged in user list all groups that he/she belongs to

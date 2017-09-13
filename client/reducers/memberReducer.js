@@ -7,6 +7,10 @@ const memberReducer = (state = {}, action = {}) => {
         ...state,
         result: action.list
       };
+    case 'CLEAR_SEARCH_LIST':
+      return {
+        result: []
+      };
     default:
       return state;
   }

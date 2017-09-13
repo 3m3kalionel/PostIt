@@ -13,7 +13,7 @@ class CreateGroupModal extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -23,7 +23,7 @@ class CreateGroupModal extends Component {
     });
   }
 
-  onClick(event) {
+  onSubmit(event) {
     event.preventDefault();
     this.props.createGroup(this.state);
   }
@@ -33,7 +33,7 @@ class CreateGroupModal extends Component {
       <div id="new-group" className="modal">
         <div className="modal-content">
           <div className="row">
-            <form className="col s12">
+            <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
                 <div className="input-field col s12">
                   <i className="material-icons prefix">account_circle</i>
@@ -61,7 +61,6 @@ class CreateGroupModal extends Component {
                       className="btn cyan waves-effect waves-light right"
                       type="submit"
                       name="action"
-                      onClick={this.onClick}
                     >Submit
                       <i className="mdi-content-send right" />
                     </button>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactPaginate from 'react-paginate';
 
-import { addMember, searchUsers } from '../../actions/memberActions';
+import { addMember, searchUsers, clearMemberSearchList } from '../../actions/memberActions';
 
 /**
  * React component that adds a registered user to a groups
@@ -17,10 +18,16 @@ class AddUserModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      offset: 0,
+      limit: 3,
+      displayPagination: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+    this.baseState = this.state;
   }
 
   /**
@@ -36,18 +43,9 @@ class AddUserModal extends Component {
       this.setState({
         query: ''
       }, () => {
-        this.props.search(this.state.query);
+        this.props.search(this.state.query, this.state.offset, this.state.limit);
       });
     }
-  }
-
-  handleInputChange(event) {
-    event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value
-    }, () => {
-      this.props.search(this.state.query);
-    });
   }
 
   onClick(event) {
@@ -55,24 +53,51 @@ class AddUserModal extends Component {
     this.props.addMember(this.props.groupId, event.target.name);
   }
 
+  resetForm() {
+    this.setState(this.baseState);
+    this.props.clearSearchList();
+  }
+
+  handleInputChange(event) {
+    event.preventDefault();
+    if (event.target.value.length === 0) {
+      return this.resetForm();
+    }
+    this.setState({
+      [event.target.name]: event.target.value,
+      displayPagination: true
+    }, () => {
+      this.props.search(this.state.query, 0, this.state.limit);
+    });
+  }
+
+  handlePageClick(data) {
+    const selected = data.selected;
+    const offset = this.state.limit * selected;
+    this.setState({ offset }, () => {
+      this.props.search(this.state.query, this.state.offset, this.state.limit);
+    });
+  }
+
   render() {
     const { searchResults } = this.props;
-    const searchComponent = searchResults.map((result, index) => {
-      return (
-        <div className="user-list" key={index}>
-          <ul className="member-list">
-            <li className="username">
-              {result.username}
-              <button
-                className="btn waves-effect waves-light right"
-                name={result.id}
-                onClick={this.onClick}
-              >Add</button>
-            </li>
-          </ul>
-        </div>
-      );
-    });
+    const searchComponent = Object.keys(searchResults).length ?
+      searchResults.rows.map((result, index) =>
+        (
+          <div className="user-list" key={index}>
+            <ul className="member-list">
+              <li className="username">
+                {result.username}
+                <button
+                  className="btn waves-effect waves-light right"
+                  name={result.id}
+                  onClick={this.onClick}
+                >Add</button>
+              </li>
+            </ul>
+          </div>
+        )
+      ) : null;
 
     return (
       <div id="user-to-group" className="modal">
@@ -95,6 +120,23 @@ class AddUserModal extends Component {
 
                 {searchComponent}
               </div>
+              {
+                this.state.displayPagination ?
+                  <ReactPaginate
+                    previousLabel={'<'}
+                    nextLabel={'>'}
+                    breakLabel={<a href="">...</a>}
+                    breakClassName={'break-me'}
+                    pageCount={Math.ceil(searchResults.count / this.state.limit)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                  />
+                  : null
+              }
             </form>
 
           </div>
@@ -102,6 +144,7 @@ class AddUserModal extends Component {
         <div className="modal-footer">
           <a
             href="#!"
+            onClick={this.resetForm}
             className="modal-action modal-close waves-effect waves-green btn-flat"
           >Cancel
           </a>
@@ -121,7 +164,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addMember: (groupId, userId) => dispatch(addMember(groupId, userId)),
-    search: (username) => dispatch(searchUsers(username))
+    search: (username, offset, limit) => dispatch(searchUsers(username, offset, limit)),
+    clearSearchList: () => dispatch(clearMemberSearchList())
   };
 }
 
@@ -129,7 +173,7 @@ AddUserModal.defaultProps = {
   group: {
     members: []
   },
-  searchResults: []
+  searchResults: {}
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

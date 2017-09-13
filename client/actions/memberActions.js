@@ -40,9 +40,28 @@ export const listMembers = groupId => (
   )
 );
 
-export const searchUsers = (username) => {
-  return (dispatch) => {
-    axios.get(`/api/users?q=${username}`)
+// export const searchUsers = (username) => {
+//   return (dispatch) => {
+//     axios.get(`/api/users?q=${username}`)
+//       .then(({ data }) => {
+//         dispatch({
+//           type: member.SEARCH_SUCCESS,
+//           list: data
+//         });
+//       })
+//       .catch((error) => {
+//         const data = error.response ? error.response.data : error;
+//         dispatch({
+//           type: ERROR_OCCURRED,
+//           error: data
+//         });
+//       });
+//   };
+// };
+
+export const searchUsers = (username, offset, limit) => (
+  dispatch => (
+    axios.get(`/api/users?username=${username}&limit=${limit}&offset=${offset}`)
       .then(({ data }) => {
         dispatch({
           type: member.SEARCH_SUCCESS,
@@ -55,6 +74,11 @@ export const searchUsers = (username) => {
           type: ERROR_OCCURRED,
           error: data
         });
-      });
-  };
-};
+      })
+  )
+);
+
+export const clearMemberSearchList = () => ({
+  type: 'CLEAR_SEARCH_LIST'
+});
+

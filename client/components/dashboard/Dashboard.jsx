@@ -10,13 +10,13 @@ import { listGroups } from '../../actions/groupActions';
 
 /**
  * React component that displays the dashboard
- * @class
+ * @class Dashboard
  * @extends {Component}
 */
 class TwoColumnDiv extends Component {
   /**
    * Creates an instance of TwoColumnDiv.
-   * @param {any} props 
+   * @param {object} props 
    * @memberof TwoColumnDiv
    */
   constructor(props) {
@@ -31,8 +31,10 @@ class TwoColumnDiv extends Component {
   }
 
   /**
-   * @memberof TwoColumnDiv
-   * @returns {void}
+   * makes jquery function available on component mount
+   * @method componentDidMount
+   * @memberof Dashboard
+   * @returns {undefined}
    */
   componentDidMount() {
     this.props.listGroups();
@@ -40,11 +42,11 @@ class TwoColumnDiv extends Component {
   }
 
   /**
-   * 
+   * sets the priority on click of a radio button
    * @method setPriority
-   * @memberof ChatArea
-   * @param {Object} event
-   * @returns {void}
+   * @memberof Dashboard
+   * @param {object} event
+   * @returns {undefined}
    */
   setPriority(event) {
     const priority = event.target.id;
@@ -54,11 +56,11 @@ class TwoColumnDiv extends Component {
   }
 
   /**
-   * 
+   * sends the message provided in the input area
    * @method sendMessage
-   * @returns {void}
-   * @memberof ChatArea
-   * @param {String} content
+   * @returns {undefined}
+   * @memberof Dashboard
+   * @param {string} content
    * @param {Function} callback
    */
   sendMessage(content, callback) {
@@ -69,10 +71,10 @@ class TwoColumnDiv extends Component {
   }
 
   /**
-   * 
+   * changes the state of selected group
    * @method selectGroup
-   * @returns {void} 
-   * @memberof TwoColumnDiv
+   * @returns {undefined} 
+   * @memberof Dashboard
    * @param {Object} event
    */
   selectGroup(event) {
@@ -82,8 +84,8 @@ class TwoColumnDiv extends Component {
 
   /**
    * 
-   * @returns {Object} a JSX Object
-   * @memberof TwoColumnDiv
+   * @returns {object} component
+   * @memberof Dashboard
    */
   render() {
     return (
@@ -91,6 +93,7 @@ class TwoColumnDiv extends Component {
         <GroupsDiv
           selectGroup={this.selectGroup}
           groups={this.props.groups}
+          activeId={this.state.selectedGroup}
         />
         <ChatArea
           groupId={this.state.selectedGroup}

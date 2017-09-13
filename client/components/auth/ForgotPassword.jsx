@@ -29,9 +29,9 @@ class ForgotPassword extends Component {
   /**
   * triggers an action that sends a user an email
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof ForgotPassword
-  * @return {void}
+  * @return {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -41,9 +41,9 @@ class ForgotPassword extends Component {
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
+  * @param {object} event
   * @memberof ForgotPassword
-  * @return {void}
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -52,7 +52,7 @@ class ForgotPassword extends Component {
   }
 
   /**
-   * @returns {Object} component
+   * @returns {object} component
    * @memberof ForgotPassword
   */
   render() {

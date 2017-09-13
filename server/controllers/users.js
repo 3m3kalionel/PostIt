@@ -112,18 +112,46 @@ module.exports = {
       });
   },
 
-  listAll(req, res) {
-    const query = req.query.q;
+  // listAll(req, res) {
+  //   const query = req.query.q;
 
-    if (!query) {
+  //   if (!query) {
+  //     res.status(200).json([]);
+  //   } else {
+  //     User.findAll({
+  //       where: {
+  //         username: {
+  //           $iLike: `%${query}%`
+  //         }
+  //       },
+  //       attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
+  //     })
+  //       .then((result) => {
+  //         res.status(200).json(result);
+  //       })
+  //       .catch((error) => {
+  //         res.status(404).json({
+  //           success: false,
+  //           error
+  //         });
+  //       });
+  //   }
+  // },
+
+  listAll(req, res) {
+    const { username, limit, offset } = req.query;
+
+    if (!req.query) {
       res.status(200).json([]);
     } else {
-      User.findAll({
+      User.findAndCountAll({
         where: {
           username: {
-            $iLike: `%${query}%`
+            $iLike: `%${username}%`
           }
         },
+        limit,
+        offset,
         attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
       })
         .then((result) => {

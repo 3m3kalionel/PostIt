@@ -34,9 +34,9 @@ class SignUpForm extends Component {
   /**
   * triggers an action that registers a new user
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof SignUpForm
-  * @return {void}
+  * @return {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -49,9 +49,9 @@ class SignUpForm extends Component {
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
+  * @param {object} event
   * @memberof SignUpForm
-  * @return {void}
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -60,7 +60,7 @@ class SignUpForm extends Component {
   }
 
   /**
-   * @returns {Object} component
+   * @returns {object} component
    * @memberof SignUpForm
   */
   render() {

@@ -5,17 +5,18 @@ import SignInForm from './SignInForm';
 import ForgotPassword from './ForgotPassword';
 
 /**
+ * React component that displays the landing page
  * @class LandingPage
  * @extends {Component}
  */
 class LandingPage extends Component {
   /**
-   * Creates an instance of ResetPassword.
-   * @param {Object} props 
-   * @memberof ResetPassword
+   * Creates an instance of LandingPage.
+   * @param {object} props 
+   * @memberof LandingPage
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       forgot: false,
     };
@@ -27,27 +28,27 @@ class LandingPage extends Component {
    * makes jquery function available on component mount
    * @method componentDidMount
    * @memberof LandingPage
-   * @return {void}
+   * @returns {undefined}
    */
   componentDidMount() {
     $('ul.tabs').tabs();
   }
 
   /**
-   * makes jquery function available on component mount
-   * @method componentDidMount
+   * makes jquery function available on component update
+   * @method componentDidUpdate
    * @memberof LandingPage
-   * @return {void}
+   * @returns {undefined}
    */
   componentDidUpdate() {
     $('ul.tabs').tabs();
   }
 
   /**
-   * changes the state of the component
+   * updates the state to render 
     * @method revertForgotPassword
     * @memberof LandingPage
-    * @return {void}
+    * @returns {void}
    */
   revertForgotPassword() {
     this.setState({
@@ -56,10 +57,10 @@ class LandingPage extends Component {
   }
 
   /**
-    * changes state of the component
+    * changes state of the component to render signup/login page
     * @method forgotPassword
     * @memberof LandingPage
-    * @return {void}
+    * @returns {undefined}
    */
   forgotPassword() {
     this.setState({
@@ -68,9 +69,8 @@ class LandingPage extends Component {
   }
 
   /**
-   * @returns {Object} component
+   * @returns {object} component
    * @memberof LandingPage
-  * @memberof LandingPage
   */
   render() {
     if (this.state.forgot) {

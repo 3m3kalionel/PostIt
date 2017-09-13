@@ -4,7 +4,10 @@ import { render } from 'react-dom';
 import Header from './common/Header';
 import DashboardNavbar from './dashboard/DashboardNavbar';
 
-
+/**
+ * @class App
+ * @extends {Component}
+ */
 class App extends Component {
   renderHeader() {
     const location = window.location.pathname;

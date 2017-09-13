@@ -17,6 +17,8 @@ body,
 
 nav {
   background-color: $base-color;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .tabs .indicator {
@@ -170,25 +172,25 @@ div a.btn {
 
 div.user-list {
   li:nth-child(even) {
-    background-color: #ffffff;
-    padding: 5px;
+    // background-color: #ffffff;
+    // padding: 5px;
   }
 }
 
 div.user-list {
   li:nth-child(odd) {
-    background-color: rgb(245,245,245);
-    padding: 8px;
+    // background-color: rgb(245,245,245);
+    // padding: 8px;
   }
 }
 
 #slide-out {
   li:nth-child(even) {
-    background-color: rgb(245,245,245);
+    // background-color: rgb(245,245,245);
   }
 
   li:nth-child(odd) {
-    background-color: #ffffff;
+    // background-color: #ffffff;
   }
 }
 
@@ -221,15 +223,15 @@ a#forgot-password:hover {
 button.btn.waves-effect.waves-light.right {
     height: 30px;
     margin-top: -5px;
-    background: none;
+    background: #26A69A;
     box-shadow: none;
-    color:#13534D;
+    // color:#26A69A;
     padding: none;
 }
 
-button.btn.waves-effect.waves-light.right:hover {
-    color: #26A69A;
-}
+// button.btn.waves-effect.waves-light.right:hover {
+//     color: #26A69A;
+// }
 
 .reset-password-div {
   align-self: center;
@@ -252,3 +254,94 @@ button.btn.waves-effect.waves-light.right:hover {
     background-color: transparent;
     color: $base-color;
 }
+
+ul.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  background-color: none;
+}
+
+.pagination li a {
+    color: #72D3C9;;
+    display: inline-block;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.pagination li.active a {
+    font-size: 14px;
+    margin-top: -2px;
+    color: #72D3C9;
+    outline: none;
+}
+
+a {
+  outline: none;
+}
+
+.pagination li.active {
+  background-color: transparent;
+  border-radius: 50%;
+  border: 1px dotted #26A69A;
+}
+
+.backdrop {
+  background-color: #ff6262;
+}
+
+div a.btn-floating,
+div li a.float-button {
+  // background: #91daf6;
+  background: #4AC2F0;
+}
+
+div a.btn-floating:hover {
+  background: rgb(74,194,240);
+}
+
+div a.btn-floating {
+  position: relative !important;
+  top: 777;
+}
+
+div a.btn-floating {
+  background:rgba(145, 218, 246, 0.88);
+  position: absolute;
+  bottom: 60px;
+}
+
+div a.btn-floating:hover {
+  transform: rotate(-90deg);
+  background: #4AC2F0;
+  
+}
+
+ul#slide-out a {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 4.5;
+    border-bottom: 1px solid lightgrey;
+    color: dimgrey;
+    height: 65px;
+}
+
+ul#slide-out a:hover {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 4.5;
+    border-bottom: 1px solid lightgrey;
+    color: #fff;
+    background: #26A69A;
+    height: 65px;
+}
+
+.selectedGroup {
+  background: #26A69A;
+  margin: 0 auto;
+  color: #fff;
+  width: 94%;
+}
+

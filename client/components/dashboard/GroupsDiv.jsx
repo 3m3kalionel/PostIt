@@ -7,14 +7,17 @@ const GroupsDiv = props => (
     <li className="bold no-padding center">
       <a className="waves-effect rgb(245,241,238)">GROUPS</a>
     </li>
-    { props.groups.map(group =>
-      (<li key={group.id} className="bold">
-        <a
-          id={group.id}
-          className="waves-effect rgb(245,241,238)"
-          onClick={props.selectGroup}
-        >{group.name}</a>
-      </li>)
+    { props.groups.map((group) => {
+      const activeClass = props.activeId == group.id ? 'selectedGroup' : 'bold';
+      return (
+        <li key={group.id} className={activeClass}>
+          <a
+            id={group.id}
+            onClick={props.selectGroup}
+          >{group.name}</a>
+        </li>
+      );
+    }
     )}
   </ul>
 );
