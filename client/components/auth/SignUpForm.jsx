@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Proptypes from 'prop-types';
+import GoogleLogin from 'react-google-login';
 
-import { signUp } from '../../actions/userActions';
+import { signUp, googleAuth } from '../../actions/userActions';
 
 /**
  * React component that displays the sign up form
@@ -29,6 +30,7 @@ class SignUpForm extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.googleSignUp = this.googleSignUp.bind(this);
   }
 
   /**
@@ -44,6 +46,20 @@ class SignUpForm extends Component {
       .then(() => {
         browserHistory.push('/dashboard');
       });
+  }
+
+  googleSignUp(response) {
+    console.log('response', response);
+    if (response.accessToken) {
+      const userData = {
+        email: response.profileObj.email,
+        username: response.profileObj.givenName
+      };
+      this.props.googleAuth(userData)
+        .then(() => {
+          browserHistory.push('/dashboard');
+        });
+    }
   }
 
   /**
@@ -119,6 +135,14 @@ class SignUpForm extends Component {
         </div>
         <div id="button-div">
           <button className="btn" type="submit">Sign up</button>
+          <GoogleLogin
+            clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
+            buttonText="Signup With Google"
+            onSuccess={this.googleSignUp}
+            onFailure={this.googleSignUp}
+          >
+            <i className="fa fa-google" aria-hidden="true" /> Sign in with Google
+          </GoogleLogin>
         </div>
       </form>
     );
@@ -130,11 +154,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: userData => dispatch(signUp(userData))
+  signUp: userData => dispatch(signUp(userData)),
+  googleAuth: userData => dispatch(googleAuth(userData))
 });
 
 SignUpForm.propTypes = {
   signUp: Proptypes.func.isRequired,
+  googleAuth: Proptypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

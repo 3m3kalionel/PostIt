@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -20,10 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    verificationCode: DataTypes.STRING,
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
     },
     salt: DataTypes.STRING
