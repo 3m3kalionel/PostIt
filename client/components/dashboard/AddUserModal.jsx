@@ -158,7 +158,7 @@ const mapStateToProps = (state, ownProps) => {
     group: state.groups[ownProps.groupId],
     searchResults: state.members.result
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
