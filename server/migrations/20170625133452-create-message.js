@@ -9,6 +9,10 @@ module.exports = {
     content: {
       type: Sequelize.STRING
     },
+    priority: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE
@@ -27,7 +31,9 @@ module.exports = {
     },
   }),
   down(queryInterface /* , Sequelize */) {
-    queryInterface.dropTable('Messages');
+    queryInterface.dropTable('Messages', {
+      cascade: true
+    });
   }
 };
 

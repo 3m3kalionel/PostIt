@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { message, ERROR_OCCURRED } from './actionTypes';
 
-export const createMessage = (groupId, messageData) => (
-  dispatch => (
+export const createMessage = (groupId, messageData) => {
+  return dispatch => (
     axios.post(`/api/group/${groupId}/message`, messageData)
       .then(({ data: { message: newMessage } }) => {
         dispatch({
@@ -17,8 +17,8 @@ export const createMessage = (groupId, messageData) => (
           error,
         });
       })
-  )
-);
+  );
+};
 
 export const listMessages = groupid => (
   dispatch => (

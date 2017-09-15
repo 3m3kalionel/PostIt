@@ -24,6 +24,8 @@ module.exports = {
     });
   },
   down(queryInterface /* , Sequelize */) {
-    return queryInterface.dropTable('Groups');
+    return queryInterface.dropTable('Groups', {
+      cascade: true
+    });
   }
 };

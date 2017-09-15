@@ -4,15 +4,8 @@ import { browserHistory } from 'react-router';
 import Proptypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 
-import { signIn } from '../../actions/userActions';
+import { signIn, googleAuth } from '../../actions/userActions';
 
-const responseGoogle = (response) => {
-  console.log('googleResponse', response);
-  const userObject = {
-    username: response.profileObj.name,
-    email: response.profileObj.email
-  };
-};
 
 /**
  * React component that displays the sign in form
@@ -21,8 +14,8 @@ const responseGoogle = (response) => {
  */
 class SignInForm extends Component {
   /**
-   * Creates an instance of ForgotPassword.
-   * @param {Object} props 
+   * Creates an instance of SignInForm.
+   * @param {object} props 
    * @memberof SigninForm
    */
   constructor(props) {
@@ -35,14 +28,15 @@ class SignInForm extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.googleSignIn = this.googleSignIn.bind(this);
   }
 
   /**
   * triggers an action that signs the user into the app
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof SignInForm
-  * @return {void}
+  * @returns {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -52,12 +46,23 @@ class SignInForm extends Component {
       });
   }
 
+  googleSignIn(response) {
+    const userData = {
+      email: response.profileObj.email,
+      username: response.profileObj.givenName
+    };
+    this.props.googleAuth(userData)
+      .then(() => {
+        browserHistory.push('/dashboard');
+      });
+  }
+
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
-  * @memberof SigninForm
-  * @return {void}
+  * @param {object} event
+  * @memberof SignInForm
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -66,8 +71,8 @@ class SignInForm extends Component {
   }
 
   /**
-   * @returns {Object} component
-   * @memberof SigninForm
+   * @returns {object} component
+   * @memberof SignInForm
   */
   render() {
     return (
@@ -78,7 +83,6 @@ class SignInForm extends Component {
             onChange={this.handleInputChange}
             id="username"
             type="text"
-            className="validate"
             required
           />
           <label htmlFor="username">Username</label>
@@ -88,7 +92,6 @@ class SignInForm extends Component {
             onChange={this.handleInputChange}
             id="password"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password">Password</label>
@@ -96,18 +99,24 @@ class SignInForm extends Component {
         <div
           onClick={() => this.props.forgotPassword()}
         >
-          <a className="waves-effect waves-light" id="forgot-password">Forgot Password?</a>
+          <a
+            className="waves-effect waves-light"
+            id="forgot-password"
+          >Forgot Password?</a>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Submit</button>
+          <button className="btn" type="submit">Login</button>
           <GoogleLogin
-            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-          />
+            clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
+            buttonText="Login With Google"
+            onSuccess={this.googleSignIn}
+            onFailure={this.googleSignIn}
+          >
+            <i className="fa fa-google" aria-hidden="true" /> Sign in with Google
+          </GoogleLogin>
         </div>
       </form>
+
     );
   }
 }
@@ -117,13 +126,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: userData => dispatch(signIn(userData))
+  signIn: userData => dispatch(signIn(userData)),
+  googleAuth: userData => dispatch(googleAuth(userData))
 });
 
 SignInForm.propTypes = {
   signIn: Proptypes.func.isRequired,
-  forgotPassword: Proptypes.func.isRequired
+  forgotPassword: Proptypes.func.isRequired,
+  googleAuth: Proptypes.func.isRequired
 };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+

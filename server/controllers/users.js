@@ -35,7 +35,8 @@ module.exports = {
         .then((newUser) => {
           const token = jwt.sign({
             username: newUser.username,
-            email: newUser.email
+            email: newUser.email,
+            id: newUser.id
           },
           process.env.JWT_SECRET,
           {
@@ -61,68 +62,78 @@ module.exports = {
     });
   },
 
-  googleSignup(req, res) {
-    User.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
-      .then((user) => {
-        if (!user) {
-          User.create(user)
-            .then((googleUser) => {
-              const token = jwt.sign({
-                googleUser
-              },
-              process.env.JWT_SECRET,
-              {
-                expiresIn: '2 days'
-              });
-              return res.status(201).json({
-                user: {
-                  id: googleUser.id,
-                  username: googleUser.userame,
-                  email: googleUser.email
-                },
-                token
-              });
-            })
-            .catch(error => res.status(500).json({
-              success: false,
-              message: 'Internal server error'
-            }));
-        } else {
+  googleAuth(req, res) {
+    User.findOne({ where: { email: req.body.email } })
+      .then((foundUser) => {
+        if (foundUser) {
+          console.log('foundUser', foundUser);
           const token = jwt.sign({
-            user
+            username: foundUser.username,
+            email: foundUser.email,
+            id: foundUser.id
           },
           process.env.JWT_SECRET,
           {
             expiresIn: '2 days'
           });
-          return res.status(200).json({
-            user: {
-              id: user.id,
-              username: user.username,
-              email: user.email
-            },
+          const { id, username, email } = foundUser;
+          res.status(200).json({
+            status: `${req.body.username} successfully logged in`,
+            user: { id, username, email },
             token
+          });
+        } else {
+          const { username, email } = req.body;
+          User.sync({ force: false }).then(() => {
+            User
+              .create({
+                username,
+                email
+              })
+              .then((newUser) => {
+                const token = jwt.sign({
+                  username: newUser.username,
+                  email: newUser.email,
+                  id: newUser.id
+                },
+                process.env.JWT_SECRET,
+                {
+                  expiresIn: '2 days'
+                });
+                return res.status(201).json({
+                  user: {
+                    id: newUser.id,
+                    username: newUser.username,
+                    email: newUser.email
+                  },
+                  token
+                });
+              })
+              .catch((error) => {
+                console.log('error', error);
+                res.status(400).json({
+                  Error: error.errors[0].message
+                });
+              });
           });
         }
       });
   },
 
   listAll(req, res) {
-    const query = req.query.q;
+    const { username, limit, offset } = req.query;
 
-    if (!query) {
+    if (!req.query) {
       res.status(200).json([]);
     } else {
-      User.findAll({
+      User.findAndCountAll({
         where: {
           username: {
-            $iLike: `%${query}%`
+            $iLike: `%${username}%`
           }
         },
+        limit,
+        offset,
         attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
       })
         .then((result) => {
@@ -177,7 +188,6 @@ module.exports = {
           message: 'Invalid verification token'
         });
       }
-      console.log('A PASSWORD JUST ARRIVED', req.body);
       const password = bcrypt.hashSync(req.body.newPassword, user.salt);
       user.update({ password });
     }).catch(error => res.status(500).json({

@@ -6,14 +6,14 @@ import { withRouter } from 'react-router';
 import { resetPassword } from '../../actions/userActions';
 
 /**
- * React component that displays the reset password form
+ * React component that displays the password reset form
  * @class ResetPassword
  * @extends {Component}
  */
 class ResetPassword extends Component {
   /**
    * Creates an instance of ResetPassword.
-   * @param {Object} props 
+   * @param {object} props 
    * @memberof ResetPassword
    */
   constructor(props) {
@@ -31,9 +31,9 @@ class ResetPassword extends Component {
   /**
   * triggers an action that resets a user's password
   * @method onSubmit
-  * @param {event} event
-  * @memberof LandingPage
-  * @return {void}
+  * @param {object} event
+  * @memberof ResetPassword
+  * @returns {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -42,11 +42,11 @@ class ResetPassword extends Component {
   }
 
   /**
-  * updates state as user's input changesd
+  * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
-  * @memberof LandingPage
-  * @return {void}
+  * @param {object} event
+  * @memberof ResetPassword
+  * @returns {undefined}
   */
   handleInputChange(event) {
     event.preventDefault();
@@ -56,8 +56,8 @@ class ResetPassword extends Component {
   }
 
   /**
-   * @returns {Object} component
-   * @memberof ChatArea
+   * @returns {object} component
+   * @memberof ResetPassword
   */
   render() {
     return (
@@ -96,7 +96,8 @@ class ResetPassword extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  resetPassword: (token, resetDetails) => dispatch(resetPassword(token, resetDetails))
+  resetPassword: (token, resetDetails) =>
+    dispatch(resetPassword(token, resetDetails))
 });
 
 ResetPassword.propTypes = {

@@ -40,9 +40,9 @@ export const listMembers = groupId => (
   )
 );
 
-export const searchUsers = (username) => {
-  return (dispatch) => {
-    axios.get(`/api/users?q=${username}`)
+export const searchUsers = (username, offset, limit) => (
+  dispatch => (
+    axios.get(`/api/users?username=${username}&limit=${limit}&offset=${offset}`)
       .then(({ data }) => {
         dispatch({
           type: member.SEARCH_SUCCESS,
@@ -55,6 +55,11 @@ export const searchUsers = (username) => {
           type: ERROR_OCCURRED,
           error: data
         });
-      });
-  };
-};
+      })
+  )
+);
+
+export const clearMemberSearchList = () => ({
+  type: 'CLEAR_SEARCH_LIST'
+});
+

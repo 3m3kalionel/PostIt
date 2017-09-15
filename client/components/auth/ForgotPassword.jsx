@@ -29,9 +29,9 @@ class ForgotPassword extends Component {
   /**
   * triggers an action that sends a user an email
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof ForgotPassword
-  * @return {void}
+  * @return {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
@@ -41,9 +41,9 @@ class ForgotPassword extends Component {
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
+  * @param {object} event
   * @memberof ForgotPassword
-  * @return {void}
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -52,12 +52,12 @@ class ForgotPassword extends Component {
   }
 
   /**
-   * @returns {Object} component
+   * @returns {object} component
    * @memberof ForgotPassword
   */
   render() {
     return (
-      <div className="page-wrapper">
+      <div className="reset-container0">
         <form onSubmit={this.onSubmit}>
           <h4>forgot password</h4>
           <div className="input-field col-s6">
@@ -75,8 +75,11 @@ class ForgotPassword extends Component {
           <div id="button-div">
             <button className="btn" type="submit">Submit</button>
           </div>
-          <div id="button-div" onClick={() => this.props.revertForgotPassword()}>
-            <button className="btn" type="submit">cancel</button>
+          <div
+            id="button-div"
+            onClick={() => this.props.revertForgotPassword()}
+          >
+            <button className="btn">cancel</button>
           </div>
         </form>
       </div>

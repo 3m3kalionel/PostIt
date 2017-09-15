@@ -8,7 +8,6 @@ html,
 body,
 #app,
 .postit-app,
-.page-wrapper,
 #two-section-page,
 .chat-container,
 #chat-input {
@@ -18,6 +17,8 @@ body,
 
 nav {
   background-color: $base-color;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .tabs .indicator {
@@ -43,20 +44,21 @@ body {
   flex-direction: column;
 }
 
-@media only screen and (max-width : 992px) {
-  #two-section-page {
-    padding-left: 0;
-  }
-}
-
 #two-section-page {
   padding-left: 300px;
   flex-grow: 1;
   width: 100%;
+
+  @media only screen and (max-width : 992px) {
+    padding-left: 0;
+  }
+}
+
+textarea {
+  resize: none;
 }
 
 textarea:focus {
-    /*resize: none;*/
     height: 40px;
 }
 
@@ -69,8 +71,8 @@ textarea:focus {
 }
 
 .modal {
-    max-height: 90%;
-    width: 40%;
+  max-height: 90%;
+  width: 40%;
 }
 
 .chat-messages {
@@ -78,13 +80,11 @@ textarea:focus {
 }
 
 nav li {
-    display: inline-block;
+  display: inline-block;
 }
 
-
-
 #signup form .row {
-    line-height: 10px;
+  line-height: 10px;
 }
 
 #no-messages {
@@ -105,23 +105,20 @@ nav li {
   width: 40%;
   margin-left: auto;
   margin-right: auto;
-  
 }
 
 .clearfix:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
 .clearfix { display: inline-block; }
-/* start commented backslash hack \*/
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
-
-/* Landing Page */
 
 .page-wrapper {
   display: flex;
@@ -173,25 +170,25 @@ div a.btn {
 
 div.user-list {
   li:nth-child(even) {
-    background-color: rgb(245,245,245);
-    padding: 5px;
+    // background-color: #ffffff;
+    // padding: 5px;
   }
 }
 
 div.user-list {
   li:nth-child(odd) {
-    background-color: #ffffff;
-    padding: 5px;
+    // background-color: rgb(245,245,245);
+    // padding: 8px;
   }
 }
 
 #slide-out {
   li:nth-child(even) {
-    background-color: rgb(245,245,245);
+    // background-color: rgb(245,245,245);
   }
 
   li:nth-child(odd) {
-    background-color: #ffffff;
+    // background-color: #ffffff;
   }
 }
 
@@ -209,16 +206,24 @@ div.empty-area p {
 }
 
 a#forgot-password {
-    background: none;
-    border: none;
-    box-shadow: none;
-    font-size: 13px;
-    margin-top: 10px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 13px;
+  margin-top: 10px;
 }
 
 a#forgot-password:hover {
-    color: #2bbbad;
-    border-bottom: 1px #2bbbad dotted;
+  color: #2bbbad;
+  border-bottom: 1px #2bbbad dotted;
+}
+
+button.btn.waves-effect.waves-light.right {
+  height: 30px;
+  margin-top: -5px;
+  background: #26A69A;
+  box-shadow: none;
+  padding: none;
 }
 
 .reset-password-div {
@@ -239,6 +244,143 @@ a#forgot-password:hover {
   margin-bottom: 3px
 }
 .tabs .tab a:hover, .tabs .tab a.active, .tabs .tab a {
-    background-color: transparent;
-    color: $base-color;
+  background-color: transparent;
+  color: $base-color;
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  background-color: none;
+}
+
+.pagination li a {
+  color: #72D3C9;;
+  display: inline-block;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.pagination li.active a {
+  font-size: 14px;
+  margin-top: -2px;
+  color: #72D3C9;
+  outline: none;
+}
+
+a {
+  outline: none;
+}
+
+.pagination li.active {
+  background-color: transparent;
+  border-radius: 50%;
+  border: 1px dotted #26A69A;
+}
+
+.backdrop {
+  background-color: #ff6262;
+}
+
+div a.btn-floating,
+div li a.float-button {
+  background: #4AC2F0;
+}
+
+div a.btn-floating:hover {
+  background: rgb(74,194,240);
+}
+
+div a.btn-floating {
+  position: relative !important;
+  top: 777;
+}
+
+div a.btn-floating {
+  background:rgba(145, 218, 246, 0.88);
+  position: absolute;
+  bottom: 60px;
+}
+
+div a.btn-floating:hover {
+  transform: rotate(-90deg);
+  background: #4AC2F0;
+}
+
+ul#slide-out a {
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 4.5;
+  border-bottom: 1px solid lightgrey;
+  color: dimgrey;
+  height: 65px;
+}
+
+ul#slide-out a:hover {
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 4.5;
+  border-bottom: 1px solid lightgrey;
+  color: #fff;
+  background: #26A69A;
+  height: 65px;
+}
+
+.selectedGroup {
+  background: #26A69A;
+  margin: 0 auto;
+  color: #fff;
+  width: 94%;
+}
+
+
+button {
+  margin-left: 3px;
+}
+
+div.card-content {
+  position: relative;
+}
+
+p.priority,
+p.sender,
+p.time-sent {
+  position: absolute;
+}
+
+p.time-sent {
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+}
+
+p.sender {
+  top: 10px;
+  left: 10px;
+  font-size: 10px
+}
+
+p.priority {
+  top: 10px;
+  right: 10px;
+  font-size: 10px
+}
+
+.card .card-content p.sender {
+  color: #26A69A;
+}
+
+.card .card-content p.time-sent {
+  color: dimgray;
+}
+
+.card .card-content p.priority {
+  color: #72D3C9;
+}
+
+.card .card-content p {
+  margin-top: 5px;
 }

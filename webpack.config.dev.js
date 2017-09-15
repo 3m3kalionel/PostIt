@@ -8,7 +8,7 @@ const SRC_DIRECTORY = path.join(__dirname, 'client');
 export default {
   devtool: 'inline-source-map',
   entry: [
-    'webpack-hot-middleware/client?reload=true', // note that it reloads the page if hot module reloading fails.
+    'webpack-hot-middleware/client?reload=true',
     path.join(SRC_DIRECTORY, 'index.jsx'),
   ],
   resolve: {

@@ -12,7 +12,7 @@ export const group = {
 export const member = {
   ADD_SUCCESS: 'ADD_MEMBER_SUCCESS',
   LIST_SUCCESS: 'LIST_MEMBERS_SUCCESS',
-  SEARCH_SUCCESS: 'SEARCH_USERS_SUCCESS'
+  SEARCH_SUCCESS: 'SEARCH_USERS_SUCCESS',
 };
 
 export const message = {

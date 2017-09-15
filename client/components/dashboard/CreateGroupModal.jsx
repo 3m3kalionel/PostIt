@@ -13,7 +13,7 @@ class CreateGroupModal extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -23,7 +23,7 @@ class CreateGroupModal extends Component {
     });
   }
 
-  onClick(event) {
+  onSubmit(event) {
     event.preventDefault();
     this.props.createGroup(this.state);
   }
@@ -33,21 +33,35 @@ class CreateGroupModal extends Component {
       <div id="new-group" className="modal">
         <div className="modal-content">
           <div className="row">
-            <form className="col s12">
+            <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
                 <div className="input-field col s12">
                   <i className="material-icons prefix">account_circle</i>
-                  <input onChange={this.handleInputChange} id="name" type="text" className="validate" />
+                  <input
+                    onChange={this.handleInputChange}
+                    id="name"
+                    type="text"
+                    required
+                  />
                   <label htmlFor="icon_prefix">Group name</label>
                 </div>
                 <div className="input-field col s12">
                   <i className="material-icons prefix">edit</i>
-                  <input onChange={this.handleInputChange} id="description" type="tel" className="validate" />
+                  <input
+                    onChange={this.handleInputChange}
+                    id="description"
+                    type="tel"
+                    required
+                  />
                   <label htmlFor="icon_telephone">Description</label>
                 </div>
                 <div className="row">
                   <div className="input-field col s12">
-                    <button className="btn cyan waves-effect waves-light right" type="submit" name="action" onClick={this.onClick}>Submit
+                    <button
+                      className="btn cyan waves-effect waves-light right"
+                      type="submit"
+                      name="action"
+                    >Submit
                       <i className="mdi-content-send right" />
                     </button>
                   </div>
@@ -57,7 +71,10 @@ class CreateGroupModal extends Component {
           </div>
         </div>
         <div className="modal-footer">
-          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+          <a
+            href="#!"
+            className="modal-action modal-close waves-effect waves-green btn-flat"
+          >Cancel</a>
         </div>
       </div>
     );
@@ -69,9 +86,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    createGroup: (groupData) => dispatch(createGroup(groupData))
+  createGroup: groupData => dispatch(createGroup(groupData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (CreateGroupModal);
-
-// get the input, mdtp. use the createGroup functio to call the create group function with the state of the input field. 
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

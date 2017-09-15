@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -20,14 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    verificationCode: DataTypes.STRING,
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
-      // validate: {
-      //   msg: 'Number already in use'
-      // }
     },
     salt: DataTypes.STRING
   });
@@ -37,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId'
     });
     User.belongsToMany(models.Group, {
-      // as: 'Members',
       foreignKey: 'userId',
       through: 'UserGroups',
     });
