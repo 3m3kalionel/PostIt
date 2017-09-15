@@ -5,10 +5,10 @@ import Proptypes from 'prop-types';
 const GroupsDiv = props => (
   <ul id="slide-out" className="side-nav fixed">
     <li className="bold no-padding center">
-      <a className="waves-effect rgb(245,241,238)">GROUPS</a>
+      GROUPS
     </li>
     { props.groups.map((group) => {
-      const activeClass = props.activeId == group.id ? 'selectedGroup' : 'bold';
+      const activeClass = props.sactiveId == group.id ? 'selectedGroup' : 'bold';
       return (
         <li key={group.id} className={activeClass}>
           <a

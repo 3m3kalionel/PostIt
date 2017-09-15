@@ -25,7 +25,7 @@ class ChatInput extends Component {
    * @method handleInputChange
    * @memberof ChatInput
    * @param {any} event
-   * @returns {void}
+   * @returns {undefined}
    */
   handleInputChange(event) {
     this.setState({ message: event.target.value });
@@ -36,7 +36,7 @@ class ChatInput extends Component {
    * @method clearMessage
    * @memberof ChatInput
    * @param {any} event
-   * @returns {void}
+   * @returns {undefined}
    */
   clearMessage() {
     this.setState({ message: '' });
@@ -55,7 +55,10 @@ class ChatInput extends Component {
         <div id="message-input">
           <textarea type="text" onChange={this.handleInputChange} value={message} />
         </div>
-        <button className="waves-effect waves-light btn" onClick={() => onSubmit(message, this.clearMessage)}>
+        <button
+          className="waves-effect waves-light btn"
+          onClick={() =>
+            onSubmit(message, this.clearMessage)}>
           Send
         </button>
       </div>

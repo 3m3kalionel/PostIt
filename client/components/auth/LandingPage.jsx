@@ -48,7 +48,7 @@ class LandingPage extends Component {
    * updates the state to render 
     * @method revertForgotPassword
     * @memberof LandingPage
-    * @returns {void}
+    * @returns {undefined}
    */
   revertForgotPassword() {
     this.setState({

@@ -110,7 +110,6 @@ class AddUserModal extends Component {
                   <input
                     id="icon_prefix"
                     type="text"
-                    className="validate"
                     name="query"
                     value={this.state.query}
                     onChange={this.handleInputChange}

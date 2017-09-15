@@ -7,7 +7,7 @@ import ResetPassword from './components/auth/ResetPassword';
 
 const onEnter = (next, replace, cb) => {
   if (localStorage.getItem('postit-token') !== null && next.location.pathname === '/') {
-    replace('/dashboard');
+    replace('/dasboard');
   }
   if (localStorage.getItem('postit-token') === null && (next.location.pathname === ('/dashboard'))) {
     replace('/');

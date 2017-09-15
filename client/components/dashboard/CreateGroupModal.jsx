@@ -41,7 +41,7 @@ class CreateGroupModal extends Component {
                     onChange={this.handleInputChange}
                     id="name"
                     type="text"
-                    className="validate"
+                    required
                   />
                   <label htmlFor="icon_prefix">Group name</label>
                 </div>
@@ -51,7 +51,7 @@ class CreateGroupModal extends Component {
                     onChange={this.handleInputChange}
                     id="description"
                     type="tel"
-                    className="validate"
+                    required
                   />
                   <label htmlFor="icon_telephone">Description</label>
                 </div>

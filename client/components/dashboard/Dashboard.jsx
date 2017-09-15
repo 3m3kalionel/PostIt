@@ -13,11 +13,11 @@ import { listGroups } from '../../actions/groupActions';
  * @class Dashboard
  * @extends {Component}
 */
-class TwoColumnDiv extends Component {
+class Dashboard extends Component {
   /**
-   * Creates an instance of TwoColumnDiv.
+   * Creates an instance of Dashboard.
    * @param {object} props 
-   * @memberof TwoColumnDiv
+   * @memberof Dashboard
    */
   constructor(props) {
     super(props);
@@ -66,6 +66,7 @@ class TwoColumnDiv extends Component {
   sendMessage(content, callback) {
     callback();
     const members = this.props.groupsData[this.state.selectedGroup].members;
+    const sender = this.props.user;
     const { priority } = this.state;
     this.props.createMessage(this.state.selectedGroup, { content, members, priority });
   }
@@ -73,7 +74,7 @@ class TwoColumnDiv extends Component {
   /**
    * changes the state of selected group
    * @method selectGroup
-   * @returns {undefined} 
+   * @returns {undefined}
    * @memberof Dashboard
    * @param {Object} event
    */
@@ -108,9 +109,9 @@ class TwoColumnDiv extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
     groups: state.user.groups,
     groupsData: state.groups
-
   };
 };
 
@@ -121,11 +122,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-TwoColumnDiv.propTypes = {
+Dashboard.propTypes = {
+  user: Proptypes.object.isRequired,
   listGroups: Proptypes.func.isRequired,
   groupsData: Proptypes.object.isRequired,
   createMessage: Proptypes.func.isRequired
-
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TwoColumnDiv);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -49,7 +49,6 @@ class SignUpForm extends Component {
   }
 
   googleSignUp(response) {
-    console.log('response', response);
     if (response.accessToken) {
       const userData = {
         email: response.profileObj.email,
@@ -88,7 +87,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="username"
             type="text"
-            className="validate"
             required
           />
           <label htmlFor="username">Username</label>
@@ -108,7 +106,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="password"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password">Password</label>
@@ -118,7 +115,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="passwordConfirm"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password-confirm">Confirm Password</label>
@@ -128,7 +124,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="phone"
             type="number"
-            className="validate"
             required
           />
           <label htmlFor="phone">Phone Number</label>
@@ -141,7 +136,7 @@ class SignUpForm extends Component {
             onSuccess={this.googleSignUp}
             onFailure={this.googleSignUp}
           >
-            <i className="fa fa-google" aria-hidden="true" /> Sign in with Google
+            <i className="fa fa-google" aria-hidden="true" /> Sign up with Google
           </GoogleLogin>
         </div>
       </form>

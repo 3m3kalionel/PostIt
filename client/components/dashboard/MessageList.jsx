@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Proptypes from 'prop-types';
+import moment from 'moment';
 
 import { listMessages } from '../../actions/messageActions';
 import { listMembers } from '../../actions/memberActions';
@@ -24,6 +25,29 @@ class MessageList extends Component {
     }
   }
 
+  getUserName(userId) {
+    if (userId) {
+      const { members } = this.props.group;
+      const user = members && members.filter((member) => {
+        return member.id === userId;
+      })[0];
+      return user.username;
+    }
+  }
+
+  formatTime (date) {
+    if (date) {
+      const testTime = moment(date).fromNow().split(' ');
+      let time = moment(date).fromNow();
+      if (testTime.includes('hours') && testTime[0] < 23) {
+        time = moment(date).calendar();
+      } else if (testTime[0] > 23) {
+        time = moment(date).fromNow();
+      }
+      return time;
+    }
+  }
+
   /**
    * @returns {Object} component
    * @memberof MessageList
@@ -37,6 +61,9 @@ class MessageList extends Component {
           <div className="card">
             <div className="card-content">
               <p>{message.content}</p>
+              <p className="priority">{message.priority}</p>
+              <p className="sender">{this.getUserName(message.userId)}</p>
+              <p className="time-sent">{this.formatTime(message.createdAt)}</p>
             </div>
           </div>
         </li>

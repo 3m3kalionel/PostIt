@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Proptypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
-import 'font-awesome/css/font-awesome.css';
 
 import { signIn, googleAuth } from '../../actions/userActions';
 
@@ -48,7 +47,6 @@ class SignInForm extends Component {
   }
 
   googleSignIn(response) {
-    console.log('response', response);
     const userData = {
       email: response.profileObj.email,
       username: response.profileObj.givenName
@@ -85,7 +83,6 @@ class SignInForm extends Component {
             onChange={this.handleInputChange}
             id="username"
             type="text"
-            className="validate"
             required
           />
           <label htmlFor="username">Username</label>
@@ -95,7 +92,6 @@ class SignInForm extends Component {
             onChange={this.handleInputChange}
             id="password"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password">Password</label>

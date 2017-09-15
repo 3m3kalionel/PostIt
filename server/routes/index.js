@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import path from 'path'
+import path from 'path';
 
 import authControllers from '../controllers';
 import authenticate from '../middleware/authenticate';
