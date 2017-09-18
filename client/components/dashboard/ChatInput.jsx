@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 /**
  * @class ChatInput
@@ -8,7 +8,7 @@ import Proptypes from 'prop-types';
 class ChatInput extends Component {
   /**
    * Creates an instance of ChatInput.
-   * @param {any} props 
+   * @param {object} props 
    * @memberof ChatInput
    */
   constructor(props) {
@@ -21,10 +21,10 @@ class ChatInput extends Component {
   }
 
   /**
-   * 
+   * updates state as user's input changes
    * @method handleInputChange
    * @memberof ChatInput
-   * @param {any} event
+   * @param {object} event
    * @returns {undefined}
    */
   handleInputChange(event) {
@@ -32,10 +32,10 @@ class ChatInput extends Component {
   }
 
   /**
-   * 
+   * clears the text input field
    * @method clearMessage
    * @memberof ChatInput
-   * @param {any} event
+   * @param {object} event
    * @returns {undefined}
    */
   clearMessage() {
@@ -43,8 +43,7 @@ class ChatInput extends Component {
   }
 
   /**
-   * 
-   * @returns {Object} a JSX Object
+   * @returns {Object} component
    * @memberof ChatInput
    */
   render() {
@@ -58,12 +57,17 @@ class ChatInput extends Component {
         <button
           className="waves-effect waves-light btn"
           onClick={() =>
-            onSubmit(message, this.clearMessage)}>
+            onSubmit(message, this.clearMessage)}
+        >
           Send
         </button>
       </div>
     );
   }
 }
+
+ChatInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default ChatInput;

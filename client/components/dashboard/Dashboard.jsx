@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import GroupsDiv from './GroupsDiv';
 import ChatArea from './ChatArea';
@@ -38,11 +38,13 @@ class Dashboard extends Component {
    */
   componentDidMount() {
     this.props.listGroups();
-    $('.modal').modal();
+    $('.modal').modal({
+      dismissible: false
+    });
   }
 
   /**
-   * sets the priority on click of a radio button
+   * sets the message priority on click of a radio button
    * @method setPriority
    * @memberof Dashboard
    * @param {object} event
@@ -58,15 +60,14 @@ class Dashboard extends Component {
   /**
    * sends the message provided in the input area
    * @method sendMessage
-   * @returns {undefined}
    * @memberof Dashboard
    * @param {string} content
    * @param {Function} callback
+   * @returns {undefined}
    */
   sendMessage(content, callback) {
     callback();
     const members = this.props.groupsData[this.state.selectedGroup].members;
-    const sender = this.props.user;
     const { priority } = this.state;
     this.props.createMessage(this.state.selectedGroup, { content, members, priority });
   }
@@ -74,9 +75,9 @@ class Dashboard extends Component {
   /**
    * changes the state of selected group
    * @method selectGroup
-   * @returns {undefined}
    * @memberof Dashboard
    * @param {Object} event
+   * @returns {undefined}
    */
   selectGroup(event) {
     event.preventDefault();
@@ -84,9 +85,8 @@ class Dashboard extends Component {
   }
 
   /**
-   * 
-   * @returns {object} component
    * @memberof Dashboard
+   * @returns {object} component
    */
   render() {
     return (
@@ -123,10 +123,20 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Dashboard.propTypes = {
-  user: Proptypes.object.isRequired,
-  listGroups: Proptypes.func.isRequired,
-  groupsData: Proptypes.object.isRequired,
-  createMessage: Proptypes.func.isRequired
+  groups: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.int,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+  })).isRequired,
+  listGroups: PropTypes.func.isRequired,
+  groupsData: PropTypes.shape({}).isRequired,
+  createMessage: PropTypes.func.isRequired
+};
+
+Dashboard.defaultProps = {
+  groups: []
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

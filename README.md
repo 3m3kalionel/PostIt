@@ -4,9 +4,9 @@
 [![Build Status](https://travis-ci.org/3m3kalionel/PostIt.svg?branch=develop)](https://travis-ci.org/3m3kalionel/PostIt)  [![Coverage Status](https://coveralls.io/repos/github/3m3kalionel/PostIt/badge.svg?branch=feature%2Ftests)](https://coveralls.io/github/3m3kalionel/PostIt?branch=feature%2Ftests)  [![Code Climate](https://codeclimate.com/github/3m3kalionel/PostIt/badges/gpa.svg)](https://codeclimate.com/github/3m3kalionel/PostIt)
 
 
-PostIt is an application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. It was developed using node.js with Express for routing and PostgreSQL for persisting data.
+PostIt is an application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. It was developed using [node.js](https://nodejs.org/en/) with [Express](https://expressjs.com/) for routing and [PostgreSQL](https://www.postgresql.org/) for persisting data.
 
-#### The application offers the following features:
+### The application offers the following features:
 
 Users can:
 
@@ -16,59 +16,51 @@ Users can:
 * Post messages in groups to which they belong.
 * Read messages posted by friends in groups they belong.
 
-### Dependencies
+### System Dependencies
+* [Node.js](https://nodejs.org/en/)
+* [PostgreSQL](https://www.postgresql.org/)
 
-The app's functionality depends on the following Node.js packages:
-
-* bcrypt
-* bodyparser
-* dotenv
-* Express
-* jsonwebtoken
-* passportjs
-* pg
-* pg-hstore
-* Sequelize ORM
-
-
-    
-### Installation
----
-
-- To clone this repository, `run git clone https://github.com/3m3kalionel/PostIt.git`
-- Run npm install to install the dependencies in the package.json file.
-
-## Usage
-
-- On your local machine, run `npm start` in your terminal to start the application.
-- To run tests, run `npm test` in your terminal.
+### Usage
+* To clone the repo run `git clone https://github.com/3m3kalionel/PostIt.git`
+* Make sure you have Postgres installed and running.
+* Change directory to `PostIt` using `cd PostIt` and run `npm install` to install the application.
+* Create a .env file in the root folder of your app similar to the sample .env file provided.
+* Run `npm start` to start the app or `npm run start-dev` to run it in a development-optimised environment.
+* Enter the url [http://localhost:8080](http://localhost:8080) in your browser to use the app.
+* Testing
+run `npm test` to run tests.
 
 ### Heroku
 The app is hosted on heroku and can be used via [Postman](https://www.getpostman.com/). The routes work as listed above. A sample of the application can be found [here](https://postit3m3ka.herokuapp.com/)
 
-##### Routes 
+### Documentation
+API Documentatin can be found [here](https://3m3kalionel.github.io/slate)
 
-* POST `/api/user/signup` Use this route to create an account. The following fields are required:
-	* `username` A user name of your choice
-	* `password` A password between 8 and 20 characters in length
-	* `email` A valid email address
+### Limitations
+Some current limitations of the PostIt which are currently in development are:
+* In-app notifications for group members
+* Users should be able to see the friends in the groups who have read the messages sent out.
+* Messages should be marked as “read” once a User has opened them.
+* Read messages should be archived and not clutter a User’s Message Board.
+* Real-time messaging
 
-* POST `/api/user/signin` Use this route to log into the application. The following fields are required:
-	* `username` The username registered on signup
-	* `password` The password registered on signup
-* POST `/api/group` Use this route to create a new group. The following fields are required:
-	* `name` The name of the group
-	* `description` A few words about the group
-* POST `/api/group/<:groupid>/user` Use this route to add a registered user to a created group. The following fields are required:
-	* `groupid` The id of the group where the user is to be added
-	* `userId` The id of the registered user to be added to be group
-* POST `/api/group/<:groupid>/message` Use this route to post messages to a group. The following fields are required: 
-	* `groupid` The id of the group where the messsage is to be posted
-	* `content` The message to be posted
 
-* GET `/api/group/<:groupid>/messages` Use this route to retrieve messages posted to the group. The following fields are required:
-	* `groupid` The id of the group 
-* GET `/api/group/<:groupid>/users` Use this route to list members of a group. The following fields are required:
-	* `groupid` The id of the group
-* GET `/api/group/<:userid>/groups` Use this route to list the groups you belong to. The following fields are required:
-	* `userid` The id of the user(you)
+### Contributing to the Project
+
+Contributions are welcome and appreciated
+* Fork this repository [here](https://github.com/3m3kalionel/PostIt.git)
+* Open a terminal and execute the following command to make a local copy `$ git clone git@github.com:your-username/postit`
+* Run this code to navigate into the folder `cd postIt-app`
+* Make your contributions to your local repo
+Add a connection to the original repo using `$ git remote add repo_nickname git://github.com/3m3kalionel/PostIt.git`
+* Note: repo_nickname is a nickname you choose.
+* Run git remote -v to verify that the connection is established
+* Make your contributions to your local copy of the project
+* Run git add and git commit to commit your contributions to the project
+* Run git push to push your changes to your copy of the repository
+* If you feel you've made a contribution that will improve the project, raise a Pull Request.
+* Be descriptive enough about your contributions so other contributors will understand what you've done
+
+### License
+This project is available for use and modification under the MIT License. See the LICENSE file for more details.
+

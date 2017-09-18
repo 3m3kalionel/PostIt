@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 
 import { signUp, googleAuth } from '../../actions/userActions';
@@ -44,10 +44,22 @@ class SignUpForm extends Component {
     event.preventDefault();
     this.props.signUp(this.state)
       .then(() => {
-        browserHistory.push('/dashboard');
+        if (this.props.error) {
+          Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
+        } else {
+          Materialize.toast('Signup successful', 3000, 'rounded success-toast');
+          browserHistory.push('/dashboard');
+        }
       });
   }
 
+  /**
+   * authenticates google users and signs them up /signs them in
+   * @method googleSignUp
+   * @param {object} response 
+   * @memberof SignUpForm
+   * @returns {undefined}
+   */
   googleSignUp(response) {
     if (response.accessToken) {
       const userData = {
@@ -56,7 +68,12 @@ class SignUpForm extends Component {
       };
       this.props.googleAuth(userData)
         .then(() => {
-          browserHistory.push('/dashboard');
+          if (this.props.error && this.props.error.Error) {
+            Materialize.toast('Login error', 3000, 'rounded error-toast');
+          } else {
+            Materialize.toast(this.props.auth.message, 3000, 'rounded success-toast');
+            browserHistory.push('/dashboard');
+          }
         });
     }
   }
@@ -145,7 +162,8 @@ class SignUpForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.errors.error
+  error: state.errors.error,
+  auth: state.user
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -154,8 +172,14 @@ const mapDispatchToProps = dispatch => ({
 });
 
 SignUpForm.propTypes = {
-  signUp: Proptypes.func.isRequired,
-  googleAuth: Proptypes.func.isRequired
+  signUp: PropTypes.func.isRequired,
+  googleAuth: PropTypes.func.isRequired,
+  error: PropTypes.shape({ Error: PropTypes.string }).isRequired,
+  auth: PropTypes.shape({ message: PropTypes.string }).isRequired
+};
+
+SignUpForm.defaultProps = {
+  error: {}
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

@@ -35,7 +35,9 @@ class ForgotPassword extends Component {
   */
   onSubmit(event) {
     event.preventDefault();
-    this.props.verifyUser(this.state);
+    this.props.verifyUser(this.state).then(() => {
+      Materialize.toast('Password reset link has been sent to your email', 4000, 'success-toast');
+    }).catch(Materialize.toast(''));
   }
 
   /**

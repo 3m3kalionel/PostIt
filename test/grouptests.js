@@ -28,7 +28,7 @@ let userToken10;
 
 const promisify = currentUser => new Promise((resolve) => {
   request(app)
-    .post('/api/user/signin')
+    .post('/api/v1/user/signin')
     .send(currentUser)
     .end((err, res) => {
       resolve(res.body.token);
@@ -65,7 +65,7 @@ describe('group route', () => {
 
   it('allows a user create a broadcast group', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken)
       .send(group.validGroup1)
       .end((err, res) => {
@@ -77,7 +77,7 @@ describe('group route', () => {
 
   it('allows a user create a broadcast group', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken)
       .send(group.validGroup2)
       .end((err, res) => {
@@ -89,7 +89,7 @@ describe('group route', () => {
 
   it('allows a user create a broadcast group', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken2)
       .send(group.validGroup3)
       .end((err, res) => {
@@ -102,7 +102,7 @@ describe('group route', () => {
   // create group edge case - duplicate group name error
   it('prevents creating a group with an existing group name', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken)
       .send(group.validGroup1)
       .end((err, res) => {
@@ -116,7 +116,7 @@ describe('group route', () => {
   // create group edge case - group name error
   it('prevents creating a group with an empty string name', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken)
       .send(group.emptyStringGroupName)
       .end((err, res) => {
@@ -130,7 +130,7 @@ describe('group route', () => {
   // create group edge case - group description error
   it('prevents creating a group with no description', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .set('x-access-token', userToken)
       .send(group.noDescriptionGroupName)
       .end((err, res) => {
@@ -143,7 +143,7 @@ describe('group route', () => {
 
   it('allows a logged in user add another user to a group', (done) => {
     request(app)
-      .post('/api/group/1/user')
+      .post('/api/v1/group/1/user')
       .set('x-access-token', userToken)
       .send({ userId: 2 })
       .end((err, res) => {
@@ -156,7 +156,7 @@ describe('group route', () => {
 
   it('allows a logged in user add another user to a group', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send({ userId: 2 })
       .end((err, res) => {
@@ -169,7 +169,7 @@ describe('group route', () => {
 
   it('allows a logged in user add another user to a group', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send({ userId: 3 })
       .end((err, res) => {
@@ -183,7 +183,7 @@ describe('group route', () => {
   // add members edge case - no userId specified
   it('prevents adding a user with no userId', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send()
       .end((err, res) => {
@@ -197,7 +197,7 @@ describe('group route', () => {
   // add members edge case - no userId specified
   it('prevents adding a user with an alphanumeric id', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send({ userId: '235t' })
       .end((err, res) => {
@@ -211,7 +211,7 @@ describe('group route', () => {
   // add members edge case - adder not a group member  
   it('prevents a non-group member from adding users', (done) => {
     request(app)
-      .post('/api/group/3/user')
+      .post('/api/v1/group/3/user')
       .set('x-access-token', userToken10)
       .send({ userId: 1 })
       .end((err, res) => {
@@ -225,7 +225,7 @@ describe('group route', () => {
   // add members edge case - re-adding a group member
   it('prevents adding an already existing group member', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send({ userId: 3 })
       .end((err, res) => {
@@ -239,7 +239,7 @@ describe('group route', () => {
   // add members edge case - invalid group id
   it('prevents adding an unregistered user', (done) => {
     request(app)
-      .post('/api/group/2/user')
+      .post('/api/v1/group/2/user')
       .set('x-access-token', userToken)
       .send({ userId: 100 })
       .end((err, res) => {
@@ -252,7 +252,7 @@ describe('group route', () => {
 
   it('prevents a non-logged-in user from accessing a route', (done) => {
     request(app)
-      .post('/api/group')
+      .post('/api/v1/group')
       .send(group.validGroup2)
       .end((err, res) => {
         expect(res.status).to.equal(403);
@@ -264,7 +264,7 @@ describe('group route', () => {
 
   it('allows a logged in user to post messages to created groups', (done) => {
     request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('x-access-token', userToken)
       .send(group.validMessage1)
       .end((err, res) => {
@@ -276,7 +276,7 @@ describe('group route', () => {
 
   it('allows a logged in user to post messages to created groups', (done) => {
     request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('x-access-token', userToken2)
       .send(group.validMessage2)
       .end((err, res) => {
@@ -289,7 +289,7 @@ describe('group route', () => {
   // post message edge case - empty message
   it('prevents a logged in user from posting empty messages', (done) => {
     request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('x-access-token', userToken2)
       .send({ content: '' })
       .end((err, res) => {
@@ -302,7 +302,7 @@ describe('group route', () => {
   // post message edge case - null. no content specified
   it('prevents a logged in user from posting empty messages', (done) => {
     request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('x-access-token', userToken2)
       .send({ })
       .end((err, res) => {
@@ -315,7 +315,7 @@ describe('group route', () => {
   // post message edge case - non - member
   it('prevents a non-group member from posting messages to a group', (done) => {
     request(app)
-      .post('/api/group/1/message')
+      .post('/api/v1/group/1/message')
       .set('x-access-token', userToken10)
       .send(group.validMessage1)
       .end((err, res) => {
@@ -328,7 +328,7 @@ describe('group route', () => {
 
   it('allows a logged in user retrieve all the messages in groups he/she belongs to', (done) => {
     request(app)
-      .get('/api/group/1/messages')
+      .get('/api/v1/group/1/messages')
       .set('x-access-token', userToken2)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -339,7 +339,7 @@ describe('group route', () => {
 
   it('allows a logged in user see all members of groups he/she belongs to', (done) => {
     request(app)
-      .get('/api/group/1/users')
+      .get('/api/v1/group/1/users')
       .set('x-access-token', userToken2)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -351,7 +351,7 @@ describe('group route', () => {
   // list messages edge case - user non-member
   it('prevents a non-group member from listing out group messages', (done) => {
     request(app)
-      .get('/api/group/1/messages')
+      .get('/api/v1/group/1/messages')
       .set('x-access-token', userToken10)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -364,7 +364,7 @@ describe('group route', () => {
   // list members edge case - user non-member
   it('prevents a non-group member from listing out group members', (done) => {
     request(app)
-      .get('/api/group/1/users')
+      .get('/api/v1/group/1/users')
       .set('x-access-token', userToken10)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -377,7 +377,7 @@ describe('group route', () => {
   // list members edge case - user not logged in
   it('prevents a non-logged-in user from listing out group members', (done) => {
     request(app)
-      .get('/api/group/1/users')
+      .get('/api/v1/group/1/users')
       .set('x-access-token', '88887hg')
       .end((err, res) => {
         expect(res.body.success).to.equal(false);
@@ -389,7 +389,7 @@ describe('group route', () => {
   // list members edge case - invalid group id
   it('throws an error if the group id is invalid', (done) => {
     request(app)
-      .get('/api/group/100/users')
+      .get('/api/v1/group/100/users')
       .set('x-access-token', userToken2)
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -400,7 +400,7 @@ describe('group route', () => {
 
   it('allows a logged in user list all the groups he/she belongs to', (done) => {
     request(app)
-      .get('/api/groups')
+      .get('/api/v1/groups')
       .set('x-access-token', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -411,7 +411,7 @@ describe('group route', () => {
 
   it('responds with a welcome message for the home route', (done) => {
     request(app)
-      .get('/api')
+      .get('/api/v1')
       .set('x-access-token', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);

@@ -5,7 +5,7 @@ import { group, ERROR_OCCURRED } from './actionTypes';
 
 export const createGroup = groupData => (
   dispatch => (
-    axios.post('/api/group', groupData)
+    axios.post('/api/v1/group', groupData)
       .then(({ data: { group: newGroup } }) => {
         dispatch({
           type: group.CREATE_SUCCESS,
@@ -24,7 +24,7 @@ export const createGroup = groupData => (
 export const listGroups = () => {
   return (dispatch) => {
     setToken();
-    axios.get('/api/groups')
+    axios.get('/api/v1/groups')
       .then(({ data }) => {
         dispatch({
           type: group.LIST_SUCCESS,

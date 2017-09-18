@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { resetPassword } from '../../actions/userActions';
 
@@ -38,7 +38,11 @@ class ResetPassword extends Component {
   onSubmit(event) {
     event.preventDefault();
     const token = this.props.params.token;
-    this.props.resetPassword(token, this.state);
+    this.props.resetPassword(token, this.state)
+      .then(() => {
+        Materialize.toast('Password reset successfully', 3000, 'success-toast');
+        browserHistory.push('/dashboard');
+      }).catch(error => Materialize.toast(error.message, 3000, 'rounded error-toast'));
   }
 
   /**
@@ -101,7 +105,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 ResetPassword.propTypes = {
-  resetPassword: Proptypes.func.isRequired
+  resetPassword: PropTypes.func.isRequired,
+  params: PropTypes.shape({ token: PropTypes.string }).isRequired
 };
 
 export default connect(null, mapDispatchToProps)(ResetPassword);

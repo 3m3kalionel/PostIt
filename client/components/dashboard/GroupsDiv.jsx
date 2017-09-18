@@ -8,7 +8,7 @@ const GroupsDiv = props => (
       GROUPS
     </li>
     { props.groups.map((group) => {
-      const activeClass = props.sactiveId == group.id ? 'selectedGroup' : 'bold';
+      const activeClass = props.activeId == group.id ? 'selectedGroup' : 'bold';
       return (
         <li key={group.id} className={activeClass}>
           <a

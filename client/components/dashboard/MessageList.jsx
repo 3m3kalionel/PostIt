@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { listMessages } from '../../actions/messageActions';
@@ -14,7 +14,7 @@ import { listMembers } from '../../actions/memberActions';
  */
 class MessageList extends Component {
   /**
-   * @param{object} nextProps
+   * @param {object} nextProps
    * @memberof MessageList
    * @returns {undefined}
    */
@@ -25,17 +25,29 @@ class MessageList extends Component {
     }
   }
 
-  getUserName(userId) {
+  /**
+   * @method getUsername
+   * @param {number} userId
+   *  @memberof MessageList
+   * @return {string} the message sender's usename
+   */
+  getUsername(userId) {
     if (userId) {
       const { members } = this.props.group;
       const user = members && members.filter((member) => {
         return member.id === userId;
       })[0];
-      return user.username;
+      return user && user.username;
     }
   }
 
-  formatTime (date) {
+  /**
+   * @method formatTime
+   * @param {object} date 
+   * @returns {string} returns the time the message is sent
+   * @memberof MessageList
+   */
+  formatTime(date) {
     if (date) {
       const testTime = moment(date).fromNow().split(' ');
       let time = moment(date).fromNow();
@@ -62,7 +74,7 @@ class MessageList extends Component {
             <div className="card-content">
               <p>{message.content}</p>
               <p className="priority">{message.priority}</p>
-              <p className="sender">{this.getUserName(message.userId)}</p>
+              <p className="sender">{this.getUsername(message.userId)}</p>
               <p className="time-sent">{this.formatTime(message.createdAt)}</p>
             </div>
           </div>
@@ -108,13 +120,13 @@ MessageList.defaultProps = {
 };
 
 MessageList.propTypes = {
-  groupId: Proptypes.string,
-  getMembers: Proptypes.func.isRequired,
-  getMessages: Proptypes.func.isRequired,
-  group: Proptypes.oneOfType([
-    Proptypes.object,
-    Proptypes.array,
-    Proptypes.string
+  groupId: PropTypes.string,
+  getMembers: PropTypes.func.isRequired,
+  getMessages: PropTypes.func.isRequired,
+  group: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+    PropTypes.string
   ])
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import AddButton from './AddButton';
 import ChatInput from './ChatInput';
@@ -9,7 +9,7 @@ import CreateGroupModal from './CreateGroupModal';
 
 /**
  * React component that displays the chat section
- * @class
+ * @class ChatArea
  * @extends {Component}
 */
 class ChatArea extends Component {
@@ -107,10 +107,10 @@ ChatArea.defaultProps = {
 };
 
 ChatArea.propTypes = {
-  groupId: Proptypes.string,
-  sendMessage: Proptypes.func.isRequired,
-  defaultPriority: Proptypes.string.isRequired,
-  setPriority: Proptypes.func.isRequired
+  groupId: PropTypes.string,
+  sendMessage: PropTypes.func.isRequired,
+  defaultPriority: PropTypes.string.isRequired,
+  setPriority: PropTypes.func.isRequired
 };
 
 export default ChatArea;

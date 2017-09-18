@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 
 import { signIn, googleAuth } from '../../actions/userActions';
@@ -42,19 +42,38 @@ class SignInForm extends Component {
     event.preventDefault();
     this.props.signIn(this.state)
       .then(() => {
-        browserHistory.push('/dashboard');
+        if (this.props.error.message || this.props.error.Error) {
+          Materialize.toast(this.props.error.message || this.props.error.Error, 3000, 'rounded error-toast');
+        } else {
+          Materialize.toast('Login in successful', 3000, 'rounded success-toast');
+          browserHistory.push('/dashboard');
+        }
       });
   }
 
+  /**
+   * authenticates google users and signs them up /signs them in
+   * @method googleSignIn
+   * @param {object} response 
+   * @memberof SignInForm
+   * @returns {undefined}
+   */
   googleSignIn(response) {
-    const userData = {
-      email: response.profileObj.email,
-      username: response.profileObj.givenName
-    };
-    this.props.googleAuth(userData)
-      .then(() => {
-        browserHistory.push('/dashboard');
-      });
+    if (response.accessToken) {
+      const userData = {
+        email: response.profileObj.email,
+        username: response.profileObj.givenName
+      };
+      this.props.googleAuth(userData)
+        .then(() => {
+          if (this.props.error && this.props.error.Error) {
+            Materialize.toast('Login error', 3000, 'rounded error-toast');
+          } else {
+            Materialize.toast(this.props.auth.message, 3000, 'rounded success-toast');
+            browserHistory.push('/dashboard');
+          }
+        });
+    }
   }
 
   /**
@@ -122,7 +141,8 @@ class SignInForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.errors.error
+  error: state.errors.error,
+  auth: state.user
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -131,11 +151,16 @@ const mapDispatchToProps = dispatch => ({
 });
 
 SignInForm.propTypes = {
-  signIn: Proptypes.func.isRequired,
-  forgotPassword: Proptypes.func.isRequired,
-  googleAuth: Proptypes.func.isRequired
+  signIn: PropTypes.func.isRequired,
+  forgotPassword: PropTypes.func.isRequired,
+  googleAuth: PropTypes.func.isRequired,
+  error: PropTypes.shape({ message: PropTypes.string, Error: PropTypes.string }).isRequired,
+  auth: PropTypes.shape({ message: PropTypes.string }).isRequired
 };
 
+SignInForm.defaultProps = {
+  error: {}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
 

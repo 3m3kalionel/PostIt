@@ -66,7 +66,6 @@ module.exports = {
     User.findOne({ where: { email: req.body.email } })
       .then((foundUser) => {
         if (foundUser) {
-          console.log('foundUser', foundUser);
           const token = jwt.sign({
             username: foundUser.username,
             email: foundUser.email,
@@ -110,7 +109,6 @@ module.exports = {
                 });
               })
               .catch((error) => {
-                console.log('error', error);
                 res.status(400).json({
                   Error: error.errors[0].message
                 });
@@ -177,7 +175,7 @@ module.exports = {
     const encodedEmail = req.params.token;
     const decode = jwt.decode(encodedEmail);
     const email = decode.email;
-    User.findOne({
+    return User.findOne({
       where: {
         email
       }
@@ -189,7 +187,13 @@ module.exports = {
         });
       }
       const password = bcrypt.hashSync(req.body.newPassword, user.salt);
-      user.update({ password });
+      return user.update({ password })
+        .then(() => {
+          res.status(200).json({
+            sucess: true,
+            message: 'Password reset successfully'
+          });
+        });
     }).catch(error => res.status(500).json({
       success: false,
       message: error.message
