@@ -6,12 +6,10 @@ import routes from './Routes';
 
 import store from './store';
 import './sass/common.scss';
-import Dashboard from './components/dashboard/Dashboard';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes}>
-    </Router>
+    <Router history={browserHistory} routes={routes} />
   </Provider>,
   document.getElementById('app')
 );
