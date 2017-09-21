@@ -60,11 +60,11 @@ class SignInForm extends Component {
    */
   googleSignIn(response) {
     if (response.accessToken) {
-      const userData = {
+      const userDetails = {
         email: response.profileObj.email,
         username: response.profileObj.givenName
       };
-      this.props.googleAuth(userData)
+      this.props.googleAuth(userDetails)
         .then(() => {
           if (this.props.error && this.props.error.Error) {
             Materialize.toast('Login error', 3000, 'rounded error-toast');
@@ -146,8 +146,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: userData => dispatch(signIn(userData)),
-  googleAuth: userData => dispatch(googleAuth(userData))
+  signIn: userDetails => dispatch(signIn(userDetails)),
+  googleAuth: userDetails => dispatch(googleAuth(userDetails))
 });
 
 SignInForm.propTypes = {

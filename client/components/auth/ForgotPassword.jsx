@@ -37,7 +37,7 @@ class ForgotPassword extends Component {
     event.preventDefault();
     this.props.verifyUser(this.state).then(() => {
       Materialize.toast('Password reset link has been sent to your email', 4000, 'success-toast');
-    }).catch(Materialize.toast(''));
+    }).catch(Materialize.toast('email does not exist', 3000, 'error-toast'));
   }
 
   /**
@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <div className="reset-container0">
-        <form onSubmit={this.onSubmit}>
+        <form id="forgot-password" onSubmit={this.onSubmit}>
           <h4>forgot password</h4>
           <div className="input-field col-s6">
             <input

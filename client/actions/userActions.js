@@ -3,9 +3,9 @@ import axios from 'axios';
 import { user, ERROR_OCCURRED } from './actionTypes';
 import { setToken } from '../utils/manageToken';
 
-export const signUp = userData => (
+export const signUp = userDetails => (
   dispatch => (
-    axios.post('/api/v1/user/signup', userData)
+    axios.post('/api/v1/user/signup', userDetails)
       .then(({ data: { user: newUser, token } }) => {
         setToken(token);
         dispatch({
@@ -23,9 +23,9 @@ export const signUp = userData => (
   )
 );
 
-export const signIn = userData => (
+export const signIn = userDetails => (
   dispatch => (
-    axios.post('/api/v1/user/signin', userData)
+    axios.post('/api/v1/user/signin', userDetails)
       .then(({ data: { user: loggedInUser, token } }) => {
         setToken(token);
         localStorage.setItem('postit-token', token);
@@ -43,9 +43,9 @@ export const signIn = userData => (
   )
 );
 
-export const googleAuth = userData => (
+export const googleAuth = userDetails => (
   dispatch => (
-    axios.post('/api/v1/user/google_auth', userData)
+    axios.post('/api/v1/user/google_auth', userDetails)
       .then(({ data: { user: newUser, token } }) => {
         setToken(token);
         dispatch({

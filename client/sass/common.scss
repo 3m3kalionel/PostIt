@@ -217,6 +217,31 @@ a#forgot-password {
   margin-top: 10px;
 }
 
+#forgot-password h4,
+#reset-password {
+  background-color: #fff;
+  padding: 15px;
+  color: #26A69A;
+}
+
+#forgot-password div.input-field.col-s6 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+form#forgot-password,
+form#reset-password {
+  padding-bottom: 15px;
+  background-color: #F5F1EE;
+  border-radius: 2px;
+  box-shadow: 1px 1px 5px #888888;
+  padding-bottom: 15px;
+}
+
+#reset-password {
+  margin-top: 20px;
+}
+
 a#forgot-password:hover {
   color: #2bbbad;
   border-bottom: 1px #2bbbad dotted;
@@ -412,4 +437,9 @@ p.priority {
 nav ul li {
   margin-left: 8px;
   margin-right: 8px;
+}
+
+[type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
+  padding-left: 23px;
+  padding-right: 11px;
 }

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * @class ChatInput
+ * @class MessageInput
  * @extends {Component}
  */
-class ChatInput extends Component {
+class MessageInput extends Component {
   /**
-   * Creates an instance of ChatInput.
+   * Creates an instance of MessageInput.
    * @param {object} props 
-   * @memberof ChatInput
+   * @memberof MessageInput
    */
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class ChatInput extends Component {
   /**
    * updates state as user's input changes
    * @method handleInputChange
-   * @memberof ChatInput
+   * @memberof MessageInput
    * @param {object} event
    * @returns {undefined}
    */
@@ -34,7 +34,7 @@ class ChatInput extends Component {
   /**
    * clears the text input field
    * @method clearMessage
-   * @memberof ChatInput
+   * @memberof MessageInput
    * @param {object} event
    * @returns {undefined}
    */
@@ -44,7 +44,7 @@ class ChatInput extends Component {
 
   /**
    * @returns {Object} component
-   * @memberof ChatInput
+   * @memberof MessageInput
    */
   render() {
     const { onSubmit } = this.props;
@@ -66,8 +66,8 @@ class ChatInput extends Component {
   }
 }
 
-ChatInput.propTypes = {
+MessageInput.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-export default ChatInput;
+export default MessageInput;

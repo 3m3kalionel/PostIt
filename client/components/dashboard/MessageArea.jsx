@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import AddButton from './AddButton';
-import ChatInput from './ChatInput';
+import MessageInput from './MessageInput';
 import MessageList from './MessageList';
 import AddUserModal from './AddUserModal';
 import CreateGroupModal from './CreateGroupModal';
 
 /**
  * React component that displays the chat section
- * @class ChatArea
+ * @class MessageArea
  * @extends {Component}
 */
-class ChatArea extends Component {
+class MessageArea extends Component {
   /**
    *
-   * @method renderChatArea
-   * @memberof ChatArea
+   * @method renderMessageArea
+   * @memberof MessageArea
    * @returns {object} a chat area component
   */
-  renderChatArea() {
+  renderMessageArea() {
     const { defaultPriority } = this.props;
     const PriorityButtons = () => (
       <div>
@@ -57,7 +57,7 @@ class ChatArea extends Component {
     return (
       <div id="chat-input">
         <MessageList groupId={this.props.groupId} />
-        <ChatInput onSubmit={this.props.sendMessage} />
+        <MessageInput onSubmit={this.props.sendMessage} />
         <PriorityButtons />
         <AddButton />
       </div>
@@ -68,7 +68,7 @@ class ChatArea extends Component {
    * 
    * @method renderUserModal
    * @returns {Object} a modal component
-   * @memberof ChatArea
+   * @memberof MessageArea
    */
   renderUserModal() {
     return (
@@ -79,7 +79,7 @@ class ChatArea extends Component {
   /**
    * @method renderCreateGroupModal
    * @returns {Component} a modal comoponent
-   * @memberof ChatArea
+   * @memberof MessageArea
    */
   renderGroupModal() {
     return (
@@ -89,12 +89,12 @@ class ChatArea extends Component {
 
   /**
    * @returns {Object} component
-   * @memberof ChatArea
+   * @memberof MessageArea
   */
   render() {
     return (
       <div className="chat-container">
-        {this.renderChatArea()}
+        {this.renderMessageArea()}
         {this.renderUserModal()}
         {this.renderGroupModal()}
       </div>
@@ -102,15 +102,15 @@ class ChatArea extends Component {
   }
 }
 
-ChatArea.defaultProps = {
+MessageArea.defaultProps = {
   groupId: ''
 };
 
-ChatArea.propTypes = {
+MessageArea.propTypes = {
   groupId: PropTypes.string,
   sendMessage: PropTypes.func.isRequired,
   defaultPriority: PropTypes.string.isRequired,
   setPriority: PropTypes.func.isRequired
 };
 
-export default ChatArea;
+export default MessageArea;

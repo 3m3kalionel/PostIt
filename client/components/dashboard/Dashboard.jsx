@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import GroupsDiv from './GroupsDiv';
-import ChatArea from './ChatArea';
+import GroupsList from './GroupsList';
+import MessageArea from './MessageArea';
 import { createMessage } from '../../actions/messageActions';
 import { listGroups } from '../../actions/groupActions';
 
@@ -91,12 +91,12 @@ class Dashboard extends Component {
   render() {
     return (
       <div id="two-section-page">
-        <GroupsDiv
+        <GroupsList
           selectGroup={this.selectGroup}
           groups={this.props.groups}
           activeId={this.state.selectedGroup}
         />
-        <ChatArea
+        <MessageArea
           groupId={this.state.selectedGroup}
           sendMessage={this.sendMessage}
           setPriority={this.setPriority}
