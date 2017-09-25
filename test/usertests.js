@@ -17,7 +17,7 @@ describe('sign up route', () => {
   });
   it('creates a user on signup', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -28,7 +28,7 @@ describe('sign up route', () => {
 
   it('creates a user on signup', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.validUser2)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -38,7 +38,7 @@ describe('sign up route', () => {
 
   it('creates a user on signup', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.validUser3)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -48,7 +48,7 @@ describe('sign up route', () => {
 
   it('creates a user on signup', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.validUser10)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -61,7 +61,7 @@ describe('sign up route', () => {
 
   it('only takes a unique username', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -72,7 +72,7 @@ describe('sign up route', () => {
 
   it('rejects a user without a username', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.nullUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -83,7 +83,7 @@ describe('sign up route', () => {
 
   it('rejects an empty string username ', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.emptyStringUsername)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -98,7 +98,7 @@ describe('sign up route', () => {
 
   it('only accepts a unique email', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.notUniqueEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -109,7 +109,7 @@ describe('sign up route', () => {
 
   it('rejects a user with no email', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.nullEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -120,7 +120,7 @@ describe('sign up route', () => {
 
   it('rejects a poorly formatted email address', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.poorFormatEmailUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -131,7 +131,7 @@ describe('sign up route', () => {
 
   it('rejects a poorly formatted email address', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.poorFormatEmailUser2)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -142,7 +142,7 @@ describe('sign up route', () => {
 
   it('rejects a poorly formatted email address', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.poorFormatEmailUser3)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -154,7 +154,7 @@ describe('sign up route', () => {
   // user signup edge cases - password
   it('rejects user with a password of less than 8 characters', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -165,7 +165,7 @@ describe('sign up route', () => {
 
   it('rejects user with a password of more than 20 characters', (done) => {
     request(app)
-      .post('/api/user/signup')
+      .post('/api/v1/user/signup')
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -178,7 +178,7 @@ describe('sign up route', () => {
 describe('Authentication route', () => {
   it('logs in registered users', (done) => {
     request(app)
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .send(user.validUser1)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -189,7 +189,7 @@ describe('Authentication route', () => {
 
   it('prevents unregistered users from logging in', (done) => {
     request(app)
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .send(user.rightUsernameWrongPassword)
       .end((err, res) => {
         expect(res.body.message).to.equal('Username and password do not match');
@@ -199,7 +199,7 @@ describe('Authentication route', () => {
 
   it('prevents unregistered users from logging in', (done) => {
     request(app)
-      .post('/api/user/signin')
+      .post('/api/v1/user/signin')
       .send(user.wrongUsername)
       .end((err, res) => {
         expect(res.body.message).to.equal('Username not found');

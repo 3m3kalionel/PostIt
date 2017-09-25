@@ -1,0 +1,29 @@
+{
+  "name": "PostIt",
+  "scripts": {
+  },
+  "env": {
+    "HEROKU_POSTGRESQL_AMBER_URL": {
+      "required": true
+    },
+    "JWT_SECRET": {
+      "required": true
+    },
+    "SMS_ACCESS_TOKEN": {
+      "required": true
+    },
+    "SMS_PUBLIC_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

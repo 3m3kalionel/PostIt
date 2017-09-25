@@ -4,11 +4,12 @@ import { member, ERROR_OCCURRED } from './actionTypes';
 
 export const addMember = (groupId, userId) => (
   dispatch => (
-    axios.post(`/api/group/${groupId}/user`, { userId })
-      .then(({ data: { user } }) => {
+    axios.post(`/api/v1/group/${groupId}/user`, { userId })
+      .then(({ data: { user, message } }) => {
         dispatch({
           type: member.ADD_SUCCESS,
           member: user,
+          message,
           groupId
         });
       })
@@ -23,7 +24,7 @@ export const addMember = (groupId, userId) => (
 
 export const listMembers = groupId => (
   dispatch => (
-    axios.get(`/api/group/${groupId}/users`)
+    axios.get(`/api/v1/group/${groupId}/users`)
       .then(({ data }) => {
         dispatch({
           type: member.LIST_SUCCESS,
@@ -40,9 +41,9 @@ export const listMembers = groupId => (
   )
 );
 
-export const searchUsers = (username) => {
-  return (dispatch) => {
-    axios.get(`/api/users?q=${username}`)
+export const searchUsers = (username, offset, limit) => (
+  dispatch => (
+    axios.get(`/api/v1/users?username=${username}&limit=${limit}&offset=${offset}`)
       .then(({ data }) => {
         dispatch({
           type: member.SEARCH_SUCCESS,
@@ -55,6 +56,11 @@ export const searchUsers = (username) => {
           type: ERROR_OCCURRED,
           error: data
         });
-      });
-  };
-};
+      })
+  )
+);
+
+export const clearMemberSearchList = () => ({
+  type: 'CLEAR_SEARCH_LIST'
+});
+

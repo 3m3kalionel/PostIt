@@ -3,9 +3,9 @@ import axios from 'axios';
 import { user, ERROR_OCCURRED } from './actionTypes';
 import { setToken } from '../utils/manageToken';
 
-export const signUp = userData => (
+export const signUp = userDetails => (
   dispatch => (
-    axios.post('/api/user/signup', userData)
+    axios.post('/api/v1/user/signup', userDetails)
       .then(({ data: { user: newUser, token } }) => {
         setToken(token);
         dispatch({
@@ -18,13 +18,14 @@ export const signUp = userData => (
           type: ERROR_OCCURRED,
           error: data
         });
+        return data;
       })
   )
 );
 
-export const signIn = userData => (
+export const signIn = userDetails => (
   dispatch => (
-    axios.post('/api/user/signin', userData)
+    axios.post('/api/v1/user/signin', userDetails)
       .then(({ data: { user: loggedInUser, token } }) => {
         setToken(token);
         localStorage.setItem('postit-token', token);
@@ -42,22 +43,16 @@ export const signIn = userData => (
   )
 );
 
-export const resetPassword = (token, resetDetails) => {
-  return dispatch => (
-    axios.post(`/api/user/reset/${token}`, resetDetails)
-      .then(({ data }) => {
-        if (data.message === 'Invalid verification token') {
-          dispatch({
-            type: ERROR_OCCURRED,
-            error: data.message
-          });
-        } else {
-          dispatch({
-            type: user.RESET_SUCCESS,
-            response: data.success
-          });
-        }
-        return data.message;
+export const googleAuth = userDetails => (
+  dispatch => (
+    axios.post('/api/v1/user/google_auth', userDetails)
+      .then(({ data: { user: newUser, token } }) => {
+        setToken(token);
+        dispatch({
+          type: user.AUTH_SUCCESS,
+          user: newUser,
+          message: 'Successful'
+        });
       })
       .catch(({ response: { data } }) => {
         dispatch({
@@ -65,12 +60,30 @@ export const resetPassword = (token, resetDetails) => {
           error: data
         });
       })
-  );
+  )
+);
+
+export const resetPassword = (token, resetDetails) => {
+  return dispatch => {
+    return axios.post(`/api/v1/user/reset/${token}`, resetDetails)
+      .then(({ data }) => {
+        dispatch({
+          type: user.RESET_SUCCESS,
+          response: data.success
+        });
+      })
+      .catch(({ response: { data } }) => {
+        dispatch({
+          type: ERROR_OCCURRED,
+          error: data
+        });
+      });
+  };
 };
 
 export const verifyUser = userEmail => (
   dispatch => (
-    axios.post('/api/user/verify', userEmail)
+    axios.post('/api/v1/user/verify', userEmail)
       .then(({ data }) => {
         dispatch({
           type: user.VERIFY_SUCCESS,
@@ -88,7 +101,7 @@ export const verifyUser = userEmail => (
 
 export const listMembers = groupId => (
   dispatch => (
-    axios.get(`/api/group/${groupId}/users`)
+    axios.get(`/api/v1/group/${groupId}/users`)
       .then(({ data }) => {
         dispatch({
           type: member.LIST_SUCCESS,

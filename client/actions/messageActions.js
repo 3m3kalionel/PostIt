@@ -2,27 +2,25 @@ import axios from 'axios';
 
 import { message, ERROR_OCCURRED } from './actionTypes';
 
-export const createMessage = (groupId, messageData) => (
-  dispatch => (
-    axios.post(`/api/group/${groupId}/message`, messageData)
-      .then(({ data: { message: newMessage } }) => {
-        dispatch({
-          type: message.CREATE_SUCCESS,
-          message: newMessage
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: ERROR_OCCURRED,
-          error,
-        });
-      })
-  )
+export const createMessage = (groupId, messageDetails) => dispatch => (
+  axios.post(`/api/v1/group/${groupId}/message`, messageDetails)
+    .then(({ data: { message: newMessage } }) => {
+      dispatch({
+        type: message.CREATE_SUCCESS,
+        message: newMessage
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: ERROR_OCCURRED,
+        error,
+      });
+    })
 );
 
 export const listMessages = groupid => (
   dispatch => (
-    axios.get(`/api/group/${groupid}/messages`)
+    axios.get(`/api/v1/group/${groupid}/messages`)
       .then(({ data }) => {
         dispatch({
           type: message.LIST_SUCCESS,

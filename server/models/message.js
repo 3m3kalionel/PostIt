@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     userId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER
+    groupId: DataTypes.INTEGER,
+    priority: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   });
   Message.associate = (models) => {
     Message.belongsTo(models.Group, {

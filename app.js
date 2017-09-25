@@ -10,7 +10,7 @@ import routes from './server/routes';
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
-const publicPath = path.resolve(__dirname, '/public');
+const publicPath = path.resolve(__dirname, '/public'); // eslint-disable-line
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -18,16 +18,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 if (process.env.NODE_ENV === 'development') {
   const webpackCompiler = webpack(webpackConfig);
-  app.use(require('webpack-dev-middleware')(webpackCompiler, {
+  app.use(require('webpack-dev-middleware')(webpackCompiler, { // eslint-disable-line
     publicPath: webpackConfig.output.publicPath
   }));
-  app.use(require('webpack-hot-middleware')(webpackCompiler, {
+  app.use(require('webpack-hot-middleware')(webpackCompiler, { // eslint-disable-line
     log: false,
     path: '/__webpack_hmr',
     heartbeat: 2 * 1000
   }));
 }
-app.use(express.static('public')); // set up our public path for our app
+app.use(express.static('public'));
 
 app.use(passport.session());
 routes(app);

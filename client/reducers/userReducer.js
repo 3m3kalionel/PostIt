@@ -6,7 +6,8 @@ const userReducer = (state = {}, action = {}) => {
       return {
         ...state,
         isAuthenticated: true,
-        ...action.user
+        ...action.user,
+        message: action.message
       };
     case group.CREATE_SUCCESS:
       return {

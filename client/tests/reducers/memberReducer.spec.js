@@ -1,6 +1,5 @@
-import expect from 'expect';
-import memberReducer from '../reducers/memberReducer';
-import * as types from '../actions/actionTypes';
+import memberReducer from '../../reducers/memberReducer';
+import * as types from '../../actions/actionTypes';
 
 describe('member reducer', () => {
   it('should return the initial state', () => {

@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 
-import Proptypes from 'prop-types';
-
-
-import { signUp } from '../../actions/userActions';
-
-const responseGoogle = (response) => {
-  console.log('googleResponse', response);
-  const userObject = {
-    username: response.profileObj.name,
-    email: response.profileObj.email
-  };
-};
+import { signUp, googleAuth } from '../../actions/userActions';
 
 /**
  * React component that displays the sign up form
@@ -40,29 +30,60 @@ class SignUpForm extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.googleSignUp = this.googleSignUp.bind(this);
   }
 
   /**
   * triggers an action that registers a new user
   * @method onSubmit
-  * @param {event} event
+  * @param {object} event
   * @memberof SignUpForm
-  * @return {void}
+  * @return {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
     this.props.signUp(this.state)
       .then(() => {
-        browserHistory.push('/dashboard');
+        if (this.props.error) {
+          Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
+        } else {
+          Materialize.toast('Signup successful', 3000, 'rounded success-toast');
+          browserHistory.push('/dashboard');
+        }
       });
+  }
+
+  /**
+   * authenticates google users and signs them up /signs them in
+   * @method googleSignUp
+   * @param {object} response 
+   * @memberof SignUpForm
+   * @returns {undefined}
+   */
+  googleSignUp(response) {
+    if (response.accessToken) {
+      const userData = {
+        email: response.profileObj.email,
+        username: response.profileObj.givenName
+      };
+      this.props.googleAuth(userData)
+        .then(() => {
+          if (this.props.error && this.props.error.Error) {
+            Materialize.toast('Login error', 3000, 'rounded error-toast');
+          } else {
+            Materialize.toast(this.props.auth.message, 3000, 'rounded success-toast');
+            browserHistory.push('/dashboard');
+          }
+        });
+    }
   }
 
   /**
   * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
+  * @param {object} event
   * @memberof SignUpForm
-  * @return {void}
+  * @return {undefined}
   */
   handleInputChange(event) {
     this.setState({
@@ -71,7 +92,7 @@ class SignUpForm extends Component {
   }
 
   /**
-   * @returns {Object} component
+   * @returns {object} component
    * @memberof SignUpForm
   */
   render() {
@@ -83,7 +104,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="username"
             type="text"
-            className="validate"
             required
           />
           <label htmlFor="username">Username</label>
@@ -103,7 +123,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="password"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password">Password</label>
@@ -113,7 +132,6 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="passwordConfirm"
             type="password"
-            className="validate"
             required
           />
           <label htmlFor="password-confirm">Confirm Password</label>
@@ -123,19 +141,20 @@ class SignUpForm extends Component {
             onChange={this.handleInputChange}
             id="phone"
             type="number"
-            className="validate"
             required
           />
           <label htmlFor="phone">Phone Number</label>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Submit</button>
+          <button className="btn" type="submit">Sign up</button>
           <GoogleLogin
-            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-          />
+            clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
+            buttonText="Signup With Google"
+            onSuccess={this.googleSignUp}
+            onFailure={this.googleSignUp}
+          >
+            <i className="fa fa-google" aria-hidden="true" /> Sign up with Google
+          </GoogleLogin>
         </div>
       </form>
     );
@@ -143,15 +162,24 @@ class SignUpForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.errors.error
+  error: state.errors.error,
+  auth: state.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: userData => dispatch(signUp(userData))
+  signUp: userData => dispatch(signUp(userData)),
+  googleAuth: userData => dispatch(googleAuth(userData))
 });
 
 SignUpForm.propTypes = {
-  signUp: Proptypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
+  googleAuth: PropTypes.func.isRequired,
+  error: PropTypes.shape({ Error: PropTypes.string }).isRequired,
+  auth: PropTypes.shape({ message: PropTypes.string }).isRequired
+};
+
+SignUpForm.defaultProps = {
+  error: {}
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

@@ -1,6 +1,5 @@
-import expect from 'expect';
-import userReducer from '../reducers/userReducer';
-import * as types from '../actions/actionTypes';
+import userReducer from '../../reducers/userReducer';
+import * as types from '../../actions/actionTypes';
 
 describe('user reducer', () => {
   it('should return the initial state', () => {

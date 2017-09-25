@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { resetPassword } from '../../actions/userActions';
 
 /**
- * React component that displays the reset password form
+ * React component that displays the password reset form
  * @class ResetPassword
  * @extends {Component}
  */
 class ResetPassword extends Component {
   /**
    * Creates an instance of ResetPassword.
-   * @param {Object} props 
+   * @param {object} props 
    * @memberof ResetPassword
    */
   constructor(props) {
@@ -31,22 +31,26 @@ class ResetPassword extends Component {
   /**
   * triggers an action that resets a user's password
   * @method onSubmit
-  * @param {event} event
-  * @memberof LandingPage
-  * @return {void}
+  * @param {object} event
+  * @memberof ResetPassword
+  * @returns {undefined}
   */
   onSubmit(event) {
     event.preventDefault();
     const token = this.props.params.token;
-    this.props.resetPassword(token, this.state);
+    this.props.resetPassword(token, this.state)
+      .then(() => {
+        Materialize.toast('Password reset successfully', 3000, 'success-toast');
+        browserHistory.push('/dashboard');
+      }).catch(error => Materialize.toast(error.message, 3000, 'rounded error-toast'));
   }
 
   /**
-  * updates state as user's input changesd
+  * updates state as user's input changes
   * @method handleInputChange
-  * @param {event} event
-  * @memberof LandingPage
-  * @return {void}
+  * @param {object} event
+  * @memberof ResetPassword
+  * @returns {undefined}
   */
   handleInputChange(event) {
     event.preventDefault();
@@ -56,13 +60,13 @@ class ResetPassword extends Component {
   }
 
   /**
-   * @returns {Object} component
-   * @memberof ChatArea
+   * @returns {object} component
+   * @memberof ResetPassword
   */
   render() {
     return (
       <div className="reset-container0">
-        <form onSubmit={this.onSubmit}>
+        <form id="reset-password" onSubmit={this.onSubmit}>
           <h4>Reset password</h4>
           <div className="input-field col-s6">
             <input
@@ -96,11 +100,13 @@ class ResetPassword extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  resetPassword: (token, resetDetails) => dispatch(resetPassword(token, resetDetails))
+  resetPassword: (token, resetDetails) =>
+    dispatch(resetPassword(token, resetDetails))
 });
 
 ResetPassword.propTypes = {
-  resetPassword: Proptypes.func.isRequired
+  resetPassword: PropTypes.func.isRequired,
+  params: PropTypes.shape({ token: PropTypes.string }).isRequired
 };
 
 export default connect(null, mapDispatchToProps)(ResetPassword);

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import Header from './common/Header';
+import Header from './auth/common/Header';
 import DashboardNavbar from './dashboard/DashboardNavbar';
 
-
+/**
+ * @class App
+ * @extends {Component}
+ */
 class App extends Component {
   renderHeader() {
     const location = window.location.pathname;
-    if (location === '/') {
+    if (location === '/' || /user\/reset/.test(location)) {
       return <Header />;
     }
-    return <DashboardNavbar />
+    return <DashboardNavbar />;
   }
 
   render() {

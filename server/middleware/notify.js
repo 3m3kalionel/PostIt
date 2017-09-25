@@ -14,7 +14,7 @@ const tp = nodemailer.createTransport({
 }, {
   from: 'Post-IT <no-reply@pangalink.net>',
   headers: {
-    'X-Laziness-level': 1000 // just an example header, no need to use this
+    'X-Laziness-level': 1000
   }
 });
 
@@ -32,7 +32,7 @@ function sendMail(messageBody, user) {
     text: messageBody.content,
 
     html: `<b>Hello,</b> ${user.username}. <p>Here's a new notification from PostIt... </p>
-          <p>message: <b>${messageBody.content}</b></p><p>from: <b>${messageBody.content}</b></p>`,
+          <p>message: <b>${messageBody.content}</b></p>`, // <p>from: <b>${messageBody.content}</b></p>
 
     attachments: []
   };
@@ -53,7 +53,7 @@ function sendText(messageBody, user) {
   const payload = {
     to: user.phone,
     from: 'PostIT',
-    message: 'Hello, ' + user.username + ', Here\'s a new notification from PostIt... ' +  'message: ' + messageBody.content + ' from: ' + messageBody.content + ' 😎',
+    message: 'Hello, ' + user.username + ', Here\'s a new notification from PostIt... ' +  'message: ' + messageBody.content + ' from: ' // + messageBody.content + ' 😎',
   };
   console.log('Sending Text Message', user.phone); // eslint-disable-line
   jusibe.sendSMS(payload)
@@ -65,12 +65,7 @@ function sendText(messageBody, user) {
     });
 }
 
-function notifyInApp() {
-
-};
-
 export default function notify(messageBody) {
-  console.log('messageBody', messageBody);
   switch (messageBody.priority) {
     case 'critical':
       return messageBody.members.forEach((member) => {
@@ -78,10 +73,7 @@ export default function notify(messageBody) {
         sendText(messageBody, member);
         console.log('notifying in-app users');
       });
-    // case 'normal':
-    //   return messageBody.members.forEach((member) => {
-    //     return sendMail(messageBody, member);
-    //   });
+
     case 'urgent':
       return messageBody.members.forEach((member) => {
         sendMail(messageBody, member);

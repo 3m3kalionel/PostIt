@@ -1,6 +1,5 @@
-import expect from 'expect';
-import groupReducer from '../reducers/groupReducer';
-import * as types from '../actions/actionTypes';
+import groupReducer from '../../reducers/groupReducer';
+import * as types from '../../actions/actionTypes';
 
 describe('group reducer', () => {
   it('should return the initial state', () => {
@@ -16,11 +15,13 @@ describe('group reducer', () => {
         id: 1,
         name: 'The dreamers, the believers',
         description: 'Believers in the law of atttraction'
-      }
+      },
+      message: 'Group created'
     })).toEqual(
       {
         1: {
           members: [],
+          message: 'Group created',
           messages: []
         }
       }

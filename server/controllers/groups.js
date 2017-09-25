@@ -17,7 +17,12 @@ module.exports = {
               .then(() => res.status(201).json({
                 success: true,
                 message: 'Group created',
-                group
+                group: {
+                  id: group.id,
+                  name: group.name,
+                  description: group.description,
+                }
+                
               }));
           });
         })
@@ -41,7 +46,7 @@ module.exports = {
       .then((group) => {
         return group
           .getUsers({
-            attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
+            attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt'] }
           }).then(members => res.status(200).json(members));
       }).catch(error => res.status(404).send(error));
   },

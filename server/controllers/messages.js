@@ -10,6 +10,7 @@ module.exports = {
         content: req.body.content,
         userId: req.decoded.id,
         groupId: req.params.groupid,
+        priority: req.body.priority
       })
       .then((message) => {
         notify(req.body);

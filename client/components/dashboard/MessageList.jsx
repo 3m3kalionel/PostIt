@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { listMessages } from '../../actions/messageActions';
 import { listMembers } from '../../actions/memberActions';
@@ -13,14 +14,49 @@ import { listMembers } from '../../actions/memberActions';
  */
 class MessageList extends Component {
   /**
-   * @param{object} nextProps
+   * @param {object} nextProps
    * @memberof MessageList
-   * @returns {void}
+   * @returns {undefined}
    */
   componentWillReceiveProps(nextProps) {
     if (this.props.groupId !== nextProps.groupId) {
       this.props.getMessages(nextProps.groupId);
       this.props.getMembers(nextProps.groupId);
+    }
+  }
+
+  /**
+   * @method getUsername
+   * @param {number} userId
+   *  @memberof MessageList
+   * @return {string} the message sender's usename
+   */
+  getUsername(userId) {
+    if (userId) {
+      const { members } = this.props.group;
+      const user = members && members.filter((member) => {
+        return member.id === userId;
+      })[0];
+      return user && user.username;
+    }
+  }
+
+  /**
+   * @method formatTime
+   * @param {object} date 
+   * @returns {string} returns the time the message is sent
+   * @memberof MessageList
+   */
+  formatTime(date) {
+    if (date) {
+      const testTime = moment(date).fromNow().split(' ');
+      let time = moment(date).fromNow();
+      if (testTime.includes('hours') && testTime[0] < 23) {
+        time = moment(date).calendar();
+      } else if (testTime[0] > 23) {
+        time = moment(date).fromNow();
+      }
+      return time;
     }
   }
 
@@ -34,17 +70,17 @@ class MessageList extends Component {
     if (Array.isArray(messages) && messages.length > 0) {
       messageComponent = messages.map(message => (
         <li key={message.id}>
-          <div className="card blue-grey darken-1">
+          <div className="card">
             <div className="card-content">
               <p>{message.content}</p>
+              <p className="priority">{message.priority}</p>
+              <p className="sender">{this.getUsername(message.userId)}</p>
+              <p className="time-sent">{this.formatTime(message.createdAt)}</p>
             </div>
           </div>
         </li>
       ));
     } else {
-      // messageComponent = <div>
-      //   <p>No message to display</p>
-      // </div>
       return (
         <div id="no-messages">
           <p>No group messages to display.
@@ -54,11 +90,9 @@ class MessageList extends Component {
     }
 
     return (
-      // <div className="messages message-list-container">
       <ul id="message-list">
         {messageComponent}
       </ul>
-      // </div>
     );
   }
 }
@@ -86,13 +120,13 @@ MessageList.defaultProps = {
 };
 
 MessageList.propTypes = {
-  groupId: Proptypes.string,
-  getMembers: Proptypes.func.isRequired,
-  getMessages: Proptypes.func.isRequired,
-  group: Proptypes.oneOfType([
-    Proptypes.object,
-    Proptypes.array,
-    Proptypes.string
+  groupId: PropTypes.string,
+  getMembers: PropTypes.func.isRequired,
+  getMessages: PropTypes.func.isRequired,
+  group: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+    PropTypes.string
   ])
 };
 

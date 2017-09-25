@@ -14,7 +14,6 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       email: {
@@ -28,7 +27,6 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       salt: {
@@ -45,6 +43,8 @@ module.exports = {
     });
   },
   down(queryInterface /* , Sequelize */) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Users', {
+      cascade: true
+    });
   }
 };

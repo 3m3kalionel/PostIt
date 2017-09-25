@@ -23,7 +23,6 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, pass
     if (!user) {
       return done({ message: 'Username not found' }, false);
     }
-    // Compare database salt to the hash of incoming password
     const reqPasswordHash = bcrypt.hashSync(req.body.password, user.salt);
 
     if (user.password === reqPasswordHash) {
