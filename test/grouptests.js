@@ -2,6 +2,7 @@ import chai from 'chai';
 import request from 'supertest';
 import bcrypt from 'bcrypt';
 import mocha from 'mocha';
+import winston from 'winston';
 import app from '../app';
 import models from '../server/models';
 import group from './helpers/groups';
@@ -44,7 +45,7 @@ describe('group route', () => {
         userToken = token;
         return promisify(user.validUser2);
       }, (err) => {
-        console.log(err, 'this is an error');
+        winston.log(err, 'this is an error');
       })
       .then((token) => {
         userToken2 = token;
@@ -58,7 +59,7 @@ describe('group route', () => {
         userToken10 = token;
         done();
       }).catch((err) => {
-        console.log(err, 'this are the errors we have');
+        winston.log(err, 'this are the errors we have');
         done();
       });
   });

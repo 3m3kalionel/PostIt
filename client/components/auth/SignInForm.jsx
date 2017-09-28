@@ -6,7 +6,6 @@ import GoogleLogin from 'react-google-login';
 
 import { signIn, googleAuth } from '../../actions/userActions';
 
-
 /**
  * React component that displays the sign in form
  * @class SignInForm

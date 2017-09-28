@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <div className="reset-container0">
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} id="forgot-password">
           <h4>forgot password</h4>
           <div className="input-field col-s6">
             <input

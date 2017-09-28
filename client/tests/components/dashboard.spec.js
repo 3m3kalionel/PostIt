@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { shallow, mount } from 'enzyme';
-// import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -57,9 +56,7 @@ describe('Dashboard Component', () => {
   });
   // it('should render the GroupsList Component', () => {
   //   const alldivs = dashboard.find('div');
-  //   console.log("alldivs", alldivs.unrendered.props);
   //   alldivs.forEach((div) => {
-  //     console.log("divvvy", div);
   //   });
   //   expect(dashboard.find('Connect(Dashboard)').length).toEqual(1);
   // });

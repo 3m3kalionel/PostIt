@@ -8,7 +8,6 @@ const groupReducer = (state = {}, action = {}) => {
         [action.group.id]: {
           members: [],
           messages: [],
-          // message: ''
           message: action.message
         }
       };

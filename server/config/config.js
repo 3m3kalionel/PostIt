@@ -2,7 +2,7 @@ const dEnv = require('dotenv');
 
 dEnv.config();
 const env = process.env;
-console.log('Database url - ', process.env.DATABASE_URL)
+
 module.exports = {
   development: {
     username: 'postgres',

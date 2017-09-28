@@ -121,6 +121,15 @@ class SignUpForm extends Component {
         <div className="input-field">
           <input
             onChange={this.handleInputChange}
+            id="phone"
+            type="number"
+            required
+          />
+          <label htmlFor="phone">Phone Number</label>
+        </div>
+        <div className="input-field">
+          <input
+            onChange={this.handleInputChange}
             id="password"
             type="password"
             required
@@ -135,15 +144,6 @@ class SignUpForm extends Component {
             required
           />
           <label htmlFor="password-confirm">Confirm Password</label>
-        </div>
-        <div className="input-field">
-          <input
-            onChange={this.handleInputChange}
-            id="phone"
-            type="number"
-            required
-          />
-          <label htmlFor="phone">Phone Number</label>
         </div>
         <div id="button-div">
           <button className="btn" type="submit">Sign up</button>

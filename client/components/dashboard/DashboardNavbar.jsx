@@ -38,7 +38,7 @@ class Navbar extends Component {
             >
               <i
                 className="material-icons large tooltipped"
-                data-delat="50"
+                data-delay="50"
                 data-tooltip="Logout"
               >exit_to_app
               </i></Link></li>

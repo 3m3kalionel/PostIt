@@ -43,9 +43,7 @@ class AddUserModal extends Component {
     if (memberList && newMemberList && newMemberList.length > memberList.length) {
       this.setState({
         query: ''
-      }); // () => {
-      // this.props.search(this.state.query, this.state.offset, this.state.limit);
-      // });
+      });
     }
   }
 
@@ -211,7 +209,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 AddUserModal.defaultProps = {
-  // groupId: '',
   group: {
     members: []
   },
@@ -220,14 +217,10 @@ AddUserModal.defaultProps = {
 
 AddUserModal.propTypes = {
   group: PropTypes.shape({ message: PropTypes.string,
-    // members: PropTypes.array
   }).isRequired,
-  // error: PropTypes.shape({ message: PropTypes.string }).isRequired,
   search: PropTypes.func.isRequired,
   addMember: PropTypes.func.isRequired,
   clearSearchList: PropTypes.func.isRequired,
-  // searchResults: PropTypes.shape([]).isRequired,
-  // groupId: PropTypes.string worked after removing.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

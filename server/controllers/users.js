@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 import model from '../models';
+import mailVerificationCode from '../middleware/verify';
 
 
 dotenv.config();

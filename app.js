@@ -5,6 +5,7 @@ import passport from 'passport';
 import http from 'http';
 import path from 'path';
 import webpack from 'webpack';
+import winston from 'winston';
 import webpackConfig from './webpack.config.dev';
 import routes from './server/routes';
 
@@ -33,6 +34,6 @@ app.use(passport.session());
 routes(app);
 
 const server = http.createServer(app);
-server.listen(port, () => console.log('The server is running on port 8080'));
+server.listen(port, () => winston.log('The server is running on port 8080'));
 
 module.exports = server;
