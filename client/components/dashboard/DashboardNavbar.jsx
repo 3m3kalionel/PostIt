@@ -20,7 +20,7 @@ class Navbar extends Component {
       tooltip: 'Logout',
       position: 'bottom',
     });
-    $('.logout').click((event) => {
+    $('.my-logout').click(() => {
       $('#logout-button').tooltip('remove');
     });
   }
@@ -42,7 +42,7 @@ class Navbar extends Component {
           <ul className="right">
             <li><i className="large material-icons">notifications</i></li>
             <li id="logout-button">
-              <Link className="logout" to="logout">
+              <Link className="my-logout" to="logout">
                 <i
                   className="material-icons large tooltipped"
                   data-delay="50"
