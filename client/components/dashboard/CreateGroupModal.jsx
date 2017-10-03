@@ -9,7 +9,7 @@ import { createGroup } from '../../actions/groupActions';
  * @class ForgotPassword
  * @extends {Component}
  */
-class CreateGroupModal extends Component {
+export class CreateGroupModal extends Component {
   /**
    * Creates an instance of CreateGroupModal
    * @param {object} props 
@@ -84,7 +84,11 @@ class CreateGroupModal extends Component {
       <div id="new-group" className="modal">
         <div className="modal-content">
           <div className="row">
-            <form className="col s12" onSubmit={this.onSubmit}>
+            <form
+              id="create-group-modal"
+              className="col s12"
+              onSubmit={this.onSubmit}
+            >
               <div className="row">
                 <div className="input-field col s12">
                   <i className="material-icons prefix">account_circle</i>

@@ -103,6 +103,7 @@ MessageList.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    ...ownProps,
     group: state.groups[ownProps.groupId || 0]
   };
 };

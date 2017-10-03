@@ -11,7 +11,7 @@ import { signUp, googleAuth } from '../../actions/userActions';
  * @class ForgotPassword
  * @extends {Component}
  */
-class SignUpForm extends Component {
+export class SignUpForm extends Component {
   /**
    * Creates an instance of SignUpForm
    * @param {Object} props 
@@ -44,7 +44,7 @@ class SignUpForm extends Component {
     event.preventDefault();
     this.props.signUp(this.state)
       .then(() => {
-        if (this.props.error) {
+        if (this.props.error.message || this.props.error.Error) {
           Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
         } else {
           Materialize.toast('Signup successful', 3000, 'rounded success-toast');

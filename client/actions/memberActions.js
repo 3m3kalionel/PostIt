@@ -50,8 +50,7 @@ export const searchUsers = (username, offset, limit) => (
           list: data
         });
       })
-      .catch((error) => {
-        const data = error.response ? error.response.data : error;
+      .catch(({ response: { data } }) => {
         dispatch({
           type: ERROR_OCCURRED,
           error: data
@@ -61,6 +60,6 @@ export const searchUsers = (username, offset, limit) => (
 );
 
 export const clearMemberSearchList = () => ({
-  type: 'CLEAR_SEARCH_LIST'
+  type: member.CLEAR_SUCCESS
 });
 

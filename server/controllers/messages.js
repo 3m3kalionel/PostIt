@@ -5,6 +5,12 @@ const Message = models.Message;
 
 module.exports = {
   create(req, res) {
+    /**
+     *  function that creates a message object
+     *  @param {req} object
+     *  @param {res} object
+     *  @returns undefined
+     */
     Message
       .create({
         content: req.body.content,

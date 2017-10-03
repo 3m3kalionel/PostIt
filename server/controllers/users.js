@@ -10,6 +10,13 @@ dotenv.config();
 const User = model.User;
 
 module.exports = {
+  /**
+   * 
+   * creates a new user along with a unique json web token and returns a user object
+   * @param {object} req 
+   * @param {object} res 
+   * @returns {object} user
+   */
   create(req, res) {
     const username = req.body.username;
     const email = req.body.email;
@@ -60,6 +67,13 @@ module.exports = {
     });
   },
 
+  /**
+   * creates a user using google details if the user's email does not exist.
+   * signs a user in if the email exists
+   * @param {object} req 
+   * @param {object} res
+   * @returns {object} user
+   */
   googleAuth(req, res) {
     User.findOne({ where: { email: req.body.email } })
       .then((foundUser) => {
@@ -116,6 +130,13 @@ module.exports = {
       });
   },
 
+  /**
+   * 
+   * searches for a user using the query passed in the request object
+   * @param {object} req
+   * @param {object} res
+   * @return m
+   */
   listAll(req, res) {
     const { username, limit, offset } = req.query;
 

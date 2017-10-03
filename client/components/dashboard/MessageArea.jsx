@@ -4,8 +4,8 @@ import className from 'classnames';
 
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
-import AddUserModal from './AddUserModal';
-import CreateGroupModal from './CreateGroupModal';
+import AddUserModalForm from './AddUserModal';
+import CreateGroupModalForm from './CreateGroupModal';
 
 
 /**
@@ -84,34 +84,32 @@ class MessageArea extends Component {
     );
 
     const AddUserButton = () => (
-      <div className={priorityClassName}>
-        <li>
-          <a
-            href="#user-to-group"
-            className="btn-floating modal-trigger tooltipped float-button"
-            data-position="left"
-            data-delay="50"
-            data-tooltip="add user to group"
-          >
-            <i
-              className="large material-icons"
-            >person_add
-            </i>
-          </a>
-        </li>
-      </div>
-    );
-
-    const CreateGroupButton = () => (
-      <div>
-        <li><a
-          href="#new-group"
+      <li className={priorityClassName}>
+        <a
+          id="add-user-button"
+          href="#user-to-group"
           className="btn-floating modal-trigger tooltipped float-button"
           data-position="left"
           data-delay="50"
-          data-tooltip="create group"
-        ><i className="large material-icons">group_add</i></a></li>
-      </div>
+          data-tooltip="add user to group"
+        >
+          <i
+            className="large material-icons"
+          >person_add
+          </i>
+        </a>
+      </li>
+    );
+
+    const CreateGroupButton = () => (
+      <li><a
+        id="create-group-button"
+        href="#new-group"
+        className="btn-floating modal-trigger tooltipped float-button"
+        data-position="left"
+        data-delay="50"
+        data-tooltip="create group"
+      ><i className="large material-icons">group_add</i></a></li>
     );
 
     const AddButton = () => (
@@ -129,7 +127,10 @@ class MessageArea extends Component {
     return (
       <div id="chat-input">
         <MessageList groupId={this.props.groupId} />
-        <MessageInput onSubmit={this.props.sendMessage} isVisible={this.state.isVisible} />
+        <MessageInput
+          onSubmit={this.props.sendMessage}
+          isVisible={this.state.isVisible}
+        />
         <PriorityButtons />
         <AddButton />
       </div>
@@ -144,7 +145,7 @@ class MessageArea extends Component {
    */
   renderUserModal() {
     return (
-      <AddUserModal groupId={this.props.groupId} />
+      <AddUserModalForm groupId={this.props.groupId} />
     );
   }
 
@@ -155,7 +156,7 @@ class MessageArea extends Component {
    */
   renderGroupModal() {
     return (
-      <CreateGroupModal />
+      <CreateGroupModalForm />
     );
   }
 

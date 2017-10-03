@@ -97,11 +97,13 @@ export class Dashboard extends Component {
     return (
       <div id="two-section-page">
         <GroupsList
+          id="groups-list"
           selectGroup={this.selectGroup}
           groups={this.props.groups}
           activeId={this.state.selectedGroup}
         />
         <MessageArea
+          id="message-area"
           groupId={this.state.selectedGroup}
           sendMessage={this.sendMessage}
           setPriority={this.setPriority}

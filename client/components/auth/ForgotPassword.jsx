@@ -9,7 +9,7 @@ import { verifyUser } from '../../actions/userActions';
  * @class ForgotPassword
  * @extends {Component}
  */
-class ForgotPassword extends Component {
+export class ForgotPassword extends Component {
   /**
    * Creates an instance of ForgotPassword
    * @param {Object} props 
@@ -79,9 +79,12 @@ class ForgotPassword extends Component {
           </div>
           <div
             id="button-div"
-            onClick={() => this.props.revertForgotPassword()}
           >
-            <button className="btn">cancel</button>
+            <button
+              onClick={() => this.props.revertForgotPassword()}
+              className="btn"
+              id="cancel"
+            >cancel</button>
           </div>
         </form>
       </div>

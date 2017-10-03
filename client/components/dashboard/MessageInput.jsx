@@ -64,13 +64,21 @@ class MessageInput extends Component {
       'input-container': true,
     });
 
+    const submitClassName = classNames({
+      'waves-effect': true,
+      'waves-light': true,
+      btn: true,
+      hidden: this.state.message.length < 1
+    });
+
     return (
       <div className={inputClassnames}>
         <div id="message-input">
-          <textarea type="text" onChange={this.handleInputChange} value={message} />
+          <textarea id="input-area" type="text" onChange={this.handleInputChange} value={message} />
         </div>
         <button
-          className="waves-effect waves-light btn"
+          id="submit-button"
+          className={submitClassName}
           onClick={() =>
             onSubmit(message, this.clearMessage)}
         >

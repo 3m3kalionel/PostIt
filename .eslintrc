@@ -42,7 +42,8 @@
       "requireReturnType": true,
       "requireParamDescription": false,
       "requireReturnDescription": true
-    }]
+    }],
+    "max-len": [2, {"code": 80, "tabWidth": 4, "ignoreUrls": true}]
   }
 }
    

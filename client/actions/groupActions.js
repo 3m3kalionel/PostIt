@@ -32,13 +32,11 @@ export const listGroups = () => (dispatch) => {
       });
       return data;
     })
-    .catch((error) => {
-      const data = error.response ? error.response.data : error;
+    .catch(({ response: { data } }) => {
       dispatch({
         type: ERROR_OCCURRED,
         error: data
       });
-      return error;
     });
 };
 
