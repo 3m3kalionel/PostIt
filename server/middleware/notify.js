@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import Jusibe from 'jusibe';
+import winston from 'winston';
 
 dotenv.config();
 
@@ -32,19 +33,18 @@ function sendMail(messageBody, user) {
     text: messageBody.content,
 
     html: `<b>Hello,</b> ${user.username}. <p>Here's a new notification from PostIt... </p>
-          <p>message: <b>${messageBody.content}</b></p>`, // <p>from: <b>${messageBody.content}</b></p>
-
+          <p>message: <b>${messageBody.content}</b></p>`,
     attachments: []
   };
 
-  console.log('Sending Mail'); // eslint-disable-line
+  winston.log('Sending Mail');
   return tp.sendMail(message, (error, info) => {
     if (error) {
-    console.log('Error occurred', error.message); // eslint-disable-line
+      winston.log('Error occurred', error.message);
       return;
     }
-  console.log('Message sent successfully!'); // eslint-disable-line
-  console.log('Server responded with "%s"', info.response); // eslint-disable-line
+    winston.log('Message sent successfully!');
+    winston.log('Server responded with "%s"', info.response);
     tp.close();
   });
 }
@@ -53,15 +53,15 @@ function sendText(messageBody, user) {
   const payload = {
     to: user.phone,
     from: 'PostIT',
-    message: 'Hello, ' + user.username + ', Here\'s a new notification from PostIt... ' +  'message: ' + messageBody.content + ' from: ' // + messageBody.content + ' 😎',
+    message: 'Hello, ' + user.username + ', Here\'s a new notification from PostIt... ' + 'message: ' + messageBody.content + ' from: ' // + messageBody.content + ' 😎',
   };
-  console.log('Sending Text Message', user.phone); // eslint-disable-line
+  winston.log('Sending Text Message', user.phone); // eslint-disable-line
   jusibe.sendSMS(payload)
     .then((res) => {
-      console.log(res.body); // eslint-disable-line
+      winston.log(res.body); // eslint-disable-line
     })
     .catch((err) => {
-      console.log(err.body, user.phone); // eslint-disable-line
+      winston.log(err.body, user.phone); // eslint-disable-line
     });
 }
 
@@ -71,7 +71,7 @@ export default function notify(messageBody) {
       return messageBody.members.forEach((member) => {
         sendMail(messageBody, member);
         sendText(messageBody, member);
-        console.log('notifying in-app users');
+        winston.log('notifying in-app users');
       });
 
     case 'urgent':

@@ -151,6 +151,10 @@ div#button-div {
   }
 }
 
+#message-input:active {
+  border: green 3px solid;
+}
+
 div.card-content {
   background: #F5F1EE;
   color: black
@@ -170,25 +174,11 @@ div a.btn {
 
 div.user-list {
   li:nth-child(even) {
-    // background-color: #ffffff;
-    // padding: 5px;
   }
 }
 
 div.user-list {
   li:nth-child(odd) {
-    // background-color: rgb(245,245,245);
-    // padding: 8px;
-  }
-}
-
-#slide-out {
-  li:nth-child(even) {
-    // background-color: rgb(245,245,245);
-  }
-
-  li:nth-child(odd) {
-    // background-color: #ffffff;
   }
 }
 
@@ -211,6 +201,31 @@ a#forgot-password {
   box-shadow: none;
   font-size: 13px;
   margin-top: 10px;
+}
+
+#forgot-password h4,
+#reset-password {
+  background-color: #fff;
+  padding: 15px;
+  color: #26A69A;
+}
+
+#forgot-password div.input-field.col-s6 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+form#forgot-password,
+form#reset-password {
+  padding-bottom: 15px;
+  background-color: #F5F1EE;
+  border-radius: 2px;
+  box-shadow: 1px 1px 5px #888888;
+  padding-bottom: 15px;
+}
+
+#reset-password {
+  margin-top: 20px;
 }
 
 a#forgot-password:hover {
@@ -383,4 +398,37 @@ p.priority {
 
 .card .card-content p {
   margin-top: 5px;
+}
+
+.error-toast {
+  font-size: 14px;
+  position: relative;
+  right: 0;
+  background: none;
+  color: #D14836;
+}
+
+.success-toast {
+  font-size: 16px;
+  position: relative;
+  left: 0;
+  background: none;
+  color: #2bbbad;
+}
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.29);
+}
+
+nav ul li {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
+  padding-left: 23px;
+  padding-right: 11px;
+}
+.hidden {
+  display: none !important;
 }

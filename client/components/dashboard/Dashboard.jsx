@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-import GroupsDiv from './GroupsDiv';
-import ChatArea from './ChatArea';
+import GroupsList from './GroupsList';
+import MessageArea from './MessageArea';
 import { createMessage } from '../../actions/messageActions';
 import { listGroups } from '../../actions/groupActions';
 
@@ -13,7 +13,7 @@ import { listGroups } from '../../actions/groupActions';
  * @class Dashboard
  * @extends {Component}
 */
-class Dashboard extends Component {
+export class Dashboard extends Component {
   /**
    * Creates an instance of Dashboard.
    * @param {object} props 
@@ -23,7 +23,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       selectedGroup: null,
-      priority: 'normal'
+      priority: 'normal',
+      showInput: false
     };
     this.selectGroup = this.selectGroup.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -38,11 +39,13 @@ class Dashboard extends Component {
    */
   componentDidMount() {
     this.props.listGroups();
-    $('.modal').modal();
+    $('.modal').modal({
+      dismissible: false
+    });
   }
 
   /**
-   * sets the priority on click of a radio button
+   * sets the message priority on click of a radio button
    * @method setPriority
    * @memberof Dashboard
    * @param {object} event
@@ -58,15 +61,14 @@ class Dashboard extends Component {
   /**
    * sends the message provided in the input area
    * @method sendMessage
-   * @returns {undefined}
    * @memberof Dashboard
    * @param {string} content
    * @param {Function} callback
+   * @returns {undefined}
    */
   sendMessage(content, callback) {
     callback();
     const members = this.props.groupsData[this.state.selectedGroup].members;
-    const sender = this.props.user;
     const { priority } = this.state;
     this.props.createMessage(this.state.selectedGroup, { content, members, priority });
   }
@@ -74,33 +76,37 @@ class Dashboard extends Component {
   /**
    * changes the state of selected group
    * @method selectGroup
-   * @returns {undefined}
    * @memberof Dashboard
    * @param {Object} event
+   * @returns {undefined}
    */
   selectGroup(event) {
     event.preventDefault();
     this.setState({ selectedGroup: event.target.id });
+    this.setState({
+      selectedGroup: event.target.id,
+      showInput: true
+    });
   }
 
   /**
-   * 
-   * @returns {object} component
    * @memberof Dashboard
+   * @returns {object} component
    */
   render() {
     return (
       <div id="two-section-page">
-        <GroupsDiv
+        <GroupsList
           selectGroup={this.selectGroup}
           groups={this.props.groups}
           activeId={this.state.selectedGroup}
         />
-        <ChatArea
+        <MessageArea
           groupId={this.state.selectedGroup}
           sendMessage={this.sendMessage}
           setPriority={this.setPriority}
           defaultPriority={this.state.priority}
+          showInput={this.state.showInput}
         />
       </div>
     );
@@ -123,10 +129,20 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Dashboard.propTypes = {
-  user: Proptypes.object.isRequired,
-  listGroups: Proptypes.func.isRequired,
-  groupsData: Proptypes.object.isRequired,
-  createMessage: Proptypes.func.isRequired
+  groups: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.int,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+  })).isRequired,
+  listGroups: PropTypes.func.isRequired,
+  groupsData: PropTypes.shape({}).isRequired,
+  createMessage: PropTypes.func.isRequired
+};
+
+Dashboard.defaultProps = {
+  groups: []
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

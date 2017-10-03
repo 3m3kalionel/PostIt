@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 
 import { addMember, searchUsers, clearMemberSearchList } from '../../actions/memberActions';
 
 /**
  * React component that adds a registered user to a groups
- * @class ForgotPassword
+ * @class AddUserModal
  * @extends {Component}
  */
 class AddUserModal extends Component {
   /**
-   * Creates an instance of ForgotPassword
+   * Creates an instance of AddUserModal
    * @param {Object} props 
    * @memberof ForgotPassword
    */
@@ -32,32 +33,59 @@ class AddUserModal extends Component {
 
   /**
    * @param {object} nextProps
-   * @memberof AddUserModel
+   * @memberof AddUserModal
    * @return {undefined}
    */
   componentWillReceiveProps(nextProps) {
     const { members: memberList } = this.props.group;
     const { members: newMemberList } = nextProps.group;
 
-    if (newMemberList.length > memberList.length) {
+    if (memberList && newMemberList && newMemberList.length > memberList.length) {
       this.setState({
         query: ''
-      }, () => {
-        this.props.search(this.state.query, this.state.offset, this.state.limit);
       });
     }
   }
 
+  /**
+  * performs an action on the click of a button
+  * @method onClick
+  * @param {object} event
+  * @memberof AddUserModal
+  * @return {undefined}
+  */
   onClick(event) {
     event.preventDefault();
-    this.props.addMember(this.props.groupId, event.target.name);
+    this.props.addMember(this.props.groupId, event.target.name)
+      .then(() => {
+        if (this.props.error && this.props.error.message) {
+          Materialize.toast(this.props.error.message, 3000, 'error-toast');
+        } else {
+          Materialize.toast(this.props.group.message, 3000, 'success-toast');
+          this.resetForm();
+        }
+      });
   }
 
+  /**
+  * clears form input field and search results
+  * @method resetForm
+  * @param {object} event
+  * @memberof AddUserModal
+  * @return {undefined}
+  */
   resetForm() {
     this.setState(this.baseState);
     this.props.clearSearchList();
   }
 
+  /**
+  * updates state as user's input changes
+  * @method handleInputChange
+  * @param {object} event
+  * @memberof AddUserModal
+  * @return {undefined}
+  */
   handleInputChange(event) {
     event.preventDefault();
     if (event.target.value.length === 0) {
@@ -71,6 +99,13 @@ class AddUserModal extends Component {
     });
   }
 
+  /**
+  * switches page view on click of a button
+  * @method handlePageClick
+  * @param {object} data
+  * @memberof AddUserModal
+  * @return {undefined}
+  */
   handlePageClick(data) {
     const selected = data.selected;
     const offset = this.state.limit * selected;
@@ -79,6 +114,10 @@ class AddUserModal extends Component {
     });
   }
 
+  /**
+   * @returns {object} component
+   * @memberof AddUserModal
+   */
   render() {
     const { searchResults } = this.props;
     const searchComponent = Object.keys(searchResults).length ?
@@ -155,10 +194,11 @@ class AddUserModal extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    error: state.errors.error,
     group: state.groups[ownProps.groupId],
     searchResults: state.members.result
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -173,6 +213,14 @@ AddUserModal.defaultProps = {
     members: []
   },
   searchResults: {}
+};
+
+AddUserModal.propTypes = {
+  group: PropTypes.shape({ message: PropTypes.string,
+  }).isRequired,
+  search: PropTypes.func.isRequired,
+  addMember: PropTypes.func.isRequired,
+  clearSearchList: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

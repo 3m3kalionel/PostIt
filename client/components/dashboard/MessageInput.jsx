@@ -1,30 +1,39 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 /**
- * @class ChatInput
+ * @class MessageInput
  * @extends {Component}
  */
-class ChatInput extends Component {
+class MessageInput extends Component {
   /**
    * Creates an instance of ChatInput.
-   * @param {any} props 
+   * @param {object} props 
    * @memberof ChatInput
    */
   constructor(props) {
     super(props);
     this.state = {
-      message: ''
+      message: '',
+      isVisible: props.isVisible
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.clearMessage = this.clearMessage.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isVisible } = nextProps;
+    this.setState({
+      isVisible
+    });
+  }
+
   /**
-   * 
+   * updates state as user's input changes
    * @method handleInputChange
    * @memberof ChatInput
-   * @param {any} event
+   * @param {object} event
    * @returns {undefined}
    */
   handleInputChange(event) {
@@ -32,10 +41,10 @@ class ChatInput extends Component {
   }
 
   /**
-   * 
+   * clears the text input field
    * @method clearMessage
    * @memberof ChatInput
-   * @param {any} event
+   * @param {object} event
    * @returns {undefined}
    */
   clearMessage() {
@@ -43,22 +52,28 @@ class ChatInput extends Component {
   }
 
   /**
-   * 
-   * @returns {Object} a JSX Object
+   * @returns {Object} component
    * @memberof ChatInput
    */
   render() {
     const { onSubmit } = this.props;
     const { message } = this.state;
+
+    const inputClassnames = classNames({
+      hidden: !this.state.isVisible,
+      'input-container': true,
+    });
+
     return (
-      <div className="input-container">
+      <div className={inputClassnames}>
         <div id="message-input">
           <textarea type="text" onChange={this.handleInputChange} value={message} />
         </div>
         <button
           className="waves-effect waves-light btn"
           onClick={() =>
-            onSubmit(message, this.clearMessage)}>
+            onSubmit(message, this.clearMessage)}
+        >
           Send
         </button>
       </div>
@@ -66,4 +81,9 @@ class ChatInput extends Component {
   }
 }
 
-export default ChatInput;
+MessageInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  isVisible: PropTypes.bool.isRequired
+};
+
+export default MessageInput;

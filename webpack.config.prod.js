@@ -8,7 +8,7 @@ const SRC_DIRECTORY = path.join(__dirname, 'client');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    path.join(SRC_DIRECTORY, 'index.jsx'),
+    path.join(SRC_DIRECTORY, 'Index.jsx'),
   ],
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss', '.css'],

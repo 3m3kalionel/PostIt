@@ -47,9 +47,7 @@ module.exports = {
               id: newUser.id,
               username: newUser.username,
               email: newUser.email,
-              phone: newUser.phone,
-              updatedAt: newUser.updatedAt,
-              createdAt: newUser.createdAt
+              phone: newUser.phone
             },
             token
           });
@@ -66,7 +64,6 @@ module.exports = {
     User.findOne({ where: { email: req.body.email } })
       .then((foundUser) => {
         if (foundUser) {
-          console.log('foundUser', foundUser);
           const token = jwt.sign({
             username: foundUser.username,
             email: foundUser.email,
@@ -78,7 +75,7 @@ module.exports = {
           });
           const { id, username, email } = foundUser;
           res.status(200).json({
-            status: `${req.body.username} successfully logged in`,
+            status: `${username} successfully logged in`,
             user: { id, username, email },
             token
           });
@@ -110,7 +107,6 @@ module.exports = {
                 });
               })
               .catch((error) => {
-                console.log('error', error);
                 res.status(400).json({
                   Error: error.errors[0].message
                 });
@@ -161,6 +157,7 @@ module.exports = {
       { expiresIn: '1h' });
       mailVerificationCode(user.username, user.email, token);
       res.status(200).json({
+        user: user.username,
         success: true,
         message: 'verification email sent'
       });
@@ -177,7 +174,7 @@ module.exports = {
     const encodedEmail = req.params.token;
     const decode = jwt.decode(encodedEmail);
     const email = decode.email;
-    User.findOne({
+    return User.findOne({
       where: {
         email
       }
@@ -189,7 +186,13 @@ module.exports = {
         });
       }
       const password = bcrypt.hashSync(req.body.newPassword, user.salt);
-      user.update({ password });
+      return user.update({ password })
+        .then(() => {
+          res.status(200).json({
+            sucess: true,
+            message: 'Password reset successfully'
+          });
+        });
     }).catch(error => res.status(500).json({
       success: false,
       message: error.message

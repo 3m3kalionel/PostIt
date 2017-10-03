@@ -9,7 +9,7 @@ export default {
   devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    path.join(SRC_DIRECTORY, 'index.jsx'),
+    path.join(SRC_DIRECTORY, 'Index.jsx'),
   ],
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss', '.css'],

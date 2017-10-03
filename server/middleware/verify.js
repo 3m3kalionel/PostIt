@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import winston from 'winston';
 
 dotenv.config();
 
@@ -25,15 +26,15 @@ function mailVerificationCode(username, userEmail, token) {
     <p>Click this <a href=${url}> link</a> to redirect and update your password</p>`
   };
 
-  console.log('Sending Mail'); // eslint-disable-line
+  winston.log('Sending Mail');
   return tp.sendMail(message, (error, info) => {
     if (error) {
-    console.log('Error occurred'); // eslint-disable-line
-    console.log(error.message); // eslint-disable-line
+      winston.log('Error occurred');
+      winston.log(error.message);
       return;
     }
-  console.log('Message sent successfully!'); // eslint-disable-line
-  console.log('Server responded with "%s"', info.response); // eslint-disable-line
+    winston.log('Message sent successfully!');
+    winston.log('Server responded with "%s"', info.response);
     tp.close();
   });
 }

@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { createGroup } from '../../actions/groupActions.js';
+import { createGroup } from '../../actions/groupActions';
 
+/**
+ * React modal component that creates a new group
+ * @class ForgotPassword
+ * @extends {Component}
+ */
 class CreateGroupModal extends Component {
+  /**
+   * Creates an instance of CreateGroupModal
+   * @param {object} props 
+   * @memberof CreateGroupModal
+   */
   constructor(props) {
     super(props);
 
@@ -14,8 +25,49 @@ class CreateGroupModal extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.baseState = this.state;
+    this.resetForm = this.resetForm.bind(this);
   }
 
+  /**
+  * triggers an action that creates a group
+  * @method onSubmit
+  * @param {object} event
+  * @memberof CreateGroupModal
+  * @return {undefined}
+  */
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.createGroup(this.state)
+      .then(() => {
+        if (this.props.error && this.props.error.Error) {
+          Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
+        } else {
+          Materialize.toast('Group created', 3000, 'rounded success-toast');
+          this.resetForm();
+          $('.modal').modal('close');
+        }
+      });
+  }
+
+  /**
+  * clears form input field and search results  
+  * @method resetForm
+  * @param {object} event
+  * @memberof CreateGroupModal
+  * @return {undefined}
+  */
+  resetForm() {
+    this.setState(this.baseState);
+  }
+
+  /**
+  * updates state as user's input changes
+  * @method handleInputChange
+  * @param {object} event
+  * @memberof CreateGroupModal
+  * @return {undefined}
+  */
   handleInputChange(event) {
     event.preventDefault();
     this.setState({
@@ -23,11 +75,10 @@ class CreateGroupModal extends Component {
     });
   }
 
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.createGroup(this.state);
-  }
-
+  /**
+   * @returns {object} component
+   * @memberof CreateGroupModal
+   */
   render() {
     return (
       <div id="new-group" className="modal">
@@ -40,6 +91,7 @@ class CreateGroupModal extends Component {
                   <input
                     onChange={this.handleInputChange}
                     id="name"
+                    value={this.state.name}
                     type="text"
                     required
                   />
@@ -50,6 +102,7 @@ class CreateGroupModal extends Component {
                   <input
                     onChange={this.handleInputChange}
                     id="description"
+                    value={this.state.description}
                     type="tel"
                     required
                   />
@@ -61,7 +114,7 @@ class CreateGroupModal extends Component {
                       className="btn cyan waves-effect waves-light right"
                       type="submit"
                       name="action"
-                    >Submit
+                    >Create
                       <i className="mdi-content-send right" />
                     </button>
                   </div>
@@ -74,6 +127,7 @@ class CreateGroupModal extends Component {
           <a
             href="#!"
             className="modal-action modal-close waves-effect waves-green btn-flat"
+            onClick={this.resetForm}
           >Cancel</a>
         </div>
       </div>
@@ -88,5 +142,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createGroup: groupData => dispatch(createGroup(groupData))
 });
+
+CreateGroupModal.propTypes = {
+  createGroup: PropTypes.func.isRequired,
+  error: PropTypes.shape({ Error: PropTypes.string }).isRequired
+};
+
+CreateGroupModal.defaultProps = {
+  error: {}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

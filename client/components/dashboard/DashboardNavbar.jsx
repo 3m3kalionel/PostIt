@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+/**
+ * React component that displays the dashboard navbar
+ * @class DashboardNavbar
+ * @extends {Component}
+*/
 class Navbar extends Component {
+  /**
+   * makes jquery function available on component mount
+   * @method componentDidMount
+   * @memberof DashboardNavbar
+   * @returns {undefined}
+   */
   componentDidMount() {
     $('.button-collapse').sideNav();
   }
 
+  /**
+   * @memberof DashboardNavbar
+   * @returns {object} component
+   */
   render() {
     return (
       <nav className="dashboard-navbar">
@@ -20,7 +35,13 @@ class Navbar extends Component {
             <li><i className="large material-icons">notifications</i></li>
             <li><Link
               to="logout"
-            ><i className="material-icons large">exit_to_app</i></Link></li>
+            >
+              <i
+                className="material-icons large tooltipped"
+                data-delay="50"
+                data-tooltip="Logout"
+              >exit_to_app
+              </i></Link></li>
           </ul>
         </div>
       </nav>

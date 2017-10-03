@@ -7,7 +7,8 @@ const groupReducer = (state = {}, action = {}) => {
         ...state,
         [action.group.id]: {
           members: [],
-          messages: []
+          messages: [],
+          message: action.message
         }
       };
     case member.ADD_SUCCESS:
@@ -18,7 +19,8 @@ const groupReducer = (state = {}, action = {}) => {
           members: [
             ...state[action.groupId].members,
             action.member
-          ]
+          ],
+          message: action.message
         }
       };
     case member.LIST_SUCCESS:
