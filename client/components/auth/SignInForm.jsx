@@ -11,7 +11,7 @@ import { signIn, googleAuth } from '../../actions/userActions';
  * @class SignInForm
  * @extends {Component}
  */
-class SignInForm extends Component {
+export class SignInForm extends Component {
   /**
    * Creates an instance of SignInForm.
    * @param {object} props 
@@ -114,10 +114,9 @@ class SignInForm extends Component {
           />
           <label htmlFor="password">Password</label>
         </div>
-        <div
-          onClick={() => this.props.forgotPassword()}
-        >
+        <div>
           <a
+            onClick={() => this.props.forgotPassword()}
             className="waves-effect waves-light"
             id="forgot-password"
           >Forgot Password?</a>

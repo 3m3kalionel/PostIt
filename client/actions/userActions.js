@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { user, ERROR_OCCURRED } from './actionTypes';
+import { user, member, ERROR_OCCURRED } from './actionTypes';
 import { setToken } from '../utils/manageToken';
 
 export const signUp = userDetails => (
@@ -99,22 +99,22 @@ export const verifyUser = userEmail => (
   )
 );
 
-export const listMembers = groupId => (
-  dispatch => (
-    axios.get(`/api/v1/group/${groupId}/users`)
-      .then(({ data }) => {
-        dispatch({
-          type: member.LIST_SUCCESS,
-          list: data,
-          groupId
-        });
-      })
-      .catch(({ response: { data } }) => {
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
-      })
-  )
-);
+// export const listMembers = groupId => (
+//   dispatch => (
+//     axios.get(`/api/v1/group/${groupId}/users`)
+//       .then(({ data }) => {
+//         dispatch({
+//           type: member.LIST_SUCCESS,
+//           list: data,
+//           groupId
+//         });
+//       })
+//       .catch(({ response: { data } }) => {
+//         dispatch({
+//           type: ERROR_OCCURRED,
+//           error: data
+//         });
+//       })
+//   )
+// );
 

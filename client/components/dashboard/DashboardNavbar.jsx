@@ -15,6 +15,14 @@ class Navbar extends Component {
    */
   componentDidMount() {
     $('.button-collapse').sideNav();
+    $('#logout-button').tooltip({
+      delay: 50,
+      tooltip: 'Logout',
+      position: 'bottom',
+    });
+    $('.my-logout').click(() => {
+      $('#logout-button').tooltip('remove');
+    });
   }
 
   /**
@@ -33,15 +41,14 @@ class Navbar extends Component {
           ><i className="material-icons">menu</i></a>
           <ul className="right">
             <li><i className="large material-icons">notifications</i></li>
-            <li><Link
-              to="logout"
-            >
-              <i
-                className="material-icons large tooltipped"
-                data-delay="50"
-                data-tooltip="Logout"
-              >exit_to_app
-              </i></Link></li>
+            <li id="logout-button">
+              <Link className="my-logout" to="logout">
+                <i
+                  className="material-icons large tooltipped"
+                  data-delay="50"
+                  data-tooltip="Logout"
+                >exit_to_app
+                </i></Link></li>
           </ul>
         </div>
       </nav>

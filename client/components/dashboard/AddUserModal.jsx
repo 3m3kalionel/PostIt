@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
+import className from 'classnames';
 
 import { addMember, searchUsers, clearMemberSearchList } from '../../actions/memberActions';
 
@@ -10,7 +11,7 @@ import { addMember, searchUsers, clearMemberSearchList } from '../../actions/mem
  * @class AddUserModal
  * @extends {Component}
  */
-class AddUserModal extends Component {
+export class AddUserModal extends Component {
   /**
    * Creates an instance of AddUserModal
    * @param {Object} props 
@@ -22,7 +23,7 @@ class AddUserModal extends Component {
       query: '',
       offset: 0,
       limit: 3,
-      displayPagination: false
+      displayPagination: true
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -120,22 +121,33 @@ class AddUserModal extends Component {
    */
   render() {
     const { searchResults } = this.props;
+    const paginationClassname = className({
+      hidden: this.state.query.length < 1
+    });
     const searchComponent = Object.keys(searchResults).length ?
-      searchResults.rows.map((result, index) =>
-        (
-          <div className="user-list" key={index}>
+      searchResults.rows.map((result) => {
+        const member = this.props.group.members.filter(mem => mem.username === result.username);
+        const buttonText = member.length === 0 ? 'Add' : 'Member';
+        return (
+          <div className="user-list" key={`${result.username}-${result.id}`}>
             <ul className="member-list">
               <li className="username">
                 {result.username}
-                <button
-                  className="btn waves-effect waves-light right"
-                  name={result.id}
-                  onClick={this.onClick}
-                >Add</button>
+                { buttonText !== 'Member'
+                  ?
+                  <button
+                    className="btn waves-effect waves-light right"
+                    name={result.id}
+                    onClick={this.onClick}
+                  >{buttonText}</button>
+                  :
+                  <span>{buttonText}</span>
+                }
               </li>
             </ul>
           </div>
-        )
+        );
+      }
       ) : null;
 
     return (
@@ -160,19 +172,21 @@ class AddUserModal extends Component {
               </div>
               {
                 this.state.displayPagination ?
-                  <ReactPaginate
-                    previousLabel={'<'}
-                    nextLabel={'>'}
-                    breakLabel={<a href="">...</a>}
-                    breakClassName={'break-me'}
-                    pageCount={Math.ceil(searchResults.count / this.state.limit)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    subContainerClassName={'pages pagination'}
-                    activeClassName={'active'}
-                  />
+                  <div className={paginationClassname}>
+                    <ReactPaginate
+                      previousLabel={'<'}
+                      nextLabel={'>'}
+                      breakLabel={<a href="">...</a>}
+                      breakClassName={'break-me'}
+                      pageCount={Math.ceil(searchResults.count / this.state.limit)}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={this.handlePageClick}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
+                  </div>
                   : null
               }
             </form>
@@ -206,7 +220,7 @@ const mapDispatchToProps = (dispatch) => {
     search: (username, offset, limit) => dispatch(searchUsers(username, offset, limit)),
     clearSearchList: () => dispatch(clearMemberSearchList())
   };
-}
+};
 
 AddUserModal.defaultProps = {
   group: {

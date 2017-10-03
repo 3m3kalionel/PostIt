@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import SignUpForm from './SignUpForm';
-import SignInForm from './SignInForm';
-import ForgotPassword from './ForgotPassword';
+import SignUpFormPage from './SignUpForm';
+import SignInFormPage from './SignInForm';
+import ForgotPasswordPage from './ForgotPassword';
 
 /**
  * React component that displays the landing page
@@ -75,7 +75,9 @@ class LandingPage extends Component {
   render() {
     if (this.state.forgot) {
       return (
-        <ForgotPassword revertForgotPassword={this.revertForgotPassword} />
+        <div className="forgot-password">
+          <ForgotPasswordPage revertForgotPassword={this.revertForgotPassword} />
+        </div>
       );
     }
     return (
@@ -91,10 +93,10 @@ class LandingPage extends Component {
           </div>
           <div className="card-content">
             <div id="signup-form" className="active">
-              <SignUpForm />
+              <SignUpFormPage />
             </div>
             <div id="signin-form">
-              <SignInForm
+              <SignInFormPage
                 forgotPassword={this.forgotPassword}
               />
             </div>
