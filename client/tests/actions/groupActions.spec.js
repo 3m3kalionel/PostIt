@@ -35,6 +35,24 @@ describe('async actions', () => {
     });
   });
 
+  it('creates ERROR_OCCURRED when a createGroup fails', () => {
+    nock('http://localhost')
+      .post('/api/v1/group')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({});
+    return store.dispatch(createGroup()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
   it('cretes LIST_SUCCESS when list groups is called successfully', () => {
     nock('http://localhost')
       .get('/api/v1/groups')
@@ -47,6 +65,23 @@ describe('async actions', () => {
       }
     ];
     const store = mockStore({ list });
+    return store.dispatch(listGroups()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('cretes ERROR_OCCURRED when listGroups fails', () => {
+    nock('http://localhost')
+      .get('/api/v1/groups')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+    const store = mockStore({});
     return store.dispatch(listGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });

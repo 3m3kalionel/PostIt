@@ -27,8 +27,25 @@ describe('async actions', () => {
         message
       }
     ];
+    const store = mockStore({});
+    return store.dispatch(createMessage(1)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 
-    const store = mockStore({ message });
+  it('creates ERROR_OCCURRED when a createMessage fails', () => {
+    nock('http://localhost')
+      .post('/api/v1/group/1/message')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({});
     return store.dispatch(createMessage(1)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
@@ -52,5 +69,22 @@ describe('async actions', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
-});
 
+  it('creates ERROR_OCCURRED when listMessages fails', () => {
+    nock('http://localhost')
+      .get('/api/v1/group/2/messages')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({});
+    return store.dispatch(listMessages(2)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+});

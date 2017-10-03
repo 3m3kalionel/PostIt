@@ -37,6 +37,24 @@ describe('async actions', () => {
     });
   });
 
+  it('creates ERROR_OCCURRED when addMember fails', () => {
+    nock('http://localhost')
+      .post('/api/v1/group/3/user')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({});
+    return store.dispatch(addMember(3)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
   it('creates LIST_SUCCESS when list members is called successfully', () => {
     nock('http://localhost')
       .get('/api/v1/group/4/users')
@@ -56,10 +74,28 @@ describe('async actions', () => {
     });
   });
 
+  it('creates ERROR_OCCURRED when listMembers fails', () => {
+    nock('http://localhost')
+      .get('/api/v1/group/4/users')
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({ });
+    return store.dispatch(listMembers(4)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
   it('creates SEARCH_SUCCESS when search users is called successfully', () => {
     nock('http://localhost')
       .get('/api/v1/users')
-      .query({ username: 'e', limit: 4, offset: 5 })
+      .query({ username: 'e', limit: 3, offset: 0 })
       .reply(200, list);
 
     const expectedActions = [
@@ -70,7 +106,26 @@ describe('async actions', () => {
     ];
 
     const store = mockStore({});
-    return store.dispatch(searchUsers('e', 4, 5)).then(() => {
+    return store.dispatch(searchUsers('e', 0, 3)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('creates ERROR_OCCURRED when searchUsers fails', () => {
+    nock('http://localhost')
+      .get('/api/v1/users')
+      .query({ username: 'e', limit: 3, offset: 0 })
+      .reply(400, {});
+
+    const expectedActions = [
+      {
+        type: types.ERROR_OCCURRED,
+        error: {}
+      }
+    ];
+
+    const store = mockStore({});
+    return store.dispatch(searchUsers('e', 0, 3)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
