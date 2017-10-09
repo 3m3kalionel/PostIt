@@ -9,7 +9,6 @@
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./tests/usertests.spec.js ./tests/grouptests.spec.js --compilers js:babel-core/register",
     "client-test": "jest --coverage",
     "client-test:watch": "npm run client-test --coverage --watch",
-    "postinstall": "npm run bundle-assets && npm run migrate-production",
     "gulp-test": "NODE_ENV=test gulp test --timeout 15000",
     "migrate-test": "NODE_ENV=test sequelize db:migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
