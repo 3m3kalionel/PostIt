@@ -23,14 +23,16 @@ describe('Give the sign up page is mounted', () => {
   });
 
   it('should change username when a user inputs his username', () => {
-    enzymeWrapper.find('#username').simulate('change', { target: { id: 'username', value: 'emeka' } });
+    enzymeWrapper.find('#username').simulate('change',
+      { target: { id: 'username', value: 'emeka' } });
     expect(enzymeWrapper.state('username')).toBe('emeka');
   });
 
-  it('should sign up a user when the form is submitted with user details', () => {
-    enzymeWrapper.find('.auth-form').simulate('submit');
-    expect(props.signUp.mock.calls.length).toBe(1);
-  });
+  it('should sign up a user when the form is submitted with user details',
+    () => {
+      enzymeWrapper.find('.auth-form').simulate('submit');
+      expect(props.signUp.mock.calls.length).toBe(1);
+    });
 
   it('should show error message if sign up fails', () => {
     enzymeWrapper.setProps({

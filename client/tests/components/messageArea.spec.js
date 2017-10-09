@@ -5,10 +5,10 @@ import MessageArea from '../../components/dashboard/MessageArea';
 
 jest.mock('../../components/dashboard/MessageList', () => 'MessageList');
 jest.mock('../../components/dashboard/AddUserModal', () => 'AddUserModal');
-jest.mock('../../components/dashboard/CreateGroupModal', () => 'CreateGroupModal');
+jest.mock('../../components/dashboard/CreateGroupModal',
+  () => 'CreateGroupModal');
 
 const props = {
-  groupId: '',
   showInput: true,
   defaultPriority: '',
   sendMessage: jest.fn(),

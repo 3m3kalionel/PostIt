@@ -22,6 +22,11 @@ class MessageInput extends Component {
     this.clearMessage = this.clearMessage.bind(this);
   }
 
+  /**
+   * @param {object} nextProps
+   * @memberof MessageInput
+   * @return {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     const { isVisible } = nextProps;
     this.setState({
@@ -74,7 +79,12 @@ class MessageInput extends Component {
     return (
       <div className={inputClassnames}>
         <div id="message-input">
-          <textarea id="input-area" type="text" onChange={this.handleInputChange} value={message} />
+          <textarea
+            id="input-area"
+            type="text"
+            onChange={this.handleInputChange}
+            value={message}
+          />
         </div>
         <button
           id="submit-button"

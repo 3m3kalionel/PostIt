@@ -28,7 +28,12 @@ if (process.env.NODE_ENV === 'development') {
     heartbeat: 2 * 1000
   }));
 }
-app.use(express.static('public'));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('dist'));
+} else {
+  app.use(express.static('public'));
+}
 
 app.use(passport.session());
 routes(app);

@@ -1,8 +1,14 @@
 import axios from 'axios';
 
-import { user, member, ERROR_OCCURRED } from './actionTypes';
-import { setToken } from '../utils/manageToken';
+import { user, ERROR_OCCURRED } from './actionTypes';
+import setToken from '../utils/setToken';
 
+/**
+* makes a call to the 
+* login action and it takes in the decoded token
+* @param {object} userDetails
+* @returns {object} type, user
+*/
 export const signUp = userDetails => (
   dispatch => (
     axios.post('/api/v1/user/signup', userDetails)
@@ -51,7 +57,7 @@ export const googleAuth = userDetails => (
         dispatch({
           type: user.AUTH_SUCCESS,
           user: newUser,
-          message: 'Successful'
+          message: 'Login successful'
         });
       })
       .catch(({ response: { data } }) => {
@@ -63,31 +69,27 @@ export const googleAuth = userDetails => (
   )
 );
 
-export const resetPassword = (token, resetDetails) => {
-  return dispatch => {
-    return axios.post(`/api/v1/user/reset/${token}`, resetDetails)
-      .then(({ data }) => {
-        dispatch({
-          type: user.RESET_SUCCESS,
-          response: data.success
-        });
-      })
-      .catch(({ response: { data } }) => {
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
+export const resetPassword = (token, resetDetails) =>
+  dispatch => axios.post(`/api/v1/user/reset/${token}`, resetDetails)
+    .then(({ data }) => {
+      dispatch({
+        type: user.RESET_SUCCESS,
       });
-  };
-};
+    })
+    .catch(({ response: { data } }) => {
+      dispatch({
+        type: ERROR_OCCURRED,
+        error: data
+      });
+      return data;
+    });
 
 export const verifyUser = userEmail => (
   dispatch => (
     axios.post('/api/v1/user/verify', userEmail)
-      .then(({ data }) => {
+      .then(() => {
         dispatch({
           type: user.VERIFY_SUCCESS,
-          response: data.success
         });
       })
       .catch(({ response: { data } }) => {
@@ -98,23 +100,4 @@ export const verifyUser = userEmail => (
       })
   )
 );
-
-// export const listMembers = groupId => (
-//   dispatch => (
-//     axios.get(`/api/v1/group/${groupId}/users`)
-//       .then(({ data }) => {
-//         dispatch({
-//           type: member.LIST_SUCCESS,
-//           list: data,
-//           groupId
-//         });
-//       })
-//       .catch(({ response: { data } }) => {
-//         dispatch({
-//           type: ERROR_OCCURRED,
-//           error: data
-//         });
-//       })
-//   )
-// );
 

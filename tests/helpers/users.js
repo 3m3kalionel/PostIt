@@ -103,5 +103,17 @@ module.exports = {
     password: '12345678',
     email: 'dummy.andela.com',
     phone: '08030561566'
+  },
+  noPhoneNumber: {
+    username: 'dummy',
+    password: '12345678',
+    email: 'dummy.andela.com',
+    phone: ''
+  },
+  emptyStringPhoneNumber: {
+    username: 'dummy',
+    password: '12345678',
+    email: 'dummy.andela.com',
+    phone: ''
   }
 };

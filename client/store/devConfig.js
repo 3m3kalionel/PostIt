@@ -6,9 +6,7 @@ import { autoRehydrate } from 'redux-persist';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import rootReducer from '../reducers';
 
-const logger = createLogger({
-  // options
-});
+const logger = createLogger();
 
 const configureStore = () => (
   composeWithDevTools(

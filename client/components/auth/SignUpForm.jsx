@@ -42,10 +42,19 @@ export class SignUpForm extends Component {
   */
   onSubmit(event) {
     event.preventDefault();
+    const passwordValue = this.state.password;
+    const retypePasswordValue = this.state.passwordConfirm;
+    if (passwordValue !== retypePasswordValue) {
+      Materialize.toast('Password inputs do not match',
+        3000, 'rounded error-toast');
+      return;
+    }
     this.props.signUp(this.state)
       .then(() => {
         if (this.props.error.message || this.props.error.Error) {
-          Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
+          Materialize.toast(this.props.error.message ||
+          this.props.error.Error, 3000,
+          'rounded error-toast');
         } else {
           Materialize.toast('Signup successful', 3000, 'rounded success-toast');
           browserHistory.push('/dashboard');
@@ -71,7 +80,8 @@ export class SignUpForm extends Component {
           if (this.props.error && this.props.error.Error) {
             Materialize.toast('Login error', 3000, 'rounded error-toast');
           } else {
-            Materialize.toast(this.props.auth.message, 3000, 'rounded success-toast');
+            Materialize.toast(this.props.auth.message, 3000,
+              'rounded success-toast');
             browserHistory.push('/dashboard');
           }
         });
@@ -148,12 +158,16 @@ export class SignUpForm extends Component {
         <div id="button-div">
           <button className="btn" type="submit">Sign up</button>
           <GoogleLogin
+            // eslint-disable-next-line
             clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
             buttonText="Signup With Google"
             onSuccess={this.googleSignUp}
             onFailure={this.googleSignUp}
           >
-            <i className="fa fa-google" aria-hidden="true" /> Sign up with Google
+            <i
+              className="fa fa-google"
+              aria-hidden="true"
+            /> Sign up with Google
           </GoogleLogin>
         </div>
       </form>
@@ -174,7 +188,8 @@ const mapDispatchToProps = dispatch => ({
 SignUpForm.propTypes = {
   signUp: PropTypes.func.isRequired,
   googleAuth: PropTypes.func.isRequired,
-  error: PropTypes.shape({ Error: PropTypes.string }).isRequired,
+  error: PropTypes.shape({ Error: PropTypes.string,
+    message: PropTypes.string }).isRequired,
   auth: PropTypes.shape({ message: PropTypes.string }).isRequired
 };
 

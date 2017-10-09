@@ -4,12 +4,15 @@ import App from './components/App';
 import LandingPage from './components/auth/LandingPage';
 import Dashboard from './components/dashboard/Dashboard';
 import ResetPassword from './components/auth/ResetPassword';
+import NotFoundPage from './components/NotFoundPage';
 
 const onEnter = (next, replace, cb) => {
-  if (localStorage.getItem('postit-token') !== null && next.location.pathname === '/') {
+  if (localStorage.getItem('postit-token') !== null
+    && next.location.pathname === '/') {
     replace('/dashboard');
   }
-  if (localStorage.getItem('postit-token') === null && (next.location.pathname === ('/dashboard'))) {
+  if (localStorage.getItem('postit-token') === null
+    && (next.location.pathname === ('/dashboard'))) {
     replace('/');
   }
   cb();
@@ -25,5 +28,6 @@ export default (
     <Route path="dashboard" component={Dashboard} onEnter={onEnter} />
     <Route path="logout" onEnter={logout} />
     <Route path="user/reset/:token" component={ResetPassword} />
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );

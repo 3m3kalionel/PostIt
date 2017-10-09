@@ -7,7 +7,7 @@ dotenv.config();
 module.exports = {
   login(req, res, next) {
     passport.authenticate('local', (err, user) => {
-      if (err) { return res.status(500).send(err); }
+      if (err) { return res.status(404).send(err); }
       if (!user) { return res.status(404).send(user); }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
@@ -22,7 +22,7 @@ module.exports = {
         });
         const { id, username, phone, email } = user;
         res.status(200).json({
-          status: `${req.body.username} successfully logged in`,
+          message: 'Login successful',
           user: { id, username, email, phone },
           token
         });

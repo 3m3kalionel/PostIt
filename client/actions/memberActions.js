@@ -43,7 +43,8 @@ export const listMembers = groupId => (
 
 export const searchUsers = (username, offset, limit) => (
   dispatch => (
-    axios.get(`/api/v1/users?username=${username}&limit=${limit}&offset=${offset}`)
+    axios
+      .get(`/api/v1/users?username=${username}&limit=${limit}&offset=${offset}`)
       .then(({ data }) => {
         dispatch({
           type: member.SEARCH_SUCCESS,

@@ -15,10 +15,12 @@ describe('Given the create group modal is mounted', () => {
     expect(enzymeWrapper.exists()).toBe(true);
   });
 
-  it('should change state.newPassword as a user inputs his new password', () => {
-    enzymeWrapper.find('#newpassword').simulate('change', { target: { name: 'newPassword', value: '12345678' } });
-    expect(enzymeWrapper.state('newPassword')).toBe('12345678');
-  });
+  it('should change state.newPassword as a user inputs his new password',
+    () => {
+      enzymeWrapper.find('#newpassword').simulate('change',
+        { target: { name: 'newPassword', value: '12345678' } });
+      expect(enzymeWrapper.state('newPassword')).toBe('12345678');
+    });
 
   it('should reset the password when the form is submitted', () => {
     enzymeWrapper.find('#reset-password').simulate('submit');
@@ -27,7 +29,8 @@ describe('Given the create group modal is mounted', () => {
 
   it('should show an error message when password reset fails', () => {
     enzymeWrapper.setProps({
-      resetPassword: jest.fn(() => Promise.reject({ error: { message: 'error' } }))
+      resetPassword: jest.fn(() =>
+        Promise.reject({ error: { message: 'error' } }))
     });
     enzymeWrapper.find('#reset-password').simulate('submit');
     expect(props.resetPassword.mock.calls.length).toBe(1);

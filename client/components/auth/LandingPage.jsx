@@ -76,7 +76,9 @@ class LandingPage extends Component {
     if (this.state.forgot) {
       return (
         <div className="forgot-password">
-          <ForgotPasswordPage revertForgotPassword={this.revertForgotPassword} />
+          <ForgotPasswordPage
+            revertForgotPassword={this.revertForgotPassword}
+          />
         </div>
       );
     }

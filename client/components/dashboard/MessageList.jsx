@@ -34,9 +34,7 @@ class MessageList extends Component {
   getUsername(userId) {
     if (userId) {
       const { members } = this.props.group;
-      const user = members && members.filter((member) => {
-        return member.id === userId;
-      })[0];
+      const user = members && members.filter(member => member.id === userId)[0];
       return user && user.username;
     }
   }
@@ -101,19 +99,15 @@ MessageList.defaultProps = {
   group: {}
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    ...ownProps,
-    group: state.groups[ownProps.groupId || 0]
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  ...ownProps,
+  group: state.groups[ownProps.groupId || 0]
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getMessages: (bindActionCreators)(listMessages, dispatch),
-    getMembers: (bindActionCreators)(listMembers, dispatch)
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getMessages: (bindActionCreators)(listMessages, dispatch),
+  getMembers: (bindActionCreators)(listMembers, dispatch)
+});
 
 MessageList.defaultProps = {
   groupId: '',

@@ -48,17 +48,16 @@ Some current limitations of the PostIt which are currently in development are:
 ### Contributing to the Project
 
 Contributions are welcome and appreciated
-* Fork this repository [here](https://github.com/3m3kalionel/PostIt.git)
+* Fork this repository
 * Open a terminal and execute the following command to make a local copy `$ git clone git@github.com:your-username/postit`
-* Run this code to navigate into the folder `cd postIt-app`
+* Run `cd postIt-app` to navigate into the folder
 * Make your contributions to your local repo
-Add a connection to the original repo using `$ git remote add repo_nickname git://github.com/3m3kalionel/PostIt.git`
-* Note: repo_nickname is a nickname you choose.
-* Run git remote -v to verify that the connection is established
+* Add a connection to the original repo using `$ git remote add repo_nickname git://github.com/3m3kalionel/PostIt.git`. Note: repo_nickname is a nickname you choose
+* Run git `$ remote -v` to verify that the connection is established
 * Make your contributions to your local copy of the project
-* Run git add and git commit to commit your contributions to the project
-* Run git push to push your changes to your copy of the repository
-* If you feel you've made a contribution that will improve the project, raise a Pull Request.
+* Run `$ git add filename` `git commit -m "commit message"` to add and commit your contributions 
+* Run `$ git push origin proposed-feature-name` to push your changes to your copy of the repository
+* If you feel you've made a contribution that will improve the project, raise a Pull Request against develop branch.
 * Be descriptive enough about your contributions so other contributors will understand what you've done
 
 ### License

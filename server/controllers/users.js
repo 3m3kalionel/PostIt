@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 import model from '../models';
-import mailVerificationCode from '../middleware/verify';
+import mailResetLink from '../middleware/verify';
 
 
 dotenv.config();
@@ -11,10 +11,9 @@ const User = model.User;
 
 module.exports = {
   /**
-   * 
-   * creates a new user along with a unique json web token and returns a user object
-   * @param {object} req 
-   * @param {object} res 
+   * creates a new user along with a unique json web token
+   * @param {object} req
+   * @param {object} res
    * @returns {object} user
    */
   create(req, res) {
@@ -23,12 +22,6 @@ module.exports = {
     const phone = req.body.phone;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    if (!req.body.password) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please Input your password'
-      });
-    }
 
     User.sync({ force: false }).then(() => {
       User
@@ -68,11 +61,11 @@ module.exports = {
   },
 
   /**
-   * creates a user using google details if the user's email does not exist.
+   * creates a user using google details if the user's email does not exist
    * signs a user in if the email exists
    * @param {object} req 
    * @param {object} res
-   * @returns {object} user
+   * @returns {object} response object containing the new user profile
    */
   googleAuth(req, res) {
     User.findOne({ where: { email: req.body.email } })
@@ -89,7 +82,7 @@ module.exports = {
           });
           const { id, username, email } = foundUser;
           res.status(200).json({
-            status: `${username} successfully logged in`,
+            message: 'Login successful',
             user: { id, username, email },
             token
           });
@@ -131,40 +124,57 @@ module.exports = {
   },
 
   /**
-   * 
-   * searches for a user using the query passed in the request object
+   * searches for users using the query passed in the request object
    * @param {object} req
+   * @param {number} req.query.limit
+   * @param {number} req.query.offset
    * @param {object} res
-   * @return m
+   * @returns {object} object containing the total result count and
+   * a list of user objects
    */
   listAll(req, res) {
-    const { username, limit, offset } = req.query;
-
-    if (!req.query) {
-      res.status(200).json([]);
-    } else {
-      User.findAndCountAll({
-        where: {
-          username: {
-            $iLike: `%${username}%`
-          }
-        },
-        limit,
-        offset,
-        attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
-      })
-        .then((result) => {
-          res.status(200).json(result);
-        })
-        .catch((error) => {
-          res.status(404).json({
-            success: false,
-            error
-          });
-        });
+    const { username } = req.query;
+    const limit = req.query.limit || 3;
+    const offset = req.query.offset || 0;
+    if (isNaN(limit)) {
+      res.status(422).json({
+        message: 'Please enter a VALID limit value'
+      });
+    } if (isNaN(offset)) {
+      res.status(422).json({
+        message: 'Please enter a VALID offset value'
+      });
     }
+    User.findAndCountAll({
+      where: {
+        username: {
+          $iLike: `%${username}%`
+        }
+      },
+      limit,
+      offset,
+      attributes: {
+        exclude: ['password', 'salt', 'createdAt',
+          'updatedAt', 'email', 'phone', 'verificationCode']
+      }
+    })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((error) => {
+        res.status(404).json({
+          error
+        });
+      });
   },
 
+  /**
+   * verifies email validity and sends the user a password reset link
+   * @param {object} req
+   * @param {string} req.body.email
+   * @param {object} res
+   * @returns {object} response object containing success staus and message
+   */
   verifyUser(req, res) {
     User.findOne({
       where: {
@@ -176,25 +186,30 @@ module.exports = {
       },
       process.env.JWT_SECRET,
       { expiresIn: '1h' });
-      mailVerificationCode(user.username, user.email, token);
+      mailResetLink(user.username, user.email, token);
       res.status(200).json({
-        user: user.username,
-        success: true,
         message: 'verification email sent'
       });
-    }).catch((error) => {
+    }).catch(() => {
       res.status(400).json({
-        success: false,
         message: 'User not found'
       });
     });
   },
 
-
+  /**
+   * decodes the url token and sends resets the password if email is valid
+   * @param {object} req
+   * @param {string} req.params.token
+   * @param {string} req.body.newPassword
+   * @param {object} res
+   * @returns {object} response object containing success staus and message  
+   * a list of user objects
+   */
   resetPassword(req, res) {
     const encodedEmail = req.params.token;
-    const decode = jwt.decode(encodedEmail);
-    const email = decode.email;
+    const decoded = jwt.verify(encodedEmail, 'andelaishome');
+    const email = decoded.email;
     return User.findOne({
       where: {
         email
@@ -202,7 +217,6 @@ module.exports = {
     }).then((user) => {
       if (!user) {
         return res.status(400).json({
-          success: false,
           message: 'Invalid verification token'
         });
       }
@@ -210,13 +224,12 @@ module.exports = {
       return user.update({ password })
         .then(() => {
           res.status(200).json({
-            sucess: true,
             message: 'Password reset successfully'
           });
         });
-    }).catch(error => res.status(500).json({
-      success: false,
+    }).catch(error => res.status(422).json({
       message: error.message
     }));
   }
 };
+

@@ -12,12 +12,14 @@ describe('member reducer', () => {
     expect(errorReducer({}, {
       type: types.ERROR_OCCURRED,
       error: {
-        Error: 'Your password length should be between EIGHT and TWENTY characters'
+        Error: 'Your password length should be between' +
+        ' EIGHT and TWENTY characters'
       }
     })).toEqual(
       {
         error: {
-          Error: 'Your password length should be between EIGHT and TWENTY characters'
+          Error: 'Your password length should be between' +
+          ' EIGHT and TWENTY characters'
         }
       }
     );

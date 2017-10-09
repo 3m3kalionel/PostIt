@@ -70,7 +70,8 @@ export class Dashboard extends Component {
     callback();
     const members = this.props.groupsData[this.state.selectedGroup].members;
     const { priority } = this.state;
-    this.props.createMessage(this.state.selectedGroup, { content, members, priority });
+    this.props.createMessage(this.state.selectedGroup,
+      { content, members, priority });
   }
 
   /**
@@ -115,20 +116,16 @@ export class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    groups: state.user.groups,
-    groupsData: state.groups
-  };
-};
+const mapStateToProps = state => ({
+  user: state.user,
+  groups: state.user.groups,
+  groupsData: state.groups
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createMessage: (bindActionCreators)(createMessage, dispatch),
-    listGroups: (bindActionCreators)(listGroups, dispatch)
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  createMessage: (bindActionCreators)(createMessage, dispatch),
+  listGroups: (bindActionCreators)(listGroups, dispatch)
+});
 
 Dashboard.propTypes = {
   groups: PropTypes.arrayOf(PropTypes.shape({

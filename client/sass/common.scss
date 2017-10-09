@@ -172,16 +172,6 @@ div a.btn {
   margin-left: auto;
 }
 
-div.user-list {
-  li:nth-child(even) {
-  }
-}
-
-div.user-list {
-  li:nth-child(odd) {
-  }
-}
-
 ul.member-list li span{
   float: right;
 }
@@ -431,4 +421,21 @@ nav ul li {
 }
 .hidden {
   display: none !important;
+}
+
+div#not-found {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+div#not-found a {
+  display: inline-block;
+}
+
+div#not-found h2,
+div#not-found h4,
+div#not-found p,
+div#not-found a {
+  align-self: center;
 }

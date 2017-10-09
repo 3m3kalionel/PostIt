@@ -1,6 +1,5 @@
 import chai from 'chai';
 import request from 'supertest';
-import mocha from 'mocha';
 import app from '../app';
 import models from '../server/models';
 import user from './helpers/users';
@@ -56,9 +55,6 @@ describe('Sign up route', () => {
       });
   });
 
-  // // user signup edge cases - username
-  // // unique usernames, null username entries, empty string usernames
-
   it('throws an error if username already exists', (done) => {
     request(app)
       .post('/api/v1/user/signup')
@@ -81,7 +77,7 @@ describe('Sign up route', () => {
       });
   });
 
-  it('throws an error if username is empty', (done) => {
+  it('throws an error if username is an empty string', (done) => {
     request(app)
       .post('/api/v1/user/signup')
       .send(user.emptyStringUsername)
@@ -91,10 +87,6 @@ describe('Sign up route', () => {
         done();
       });
   });
-
-
-  // // user signup edgecases - email
-  // // validate emails -  not unique email, null emails, and invalid patterns
 
   it('throws an error if email already exists', (done) => {
     request(app)
@@ -154,13 +146,12 @@ describe('Sign up route', () => {
         });
     });
 
-  // user signup edge cases - password
   it('rejects user with a password of less than 8 characters', (done) => {
     request(app)
       .post('/api/v1/user/signup')
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(422);
         expect(res.body.Error).to.equal('Your password length should' +
         ' be between EIGHT and TWENTY characters');
         done();
@@ -172,9 +163,31 @@ describe('Sign up route', () => {
       .post('/api/v1/user/signup')
       .send(user.lessPasswordCharUser)
       .end((err, res) => {
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(422);
         expect(res.body.Error).to.equal('Your password length should' +
         ' be between EIGHT and TWENTY characters');
+        done();
+      });
+  });
+
+  it('throws an error if no phone number is supplied', (done) => {
+    request(app)
+      .post('/api/v1/user/signup')
+      .send(user.emptyStringPhoneNumber)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('Please enter your phone number');
+        done();
+      });
+  });
+
+  it('throws an error if username is an empty string', (done) => {
+    request(app)
+      .post('/api/v1/user/signup')
+      .send(user.noPhoneNumber)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('Please enter your phone number');
         done();
       });
   });
@@ -215,15 +228,3 @@ describe('Authentication route', () => {
   });
 });
 
-describe('Authentication route', () => {
-  it('lets a user search for other registered users', (done) => {
-    request(app)
-      .get('/api/v1/users?username=e&offset=0&limit=3')
-      // .send('?username="e"')
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        // expect(res.body.message).to.equal('Username not found');
-        done();
-      });
-  });
-});

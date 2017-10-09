@@ -4,7 +4,8 @@ import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 import className from 'classnames';
 
-import { addMember, searchUsers, clearMemberSearchList } from '../../actions/memberActions';
+import { addMember, searchUsers, clearMemberSearchList }
+  from '../../actions/memberActions';
 
 /**
  * React component that adds a registered user to a groups
@@ -41,7 +42,8 @@ export class AddUserModal extends Component {
     const { members: memberList } = this.props.group;
     const { members: newMemberList } = nextProps.group;
 
-    if (memberList && newMemberList && newMemberList.length > memberList.length) {
+    if (memberList && newMemberList && newMemberList.length >
+      memberList.length) {
       this.setState({
         query: ''
       });
@@ -126,7 +128,8 @@ export class AddUserModal extends Component {
     });
     const searchComponent = Object.keys(searchResults).length ?
       searchResults.rows.map((result) => {
-        const member = this.props.group.members.filter(mem => mem.username === result.username);
+        const member = this.props.group.members.filter(mem => mem.username ===
+        result.username);
         const buttonText = member.length === 0 ? 'Add' : 'Member';
         return (
           <div className="user-list" key={`${result.username}-${result.id}`}>
@@ -134,8 +137,7 @@ export class AddUserModal extends Component {
               <li className="username">
                 {result.username}
                 { buttonText !== 'Member'
-                  ?
-                  <button
+                  ? <button
                     className="btn waves-effect waves-light right"
                     name={result.id}
                     onClick={this.onClick}
@@ -178,7 +180,8 @@ export class AddUserModal extends Component {
                       nextLabel={'>'}
                       breakLabel={<a href="">...</a>}
                       breakClassName={'break-me'}
-                      pageCount={Math.ceil(searchResults.count / this.state.limit)}
+                      pageCount={Math.ceil(searchResults.count /
+                      this.state.limit)}
                       marginPagesDisplayed={2}
                       pageRangeDisplayed={5}
                       onPageChange={this.handlePageClick}
@@ -197,6 +200,7 @@ export class AddUserModal extends Component {
           <a
             href="#!"
             onClick={this.resetForm}
+            // eslint-disable-next-line
             className="modal-action modal-close waves-effect waves-green btn-flat"
           >Cancel
           </a>
@@ -206,35 +210,39 @@ export class AddUserModal extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    error: state.errors.error,
-    group: state.groups[ownProps.groupId],
-    searchResults: state.members.result
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  error: state.errors.error,
+  group: state.groups[ownProps.groupId],
+  searchResults: state.members.result
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addMember: (groupId, userId) => dispatch(addMember(groupId, userId)),
-    search: (username, offset, limit) => dispatch(searchUsers(username, offset, limit)),
-    clearSearchList: () => dispatch(clearMemberSearchList())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  addMember: (groupId, userId) => dispatch(addMember(groupId, userId)),
+  search: (username, offset, limit) => dispatch(searchUsers(username, offset,
+    limit)),
+  clearSearchList: () => dispatch(clearMemberSearchList())
+});
 
 AddUserModal.defaultProps = {
   group: {
     members: []
   },
-  searchResults: {}
+  searchResults: {},
+  error: {},
+  groupId: PropTypes.oneOfType([React.PropTypes.number,
+    React.PropTypes.string]),
 };
 
 AddUserModal.propTypes = {
-  group: PropTypes.shape({ message: PropTypes.string,
+  groupId: PropTypes.string,
+  group: PropTypes.oneOfType([PropTypes.object]),
+  error: PropTypes.shape({
+    message: PropTypes.string
   }).isRequired,
   search: PropTypes.func.isRequired,
   addMember: PropTypes.func.isRequired,
   clearSearchList: PropTypes.func.isRequired,
+  searchResults: PropTypes.shape([])
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

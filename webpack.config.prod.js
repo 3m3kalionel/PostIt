@@ -1,7 +1,10 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const path = require('path');
 const webpack = require('webpack');
 
-const PUBLIC_PATH = path.join(__dirname, 'public');
+// const PUBLIC_PATH = path.join(__dirname, 'public');
 const SRC_DIRECTORY = path.join(__dirname, 'client');
 
 
@@ -9,13 +12,15 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     path.join(SRC_DIRECTORY, 'Index.jsx'),
+    path.join(SRC_DIRECTORY, 'sass/common.scss')
   ],
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss', '.css'],
   },
   output: {
-    path: PUBLIC_PATH,
-    filename: 'js/bundle.js'
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/',
+    filename: 'bundle.min.js'
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
@@ -39,7 +44,13 @@ module.exports = {
       minimize: true,
       sourceMap: true
     }),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('bundle.css'),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    })
   ],
   module: {
     rules: [
@@ -68,14 +79,23 @@ module.exports = {
           name: 'img/[name].[ext]'
         },
       },
-      {
-        test: /\.scss?$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+      // {
+      //   test: /\.scss?$/,
+      //   use: ['style-loader', 'css-loader', 'sass-loader'],
+      // },
+      // {
+      //   test: /\.css?$/,
+      //   use: ['style-loader', 'css-loader'],
+      // },
+      { test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          loader: 'css-loader?importLoaders=1' })
       },
       {
-        test: /\.css?$/,
-        use: ['style-loader', 'css-loader'],
-      }
+        test: /\.(sass|scss)$/,
+        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+      },
     ],
   }
 };

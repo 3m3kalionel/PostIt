@@ -19,17 +19,20 @@ describe('Given the forgot password page is mounted', () => {
   });
 
   it('should change email when a user inputs his email', () => {
-    enzymeWrapper.find('#email').simulate('change', { target: { id: 'email', value: 'emeka@gmail.com' } });
+    enzymeWrapper.find('#email').simulate('change',
+      { target: { id: 'email', value: 'emeka@gmail.com' } });
     expect(enzymeWrapper.state('email')).toBe('emeka@gmail.com');
   });
 
-  it('should call the revertForgotPasswordFunction when the cancel button is clicked', () => {
-    enzymeWrapper.find('#cancel').simulate('click');
-    expect(props.revertForgotPassword.mock.calls.length).toBe(1);
-  });
+  it('should call the revertForgotPassword when the cancel button is clicked',
+    () => {
+      enzymeWrapper.find('#cancel').simulate('click');
+      expect(props.revertForgotPassword.mock.calls.length).toBe(1);
+    });
 
-  it('should send the user an email when the form is submitted with user details', () => {
-    enzymeWrapper.find('#forgot-password').simulate('submit');
-    expect(props.verifyUser.mock.calls.length).toBe(1);
-  });
+  it('should send the user an email when the form is submitted',
+    () => {
+      enzymeWrapper.find('#forgot-password').simulate('submit');
+      expect(props.verifyUser.mock.calls.length).toBe(1);
+    });
 });

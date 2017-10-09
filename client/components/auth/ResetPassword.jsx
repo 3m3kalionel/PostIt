@@ -37,12 +37,25 @@ export class ResetPassword extends Component {
   */
   onSubmit(event) {
     event.preventDefault();
+    const newPasswordValue = document.querySelector('#newpassword');
+    const retypeNewPasswordValue = document.querySelector('#retypenewpassword');
+    if (newPasswordValue !== retypeNewPasswordValue) {
+      Materialize.toast('Password inputs do not match',
+        3000, 'rounded error-toast');
+      return;
+    }
     const token = this.props.params.token;
     this.props.resetPassword(token, this.state)
       .then(() => {
-        Materialize.toast('Password reset successfully', 3000, 'success-toast');
-        browserHistory.push('/dashboard');
-      }).catch(error => Materialize.toast(error.message, 3000, 'rounded error-toast'));
+        if (!this.props.error) {
+          Materialize.toast('Password reset successfully',
+            3000, 'rounded success-toast');
+          browserHistory.push('/dashboard');
+        } else {
+          Materialize.toast(this.props.error.message, 3000,
+            'rounded error-toast');
+        }
+      });
   }
 
   /**
@@ -99,15 +112,25 @@ export class ResetPassword extends Component {
   }
 }
 
+
+const mapStateToProps = state => ({
+  error: state.errors.error,
+});
+
 const mapDispatchToProps = dispatch => ({
   resetPassword: (token, resetDetails) =>
     dispatch(resetPassword(token, resetDetails))
 });
 
-ResetPassword.propTypes = {
-  resetPassword: PropTypes.func.isRequired,
-  params: PropTypes.shape({ token: PropTypes.string }).isRequired
+ResetPassword.defaultProps = {
+  error: {}
 };
 
-export default connect(null, mapDispatchToProps)(ResetPassword);
+ResetPassword.propTypes = {
+  resetPassword: PropTypes.func.isRequired,
+  params: PropTypes.shape({ token: PropTypes.string }).isRequired,
+  error: PropTypes.shape({ message: PropTypes.string })
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
 

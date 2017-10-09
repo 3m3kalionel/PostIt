@@ -3,7 +3,8 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 
 import localStorage from '../__mocks__/localStorage';
-import { createMessage, listMessages } from '../../actions/messageActions';
+import { createMessage, listMessages }
+  from '../../actions/messageActions';
 import * as types from '../../actions/actionTypes';
 import { message, list } from '../__mocks__/__mockData__';
 
@@ -16,22 +17,23 @@ describe('async actions', () => {
     nock.cleanAll();
   });
 
-  it('creates CREATE_MESSAGE_SUCCESS when a message is posted successfully', () => {
-    nock('http://localhost')
-      .post('/api/v1/group/1/message')
-      .reply(201, { message });
+  it('creates CREATE_MESSAGE_SUCCESS when a message is posted successfully',
+    () => {
+      nock('http://localhost')
+        .post('/api/v1/group/1/message')
+        .reply(201, { message });
 
-    const expectedActions = [
-      {
-        type: types.message.CREATE_SUCCESS,
-        message
-      }
-    ];
-    const store = mockStore({});
-    return store.dispatch(createMessage(1)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+      const expectedActions = [
+        {
+          type: types.message.CREATE_SUCCESS,
+          message
+        }
+      ];
+      const store = mockStore({});
+      return store.dispatch(createMessage(1)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
     });
-  });
 
   it('creates ERROR_OCCURRED when a createMessage fails', () => {
     nock('http://localhost')

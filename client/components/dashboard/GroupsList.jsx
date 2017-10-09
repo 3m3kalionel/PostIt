@@ -8,10 +8,13 @@ const GroupsList = props => (
       GROUPS
     </li>
     { props.groups.map((group) => {
-      const activeClass = props.activeId == group.id ? 'selectedGroup' : 'bold';
+      const activeClass = props.activeId ===
+        `${group.id}` ? 'selectedGroup' : 'bold';
       return (
         <li key={group.id} className={activeClass}>
           <a
+            tabIndex={0}
+            role="link"
             id={group.id}
             onClick={props.selectGroup}
           >{group.name}</a>

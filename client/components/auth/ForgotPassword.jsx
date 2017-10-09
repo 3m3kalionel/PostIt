@@ -36,7 +36,14 @@ export class ForgotPassword extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.verifyUser(this.state).then(() => {
-      Materialize.toast('Password reset link has been sent to your email', 4000, 'success-toast');
+      if (!this.props.error.message) {
+        Materialize.toast('Password reset link has been sent'
+    + ' to your email',
+        4000, 'rounded success-toast');
+      } else {
+        Materialize.toast(this.props.error.message, 3000,
+          'rounded error-toast');
+      }
     }).catch(Materialize.toast(''));
   }
 
@@ -92,13 +99,22 @@ export class ForgotPassword extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  error: state.errors.error
+});
+
 const mapDispatchToProps = dispatch => ({
   verifyUser: email => dispatch(verifyUser(email))
 });
 
-ForgotPassword.propTypes = {
-  verifyUser: PropTypes.func.isRequired,
-  revertForgotPassword: PropTypes.func.isRequired
+ForgotPassword.defaultProps = {
+  error: {}
 };
 
-export default connect(null, mapDispatchToProps)(ForgotPassword);
+ForgotPassword.propTypes = {
+  verifyUser: PropTypes.func.isRequired,
+  revertForgotPassword: PropTypes.func.isRequired,
+  error: PropTypes.shape({ message: PropTypes.string })
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);

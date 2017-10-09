@@ -14,23 +14,24 @@ passport.deserializeUser((id, done) => {
   User.findById(id, (err, sessionUser) => done(err, sessionUser));
 });
 
-passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, password, done) => {
-  User.findOne({
-    where: {
-      username
-    }
-  }).then((user) => {
-    if (!user) {
-      return done({ message: 'Username not found' }, false);
-    }
-    const reqPasswordHash = bcrypt.hashSync(req.body.password, user.salt);
+passport.use(new LocalStrategy({ passReqToCallback: true },
+  (req, username, password, done) => {
+    User.findOne({
+      where: {
+        username
+      }
+    }).then((user) => {
+      if (!user) {
+        return done({ message: 'Username not found' }, false);
+      }
+      const reqPasswordHash = bcrypt.hashSync(req.body.password, user.salt);
 
-    if (user.password === reqPasswordHash) {
-      return done(null, user);
-    }
-    return done({ message: 'Username and password do not match' }, false);
-  }).catch(err => done(err));
-}
+      if (user.password === reqPasswordHash) {
+        return done(null, user);
+      }
+      return done({ message: 'Username and password do not match' }, false);
+    }).catch(err => done(err));
+  }
 ));
 
 module.exports = passport;

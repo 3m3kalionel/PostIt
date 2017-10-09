@@ -37,8 +37,9 @@ describe('Given the landing page is mounted', () => {
     expect(enzymeWrapper.find('#signup-form').exists()).toBe(false);
   });
 
-  it('should set state.forgot to false when revertForgotPassword is called', () => {
-    wrapperInstance.revertForgotPassword();
-    expect(enzymeWrapper.state('forgot')).toEqual(false);
-  });
+  it('should set state.forgot to false when revertForgotPassword is called',
+    () => {
+      wrapperInstance.revertForgotPassword();
+      expect(enzymeWrapper.state('forgot')).toEqual(false);
+    });
 });

@@ -24,6 +24,14 @@ const jusibe = new Jusibe(
   process.env.SMS_ACCESS_TOKEN
 );
 
+/**
+* sends user an email, notifying him of new group messages
+* @param {object} messageBody
+* @param {string} messageBody.content
+* @param {object} user
+* @param {string} user.email
+* @returns {undefined}
+*/
 function sendMail(messageBody, user) {
   const message = {
     to: user.email,
@@ -31,7 +39,7 @@ function sendMail(messageBody, user) {
     subject: 'PostIt-Alert',
 
     text: messageBody.content,
-
+    // eslint-disable-next-line
     html: `<b>Hello,</b> ${user.username}. <p>Here's a new notification from PostIt... </p>
           <p>message: <b>${messageBody.content}</b></p>`,
     attachments: []
@@ -49,22 +57,41 @@ function sendMail(messageBody, user) {
   });
 }
 
+/**
+* sends a user a text message, notifying him of new group messages
+* @param {object} messageBody
+* @param {string} messageBody.content
+* @param {object} user
+* @param {string} user.phone
+* @returns {undefined}
+*/
 function sendText(messageBody, user) {
   const payload = {
     to: user.phone,
     from: 'PostIT',
-    message: 'Hello, ' + user.username + ', Here\'s a new notification from PostIt... ' + 'message: ' + messageBody.content + ' from: ' // + messageBody.content + ' 😎',
+    message: 'Hello, ' + user.username +
+    ', Here\'s a new notification from PostIt... '
+    + 'message: ' + messageBody.content
   };
-  winston.log('Sending Text Message', user.phone); // eslint-disable-line
+  winston.log('Sending Text Message', user.phone);
   jusibe.sendSMS(payload)
     .then((res) => {
-      winston.log(res.body); // eslint-disable-line
+      winston.log(res.body);
     })
     .catch((err) => {
-      winston.log(err.body, user.phone); // eslint-disable-line
+      winston.log(err.body, user.phone);
     });
 }
 
+/**
+* notifies a user based on the priority type
+* @param {object} messageBody
+* @param {string} messageBody.priority
+* @param {array.object} messageBody.members
+* @param {object} user
+* @param {string} user.phone
+* @returns {undefined}
+*/
 export default function notify(messageBody) {
   switch (messageBody.priority) {
     case 'critical':

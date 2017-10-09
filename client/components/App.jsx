@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 
-import Header from './auth/common/Header';
+import Navbar from './auth/common/Navbar';
 import DashboardNavbar from './dashboard/DashboardNavbar';
 
 /**
@@ -9,22 +9,36 @@ import DashboardNavbar from './dashboard/DashboardNavbar';
  * @extends {Component}
  */
 class App extends Component {
-  renderHeader() {
+  /**
+   * renders navbar depending on which page is in use
+   * @method renderNavbar
+   * @memberof App
+   * @returns {object} the navbar to be rendered
+   */
+  renderNavbar() {
     const location = window.location.pathname;
-    if (location === '/' || /user\/reset/.test(location)) {
-      return <Header />;
+    if (location === '/dashboard') {
+      return <DashboardNavbar />;
     }
-    return <DashboardNavbar />;
+    return <Navbar />;
   }
 
+  /**
+   * @returns {object} component
+   * @memberof App
+  */
   render() {
     return (
       <div className="postit-app">
-        {this.renderHeader()}
+        {this.renderNavbar()}
         {this.props.children}
       </div>
     );
   }
 }
+
+App.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export default App;

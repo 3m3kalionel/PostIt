@@ -40,8 +40,9 @@ export class CreateGroupModal extends Component {
     event.preventDefault();
     this.props.createGroup(this.state)
       .then(() => {
-        if (this.props.error && this.props.error.Error) {
-          Materialize.toast(this.props.error.Error, 3000, 'rounded error-toast');
+        if (this.props.error && this.props.error.message) {
+          Materialize.toast(this.props.error.message, 3000,
+            'rounded error-toast');
         } else {
           Materialize.toast('Group created', 3000, 'rounded success-toast');
           this.resetForm();
@@ -130,6 +131,7 @@ export class CreateGroupModal extends Component {
         <div className="modal-footer">
           <a
             href="#!"
+            // eslint-disable-next-line
             className="modal-action modal-close waves-effect waves-green btn-flat"
             onClick={this.resetForm}
           >Cancel</a>
@@ -140,7 +142,8 @@ export class CreateGroupModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.errors.error
+  error: state.errors.error,
+  message: state.groups.message
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -149,11 +152,13 @@ const mapDispatchToProps = dispatch => ({
 
 CreateGroupModal.propTypes = {
   createGroup: PropTypes.func.isRequired,
-  error: PropTypes.shape({ Error: PropTypes.string }).isRequired
+  error: PropTypes.shape({ message: PropTypes.string }).isRequired,
+  message: PropTypes.string
 };
 
 CreateGroupModal.defaultProps = {
-  error: {}
+  error: {},
+  message: ''
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupModal);

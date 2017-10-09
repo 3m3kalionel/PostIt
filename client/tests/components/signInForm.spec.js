@@ -24,12 +24,14 @@ describe('Given the sign in page is mounted', () => {
   });
 
   it('should change state.username when a user inputs his username', () => {
-    enzymeWrapper.find('#username').simulate('change', { target: { id: 'username', value: 'emeka' } });
+    enzymeWrapper.find('#username').simulate('change',
+      { target: { id: 'username', value: 'emeka' } });
     expect(enzymeWrapper.state('username')).toBe('emeka');
   });
 
-  it('should sign in a user when the form is submitted with user details', () => {
-    enzymeWrapper.find('#password').simulate('change', { target: { id: 'password', value: 'foodisbae' } });
+  it('should sign in a user when the form is submitted', () => {
+    enzymeWrapper.find('#password').simulate('change',
+      { target: { id: 'password', value: 'foodisbae' } });
     enzymeWrapper.find('.auth-form').simulate('submit');
     expect(props.signIn.mock.calls.length).toBe(1);
   });
@@ -56,8 +58,9 @@ describe('Given the sign in page is mounted', () => {
     expect(props.googleAuth.mock.calls.length).toBe(1);
   });
 
-  it('should call the forgotPassword function when the forgot password link is clicked', () => {
-    enzymeWrapper.find('#forgot-password').simulate('click');
-    expect(props.forgotPassword.mock.calls.length).toBe(1);
-  });
+  it('should call forgotPassword when the forgot password link is clicked',
+    () => {
+      enzymeWrapper.find('#forgot-password').simulate('click');
+      expect(props.forgotPassword.mock.calls.length).toBe(1);
+    });
 });

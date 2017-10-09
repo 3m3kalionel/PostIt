@@ -6,7 +6,7 @@ import { Link } from 'react-router';
  * @class DashboardNavbar
  * @extends {Component}
 */
-class Navbar extends Component {
+class DashboardNavbar extends Component {
   /**
    * makes jquery function available on component mount
    * @method componentDidMount
@@ -56,4 +56,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default DashboardNavbar;

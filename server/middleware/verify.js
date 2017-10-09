@@ -16,14 +16,20 @@ const tp = nodemailer.createTransport({
   from: 'Post-IT <no-reply@pangalink.net>',
 });
 
-
-function mailVerificationCode(username, userEmail, token) {
+/**
+* sends a user an email
+* @param {object} username
+* @param {string} userEmail
+* @param {object} token
+* @returns {undefined}
+*/
+function mailResetLink(username, userEmail, token) {
   const url = `${process.env.URL}/${token}`;
   const message = {
     to: userEmail,
     subject: 'PostIt-Alert',
     html: `<b>Hello,</b> ${username}.<p>
-    <p>Click this <a href=${url}> link</a> to redirect and update your password</p>`
+    <p>Click this <a href=${url}> link</a> to redirect and update your password</p>` // eslint-disable-line
   };
 
   winston.log('Sending Mail');
@@ -39,4 +45,4 @@ function mailVerificationCode(username, userEmail, token) {
   });
 }
 
-export default mailVerificationCode;
+export default mailResetLink;

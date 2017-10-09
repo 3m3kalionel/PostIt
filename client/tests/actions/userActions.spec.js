@@ -3,7 +3,8 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 
 import localStorage from '../__mocks__/localStorage';
-import { signUp, signIn, googleAuth, resetPassword, verifyUser } from '../../actions/userActions';
+import { signUp, signIn, googleAuth, resetPassword, verifyUser }
+  from '../../actions/userActions';
 import * as types from '../../actions/actionTypes';
 import { user } from '../__mocks__/__mockData__';
 
@@ -84,7 +85,7 @@ describe('async actions', () => {
     });
   });
 
-  it('creates ERROR_OCCURRED when a user signs in/signs up  successfully using Google', () => {
+  it('creates AUTH_SUCCESS when a user signs in/signs up using Google', () => {
     nock('http://localhost')
       .post('/api/v1/user/google_auth')
       .reply(200, { user });
@@ -93,7 +94,7 @@ describe('async actions', () => {
       {
         type: types.user.AUTH_SUCCESS,
         user,
-        message: 'Successful'
+        message: 'Login successful'
       }
     ];
     const store = mockStore({ user });
@@ -119,22 +120,22 @@ describe('async actions', () => {
     });
   });
 
-  it('creates RESET_SUCCESS when a user successfully resets his password', () => {
-    nock('http://localhost')
-      .post('/api/v1/user/reset/13678843eyyd')
-      .reply(200, { success: true });
+  it('creates RESET_SUCCESS when a user successfully resets his password',
+    () => {
+      nock('http://localhost')
+        .post('/api/v1/user/reset/13678843eyyd')
+        .reply(200, { success: true });
 
-    const expectedActions = [
-      {
-        type: types.user.RESET_SUCCESS,
-        response: true
-      }
-    ];
-    const store = mockStore({ user });
-    return store.dispatch(resetPassword('13678843eyyd')).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+      const expectedActions = [
+        {
+          type: types.user.RESET_SUCCESS
+        }
+      ];
+      const store = mockStore({ user });
+      return store.dispatch(resetPassword('13678843eyyd')).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
     });
-  });
 
   it('creates ERROR_OCCURRED when password reset fails', () => {
     nock('http://localhost')
@@ -153,7 +154,7 @@ describe('async actions', () => {
     });
   });
 
-  it('creates VERIFY_SUCCESS when a user successfully inputs the correct email', () => {
+  it('creates VERIFY_SUCCESS when a user inputs the correct email', () => {
     nock('http://localhost')
       .post('/api/v1/user/verify')
       .reply(200, { success: true });
@@ -161,7 +162,6 @@ describe('async actions', () => {
     const expectedActions = [
       {
         type: types.user.VERIFY_SUCCESS,
-        response: true
       }
     ];
     const store = mockStore({ user });

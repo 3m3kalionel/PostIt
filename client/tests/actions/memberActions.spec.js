@@ -3,7 +3,8 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 
 import localStorage from '../__mocks__/localStorage';
-import { addMember, listMembers, searchUsers } from '../../actions/memberActions';
+import { addMember, listMembers, searchUsers }
+  from '../../actions/memberActions';
 import * as types from '../../actions/actionTypes';
 import { user, list } from '../__mocks__/__mockData__';
 

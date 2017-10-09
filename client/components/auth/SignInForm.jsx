@@ -42,9 +42,10 @@ export class SignInForm extends Component {
     this.props.signIn(this.state)
       .then(() => {
         if (this.props.error.message || this.props.error.Error) {
-          Materialize.toast(this.props.error.message || this.props.error.Error, 3000, 'rounded error-toast');
+          Materialize.toast(this.props.error.message || this.props.error.Error,
+            3000, 'rounded error-toast');
         } else {
-          Materialize.toast('Login in successful', 3000, 'rounded success-toast');
+          Materialize.toast('Login successful', 3000, 'rounded success-toast');
           browserHistory.push('/dashboard');
         }
       });
@@ -68,7 +69,8 @@ export class SignInForm extends Component {
           if (this.props.error && this.props.error.Error) {
             Materialize.toast('Login error', 3000, 'rounded error-toast');
           } else {
-            Materialize.toast(this.props.auth.message, 3000, 'rounded success-toast');
+            Materialize.toast(this.props.auth.message, 3000,
+              'rounded success-toast');
             browserHistory.push('/dashboard');
           }
         });
@@ -116,6 +118,8 @@ export class SignInForm extends Component {
         </div>
         <div>
           <a
+            tabIndex={0}
+            role="link"
             onClick={() => this.props.forgotPassword()}
             className="waves-effect waves-light"
             id="forgot-password"
@@ -124,12 +128,14 @@ export class SignInForm extends Component {
         <div id="button-div">
           <button className="btn" type="submit">Login</button>
           <GoogleLogin
+          // eslint-disable-next-line
             clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
             buttonText="Login With Google"
             onSuccess={this.googleSignIn}
             onFailure={this.googleSignIn}
           >
-            <i className="fa fa-google" aria-hidden="true" /> Sign in with Google
+            <i className="fa fa-google" aria-hidden="true" />
+            Sign in with Google
           </GoogleLogin>
         </div>
       </form>
@@ -152,7 +158,8 @@ SignInForm.propTypes = {
   signIn: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
   googleAuth: PropTypes.func.isRequired,
-  error: PropTypes.shape({ message: PropTypes.string, Error: PropTypes.string }).isRequired,
+  error: PropTypes.shape({ message: PropTypes.string, Error: PropTypes.string
+  }).isRequired,
   auth: PropTypes.shape({ message: PropTypes.string }).isRequired
 };
 

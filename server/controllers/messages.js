@@ -6,10 +6,14 @@ const Message = models.Message;
 module.exports = {
   create(req, res) {
     /**
-     *  function that creates a message object
-     *  @param {req} object
-     *  @param {res} object
-     *  @returns undefined
+     *  creates a message and posts it to a group depending on the priority
+     * @param {object} req
+     * @param {string} content
+     * @param {string} priority
+     * @param {number} userId
+     * @param {number} groupId
+     * @param {res} object
+     * @returns response object containing the created message
      */
     Message
       .create({
@@ -21,8 +25,13 @@ module.exports = {
       .then((message) => {
         notify(req.body);
         res.status(201).json({
-          message
+          message: {
+            id: message.id,
+            content: message.content,
+            userId: message.userId,
+            groupId: message.groupId
+          }
         });
-      });
+      }).catch(error => res.status(500).send(error.message));
   }
 };

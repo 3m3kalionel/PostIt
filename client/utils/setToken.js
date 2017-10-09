@@ -4,9 +4,7 @@ const saveToken = (token) => {
   localStorage.setItem('postit-token', token);
 };
 
-export const retrieveToken = () => {
-  return localStorage.getItem('postit-token');
-}
+const retrieveToken = () => localStorage.getItem('postit-token');
 
 const setToken = (token) => {
   if (token) {
@@ -17,4 +15,4 @@ const setToken = (token) => {
   axios.defaults.headers.common['x-access-token'] = token;
 };
 
-export { setToken };
+export default setToken;
