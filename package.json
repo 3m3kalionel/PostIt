@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An application that allows friends and colleagues create groups for notifications",
   "scripts": {
+    "postinstall": "npm run bundle-assets",
     "start": "node index.js",
     "start-dev": "NODE_ENV=development nodemon --exec babel-node -- index.js",
     "bundle-assets": "webpack -p --config=webpack.config.prod.js",
