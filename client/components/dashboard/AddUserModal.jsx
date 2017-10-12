@@ -128,9 +128,9 @@ export class AddUserModal extends Component {
     });
     const searchComponent = Object.keys(searchResults).length ?
       searchResults.rows.map((result) => {
-        const member = this.props.group.members.filter(mem => mem.username ===
+        const member = this.props.group.members.some(mem => mem.username ===
         result.username);
-        const buttonText = member.length === 0 ? 'Add' : 'Member';
+        const buttonText = member ? 'Member' : 'Add';
         return (
           <div className="user-list" key={`${result.username}-${result.id}`}>
             <ul className="member-list">
@@ -138,12 +138,13 @@ export class AddUserModal extends Component {
                 {result.username}
                 { buttonText !== 'Member'
                   ? <button
+                    id="add-button"
                     className="btn waves-effect waves-light right"
                     name={result.id}
                     onClick={this.onClick}
                   >{buttonText}</button>
                   :
-                  <span>{buttonText}</span>
+                  <span id="member-text">{buttonText}</span>
                 }
               </li>
             </ul>

@@ -37,8 +37,9 @@ export class ResetPassword extends Component {
   */
   onSubmit(event) {
     event.preventDefault();
-    const newPasswordValue = document.querySelector('#newpassword');
-    const retypeNewPasswordValue = document.querySelector('#retypenewpassword');
+    const newPasswordValue = document.querySelector('#newpassword').value;
+    const retypeNewPasswordValue =
+    document.querySelector('#retypenewpassword').value;
     if (newPasswordValue !== retypeNewPasswordValue) {
       Materialize.toast('Password inputs do not match',
         3000, 'rounded error-toast');
@@ -47,10 +48,10 @@ export class ResetPassword extends Component {
     const token = this.props.params.token;
     this.props.resetPassword(token, this.state)
       .then(() => {
-        if (!this.props.error) {
+        if (!this.props.error.message) {
           Materialize.toast('Password reset successfully',
             3000, 'rounded success-toast');
-          browserHistory.push('/dashboard');
+          browserHistory.push('/');
         } else {
           Materialize.toast(this.props.error.message, 3000,
             'rounded error-toast');

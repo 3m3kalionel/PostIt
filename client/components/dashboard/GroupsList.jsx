@@ -27,12 +27,14 @@ const GroupsList = props => (
 
 
 GroupsList.defaultProps = {
-  groups: []
+  groups: [],
+  activeId: ''
 };
 
 GroupsList.propTypes = {
   groups: Proptypes.arrayOf(Proptypes.object).isRequired,
-  selectGroup: Proptypes.func.isRequired
+  selectGroup: Proptypes.func.isRequired,
+  activeId: Proptypes.string
 };
 
 export default GroupsList;

@@ -46,7 +46,7 @@ describe('group route', () => {
         userToken = token;
         return promisify(user.validUser2);
       }, (err) => {
-        winston.log(err, 'this is an error');
+        winston.error('<< test errors >>', err);
       })
       .then((token) => {
         userToken2 = token;
@@ -61,7 +61,7 @@ describe('group route', () => {
         done();
       })
       .catch((err) => {
-        winston.log(err, 'these are the errors we have');
+        winston.error('<< test errors >>', err);
         done();
       });
   });

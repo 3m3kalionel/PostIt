@@ -4,14 +4,13 @@ import setToken from '../utils/setToken';
 import { group, ERROR_OCCURRED } from './actionTypes';
 
 /**
-* makes a call to the api endpoint, creating a new group with the data provided
-* @param {object} groupData
-* @returns {object} group
-* @returns {string} message
+* creates a new group with the group details provided
+* @param {object} groupDetails
+* @returns {object} action: type, group, message
 */
-export const createGroup = groupData => (
+export const createGroup = groupDetails => (
   dispatch => (
-    axios.post('/api/v1/group', groupData)
+    axios.post('/api/v1/group', groupDetails)
       .then(({ data: { message, group: newGroup } }) => {
         dispatch({
           type: group.CREATE_SUCCESS,
@@ -29,9 +28,8 @@ export const createGroup = groupData => (
 );
 
 /**
-* The listGroups action makes a call to the api endpoint
-* and lists all the groups a user belongs to
-* @returns {array.object} list
+* lists all the groups a user belongs to
+* @returns {array.object} action: type, list
 */
 export const listGroups = () => (dispatch) => {
   setToken();

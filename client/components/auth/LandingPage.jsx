@@ -73,40 +73,39 @@ class LandingPage extends Component {
    * @memberof LandingPage
   */
   render() {
-    if (this.state.forgot) {
-      return (
+    return this.state.forgot ?
+      (
         <div className="forgot-password">
           <ForgotPasswordPage
             revertForgotPassword={this.revertForgotPassword}
           />
         </div>
-      );
-    }
-    return (
-      <div className="page-wrapper">
-        <div className="card main-card">
-          <div className="card-tabs">
-            <ul className="tabs tabs-fixed-width">
-              <li
-                className="tab"
-              ><a href="#signup-form" className="active">Sign Up</a></li>
-              <li className="tab"><a href="#signin-form">Sign In</a></li>
-            </ul>
-          </div>
-          <div className="card-content">
-            <div id="signup-form" className="active">
-              <SignUpFormPage />
+      )
+      :
+      (
+        <div className="page-wrapper">
+          <div className="card main-card">
+            <div className="card-tabs">
+              <ul className="tabs tabs-fixed-width">
+                <li
+                  className="tab"
+                ><a href="#signup-form" className="active">Sign Up</a></li>
+                <li className="tab"><a href="#signin-form">Sign In</a></li>
+              </ul>
             </div>
-            <div id="signin-form">
-              <SignInFormPage
-                forgotPassword={this.forgotPassword}
-              />
+            <div className="card-content">
+              <div id="signup-form" className="active">
+                <SignUpFormPage />
+              </div>
+              <div id="signin-form">
+                <SignInFormPage
+                  forgotPassword={this.forgotPassword}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
   }
 }
-
 export default LandingPage;

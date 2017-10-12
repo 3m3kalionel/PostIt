@@ -2,6 +2,12 @@ import axios from 'axios';
 
 import { message, ERROR_OCCURRED } from './actionTypes';
 
+/**
+* creates a message
+* @param {number} groupId
+* @param {object} messageDetails
+* @returns {object} action: type, message
+*/
 export const createMessage = (groupId, messageDetails) => dispatch => (
   axios.post(`/api/v1/group/${groupId}/message`, messageDetails)
     .then(({ data: { message: newMessage } }) => {
@@ -18,6 +24,11 @@ export const createMessage = (groupId, messageDetails) => dispatch => (
     })
 );
 
+/**
+* lists all the messages in a group a user belongs to
+* @param {number} groupid
+* @returns {array.object} action: type, list
+*/
 export const listMessages = groupid => (
   dispatch => (
     axios.get(`/api/v1/group/${groupid}/messages`)

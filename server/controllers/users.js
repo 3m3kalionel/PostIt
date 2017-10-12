@@ -120,7 +120,7 @@ module.exports = {
               });
           });
         }
-      });
+      }).catch(error => res.status(500).send(error.message));
   },
 
   /**
@@ -188,7 +188,7 @@ module.exports = {
       { expiresIn: '1h' });
       mailResetLink(user.username, user.email, token);
       res.status(200).json({
-        message: 'verification email sent'
+        message: 'Password reset link has been sent to your email'
       });
     }).catch(() => {
       res.status(400).json({

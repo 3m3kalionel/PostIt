@@ -16,7 +16,7 @@ describe('Given the create group modal is mounted', () => {
     expect(enzymeWrapper.exists()).toBe(true);
   });
 
-  it('should change group name when a user inputs the name of the group',
+  it('should change group as when a user inputs the name of the group',
     () => {
       enzymeWrapper.find('#name').simulate('change',
         { target: { id: 'name', value: 'mma freaks' } });

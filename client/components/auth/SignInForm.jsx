@@ -126,7 +126,7 @@ export class SignInForm extends Component {
           >Forgot Password?</a>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Login</button>
+          <button id="sign-in" className="btn" type="submit">Login</button>
           <GoogleLogin
           // eslint-disable-next-line
             clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"

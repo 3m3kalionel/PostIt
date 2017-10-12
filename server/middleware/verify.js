@@ -32,15 +32,15 @@ function mailResetLink(username, userEmail, token) {
     <p>Click this <a href=${url}> link</a> to redirect and update your password</p>` // eslint-disable-line
   };
 
-  winston.log('Sending Mail');
+  winston.info('Sending Mail');
   return tp.sendMail(message, (error, info) => {
     if (error) {
-      winston.log('Error occurred');
-      winston.log(error.message);
+      winston.error('Error occurred');
+      winston.error(error.message);
       return;
     }
-    winston.log('Message sent successfully!');
-    winston.log('Server responded with "%s"', info.response);
+    winston.info('Message sent successfully!');
+    winston.info('Server responded with "%s"', info.response);
     tp.close();
   });
 }

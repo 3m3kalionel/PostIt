@@ -45,14 +45,14 @@ function sendMail(messageBody, user) {
     attachments: []
   };
 
-  winston.log('Sending Mail');
+  winston.info('Sending Mail');
   return tp.sendMail(message, (error, info) => {
     if (error) {
-      winston.log('Error occurred', error.message);
+      winston.error('Error occurred', error.message);
       return;
     }
-    winston.log('Message sent successfully!');
-    winston.log('Server responded with "%s"', info.response);
+    winston.info('Message sent successfully!');
+    winston.info('Server responded with "%s"', info.response);
     tp.close();
   });
 }
@@ -69,17 +69,16 @@ function sendText(messageBody, user) {
   const payload = {
     to: user.phone,
     from: 'PostIT',
-    message: 'Hello, ' + user.username +
-    ', Here\'s a new notification from PostIt... '
-    + 'message: ' + messageBody.content
+    message: `Hello, ${user.username}, Here's a new notification from PostIt`
+    + `message: ${messageBody.content}`
   };
-  winston.log('Sending Text Message', user.phone);
+  winston.info('Sending Text Message', user.phone);
   jusibe.sendSMS(payload)
     .then((res) => {
-      winston.log(res.body);
+      winston.info(res.body);
     })
     .catch((err) => {
-      winston.log(err.body, user.phone);
+      winston.error(err.body, user.phone);
     });
 }
 
@@ -98,7 +97,7 @@ export default function notify(messageBody) {
       return messageBody.members.forEach((member) => {
         sendMail(messageBody, member);
         sendText(messageBody, member);
-        winston.log('notifying in-app users');
+        winston.info('notifying in-app users');
       });
 
     case 'urgent':

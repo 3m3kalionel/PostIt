@@ -13,6 +13,14 @@ const app = express();
 const port = parseInt(process.env.PORT, 10) || 8080;
 const publicPath = path.resolve(__dirname, '/public'); // eslint-disable-line
 
+winston.configure({
+  transports: [
+    new (winston.transports.File)({
+      filename: path.resolve(__dirname, 'log.txt'),
+    })
+  ]
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,7 +46,9 @@ if (process.env.NODE_ENV === 'production') {
 app.use(passport.session());
 routes(app);
 
+winston.info('testing winston');
+
 const server = http.createServer(app);
-server.listen(port, () => winston.log('The server is running on port 8080'));
+server.listen(port, () => winston.info('The server is running on port 8080'));
 
 module.exports = server;

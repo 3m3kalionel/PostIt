@@ -56,10 +56,7 @@ body {
 
 textarea {
   resize: none;
-}
-
-textarea:focus {
-    height: 40px;
+  margin-bottom: 5px;
 }
 
 #slide-out {
@@ -102,7 +99,7 @@ nav li {
 }
 
 .main-card {
-  width: 40%;
+  // width: 40%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -147,7 +144,8 @@ div#button-div {
 
   #message-input {
     background: #F5F1EE;
-    width: 100%;
+    display: flex;
+    width: calc(100% - 70px);
   }
 }
 
@@ -301,13 +299,10 @@ div a.btn-floating:hover {
 
 div a.btn-floating {
   position: relative !important;
-  top: 777;
 }
 
 div a.btn-floating {
   background:rgba(145, 218, 246, 0.88);
-  position: absolute;
-  bottom: 60px;
 }
 
 div a.btn-floating:hover {
@@ -438,4 +433,60 @@ div#not-found h4,
 div#not-found p,
 div#not-found a {
   align-self: center;
+}
+
+@media screen and (min-width: 360px) and (max-width: 768px) {
+  .main-card {
+    width: 95%;
+  }
+  button#sign-up,
+  button#sign-in {
+    font-size: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 25%;
+    height: 44px;
+  }
+
+  .modal {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main-card {
+    width: 70%;
+  }
+
+  button#sign-up,
+  button#sign-in {
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 30%;
+    height: 45px;
+  }
+
+  .modal {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .main-card {
+    width: 40%;
+  }
+
+  button#sign-up,
+  button#sign-in {
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 30%;
+    height: 45px;
+  }
+
+  .modal {
+    width: 70%;
+  }
 }

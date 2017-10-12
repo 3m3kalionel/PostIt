@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import formatTime from '../../utils/formatTime';
 
 import { listMessages } from '../../actions/messageActions';
 import { listMembers } from '../../actions/memberActions';
@@ -12,7 +12,7 @@ import { listMembers } from '../../actions/memberActions';
  * @class MessageList
  * @extends {Component}
  */
-class MessageList extends Component {
+export class MessageList extends Component {
   /**
    * @param {object} nextProps
    * @memberof MessageList
@@ -40,25 +40,6 @@ class MessageList extends Component {
   }
 
   /**
-   * @method formatTime
-   * @param {object} date 
-   * @returns {string} returns the time the message is sent
-   * @memberof MessageList
-   */
-  formatTime(date) {
-    if (date) {
-      const testTime = moment(date).fromNow().split(' ');
-      let time = moment(date).fromNow();
-      if (testTime.includes('hours') && testTime[0] < 23) {
-        time = moment(date).calendar();
-      } else if (testTime[0] > 23) {
-        time = moment(date).fromNow();
-      }
-      return time;
-    }
-  }
-
-  /**
    * @returns {Object} component
    * @memberof MessageList
    */
@@ -73,7 +54,7 @@ class MessageList extends Component {
               <p>{message.content}</p>
               <p className="priority">{message.priority}</p>
               <p className="sender">{this.getUsername(message.userId)}</p>
-              <p className="time-sent">{this.formatTime(message.createdAt)}</p>
+              <p className="time-sent">{formatTime(message.createdAt)}</p>
             </div>
           </div>
         </li>

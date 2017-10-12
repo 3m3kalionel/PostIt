@@ -85,15 +85,15 @@ class MessageInput extends Component {
             onChange={this.handleInputChange}
             value={message}
           />
+          <button
+            id="submit-button"
+            className={submitClassName}
+            onClick={() =>
+              onSubmit(message, this.clearMessage)}
+          >
+            Send
+          </button>
         </div>
-        <button
-          id="submit-button"
-          className={submitClassName}
-          onClick={() =>
-            onSubmit(message, this.clearMessage)}
-        >
-          Send
-        </button>
       </div>
     );
   }

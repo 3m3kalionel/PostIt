@@ -71,11 +71,11 @@ export class SignUpForm extends Component {
    */
   googleSignUp(response) {
     if (response.accessToken) {
-      const userData = {
+      const userDetails = {
         email: response.profileObj.email,
         username: response.profileObj.givenName
       };
-      this.props.googleAuth(userData)
+      this.props.googleAuth(userDetails)
         .then(() => {
           if (this.props.error && this.props.error.Error) {
             Materialize.toast('Login error', 3000, 'rounded error-toast');
@@ -156,8 +156,9 @@ export class SignUpForm extends Component {
           <label htmlFor="password-confirm">Confirm Password</label>
         </div>
         <div id="button-div">
-          <button className="btn" type="submit">Sign up</button>
+          <button className="btn" type="submit" id="sign-up">Sign up</button>
           <GoogleLogin
+            id="google-login"
             // eslint-disable-next-line
             clientId="16460409560-2ea3rrvh3g3306enntrekk20be52djgr.apps.googleusercontent.com"
             buttonText="Signup With Google"
@@ -181,8 +182,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: userData => dispatch(signUp(userData)),
-  googleAuth: userData => dispatch(googleAuth(userData))
+  signUp: userDetails => dispatch(signUp(userDetails)),
+  googleAuth: userDetails => dispatch(googleAuth(userDetails))
 });
 
 SignUpForm.propTypes = {

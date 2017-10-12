@@ -4,10 +4,9 @@ import { user, ERROR_OCCURRED } from './actionTypes';
 import setToken from '../utils/setToken';
 
 /**
-* makes a call to the 
-* login action and it takes in the decoded token
+* signs a new user up
 * @param {object} userDetails
-* @returns {object} type, user
+* @returns {object} action: type, user
 */
 export const signUp = userDetails => (
   dispatch => (
@@ -29,6 +28,11 @@ export const signUp = userDetails => (
   )
 );
 
+/**
+* signs in a new user
+* @param {object} userDetails
+* @returns {object} action: type, user
+*/
 export const signIn = userDetails => (
   dispatch => (
     axios.post('/api/v1/user/signin', userDetails)
@@ -49,6 +53,11 @@ export const signIn = userDetails => (
   )
 );
 
+/**
+* signs in a new user using his google details
+* @param {object} userDetails
+* @returns {object} action: type, user, message
+*/
 export const googleAuth = userDetails => (
   dispatch => (
     axios.post('/api/v1/user/google_auth', userDetails)
@@ -69,9 +78,15 @@ export const googleAuth = userDetails => (
   )
 );
 
+/**
+* resets a user's password
+* @param {string} token
+* @param {object} resetDetails
+* @returns {object} action: type
+*/
 export const resetPassword = (token, resetDetails) =>
   dispatch => axios.post(`/api/v1/user/reset/${token}`, resetDetails)
-    .then(({ data }) => {
+    .then(() => {
       dispatch({
         type: user.RESET_SUCCESS,
       });
@@ -84,6 +99,11 @@ export const resetPassword = (token, resetDetails) =>
       return data;
     });
 
+/**
+* verifies a user's details before sending password reset link
+* @param {string} userEmail
+* @returns {object} action: type
+*/
 export const verifyUser = userEmail => (
   dispatch => (
     axios.post('/api/v1/user/verify', userEmail)

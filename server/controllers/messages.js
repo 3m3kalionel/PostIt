@@ -29,7 +29,10 @@ module.exports = {
             id: message.id,
             content: message.content,
             userId: message.userId,
-            groupId: message.groupId
+            groupId: message.groupId,
+            priority: message.priority,
+            createdAt: message.createdAt,
+            updatedAt: message.updatedAt
           }
         });
       }).catch(error => res.status(500).send(error.message));

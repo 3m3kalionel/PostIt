@@ -1,5 +1,11 @@
 import { member } from '../actions/actionTypes';
 
+/**
+ * updates members in the store
+ * @param {object} state
+ * @param {object} action
+ * @returns {object} state
+ */
 const memberReducer = (state = {}, action = {}) => {
   switch (action.type) {
     case member.SEARCH_SUCCESS:

@@ -1,5 +1,11 @@
 import { group, member, message } from '../actions/actionTypes';
 
+/**
+ * updates groups in the store
+ * @param {object} state
+ * @param {object} action
+ * @returns {object} state
+ */
 const groupReducer = (state = {}, action = {}) => {
   switch (action.type) {
     case group.CREATE_SUCCESS:

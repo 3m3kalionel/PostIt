@@ -147,7 +147,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createGroup: groupData => dispatch(createGroup(groupData))
+  createGroup: groupDetails => dispatch(createGroup(groupDetails))
 });
 
 CreateGroupModal.propTypes = {

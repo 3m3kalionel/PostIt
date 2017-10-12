@@ -1,5 +1,11 @@
 import { user, group } from '../actions/actionTypes';
 
+/**
+ * updates user in the store
+ * @param {object} state
+ * @param {object} action
+ * @returns {object} state
+ */
 const userReducer = (state = {}, action = {}) => {
   switch (action.type) {
     case user.AUTH_SUCCESS:

@@ -40,7 +40,6 @@ class DashboardNavbar extends Component {
             className="button-collapse"
           ><i className="material-icons">menu</i></a>
           <ul className="right">
-            <li><i className="large material-icons">notifications</i></li>
             <li id="logout-button">
               <Link className="my-logout" to="logout">
                 <i
