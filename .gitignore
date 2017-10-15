@@ -6,3 +6,4 @@ package-lock.json
 .env
 public/js/
 log.txt
+.nyc_output/

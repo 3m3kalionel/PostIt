@@ -68,7 +68,7 @@ export class ForgotPassword extends Component {
     return (
       <div className="reset-container0">
         <form onSubmit={this.onSubmit} id="forgot-password">
-          <h4>forgot password</h4>
+          <h4>Forgot password</h4>
           <div className="input-field col-s6">
             <input
               id="email"

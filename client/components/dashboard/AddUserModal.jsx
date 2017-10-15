@@ -105,12 +105,12 @@ export class AddUserModal extends Component {
   /**
   * switches page view on click of a button
   * @method handlePageClick
-  * @param {object} data
+  * @param {object} pageDetails
   * @memberof AddUserModal
   * @return {undefined}
   */
-  handlePageClick(data) {
-    const selected = data.selected;
+  handlePageClick(pageDetails) {
+    const selected = pageDetails.selected;
     const offset = this.state.limit * selected;
     this.setState({ offset }, () => {
       this.props.search(this.state.query, this.state.offset, this.state.limit);
@@ -122,14 +122,25 @@ export class AddUserModal extends Component {
    * @memberof AddUserModal
    */
   render() {
+    const { userGroups, group, groupId } = this.props;
+    let selectedGroup = '';
+
+
+    if (userGroups) {
+      const activeGroup = userGroups.filter(
+        userGroup => userGroup.id === Number(groupId)
+      )[0];
+      selectedGroup = activeGroup ? activeGroup.name : '';
+    }
+
     const { searchResults } = this.props;
     const paginationClassname = className({
       hidden: this.state.query.length < 1
     });
     const searchComponent = Object.keys(searchResults).length ?
       searchResults.rows.map((result) => {
-        const member = this.props.group.members.some(mem => mem.username ===
-        result.username);
+        const member = this.props.group.members.some(groupMember =>
+          groupMember.username === result.username);
         const buttonText = member ? 'Member' : 'Add';
         return (
           <div className="user-list" key={`${result.username}-${result.id}`}>
@@ -153,48 +164,54 @@ export class AddUserModal extends Component {
       }
       ) : null;
 
+
     return (
       <div id="user-to-group" className="modal">
         <div className="modal-content">
-          <div className="row">
-            <form className="col s12">
-              <div className="row">
-                <div className="input-field col s12">
-                  <i className="material-icons prefix">account_circle</i>
-                  <input
-                    id="icon_prefix"
-                    type="text"
-                    name="query"
-                    value={this.state.query}
-                    onChange={this.handleInputChange}
-                  />
-                  <label htmlFor="icon_prefix">Username</label>
-                </div>
-
-                {searchComponent}
-              </div>
-              {
-                this.state.displayPagination ?
-                  <div className={paginationClassname}>
-                    <ReactPaginate
-                      previousLabel={'<'}
-                      nextLabel={'>'}
-                      breakLabel={<a href="">...</a>}
-                      breakClassName={'break-me'}
-                      pageCount={Math.ceil(searchResults.count /
-                      this.state.limit)}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={this.handlePageClick}
-                      containerClassName={'pagination'}
-                      subContainerClassName={'pages pagination'}
-                      activeClassName={'active'}
+          <div id="modal-header">
+            <h4 className="center">Add user to {selectedGroup} </h4>
+          </div>
+          <div id="modal-body">
+            <div className="row">
+              <form className="col s12">
+                <div className="row">
+                  <div className="input-field col s12">
+                    <i className="material-icons prefix">account_circle</i>
+                    <input
+                      id="icon_prefix"
+                      type="text"
+                      name="query"
+                      value={this.state.query}
+                      onChange={this.handleInputChange}
                     />
+                    <label htmlFor="icon_prefix">Username</label>
                   </div>
-                  : null
-              }
-            </form>
 
+                  {searchComponent}
+                </div>
+                {
+                  this.state.displayPagination ?
+                    <div className={paginationClassname}>
+                      <ReactPaginate
+                        previousLabel={'<'}
+                        nextLabel={'>'}
+                        breakLabel={<a href="">...</a>}
+                        breakClassName={'break-me'}
+                        pageCount={Math.ceil(searchResults.count /
+                        this.state.limit)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
+                    </div>
+                    : null
+                }
+              </form>
+
+            </div>
           </div>
         </div>
         <div className="modal-footer">
@@ -203,7 +220,7 @@ export class AddUserModal extends Component {
             onClick={this.resetForm}
             // eslint-disable-next-line
             className="modal-action modal-close waves-effect waves-green btn-flat"
-          >Cancel
+          >Close
           </a>
         </div>
       </div>
@@ -212,9 +229,12 @@ export class AddUserModal extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  userGroups: state.user.groups,
   error: state.errors.error,
   group: state.groups[ownProps.groupId],
-  searchResults: state.members.result
+  group1: state.groups,
+  searchResults: state.members.result,
+  groupName: state.groups
 });
 
 const mapDispatchToProps = dispatch => ({

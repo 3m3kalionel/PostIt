@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-// const PUBLIC_PATH = path.join(__dirname, 'public');
 const SRC_DIRECTORY = path.join(__dirname, 'client');
 
 
@@ -79,14 +78,6 @@ module.exports = {
           name: 'img/[name].[ext]'
         },
       },
-      // {
-      //   test: /\.scss?$/,
-      //   use: ['style-loader', 'css-loader', 'sass-loader'],
-      // },
-      // {
-      //   test: /\.css?$/,
-      //   use: ['style-loader', 'css-loader'],
-      // },
       { test: /\.css$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',

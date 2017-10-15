@@ -110,6 +110,7 @@ export class Dashboard extends Component {
           setPriority={this.setPriority}
           defaultPriority={this.state.priority}
           showInput={this.state.showInput}
+          selectedGroup={this.state.selectedGroup}
         />
       </div>
     );

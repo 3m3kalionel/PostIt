@@ -6,6 +6,15 @@ import DashboardPage from './components/dashboard/Dashboard';
 import ResetPasswordPage from './components/auth/ResetPassword';
 import NotFoundPage from './components/NotFoundPage';
 
+/**
+ * calls retrieveToken if token exists in the local storage
+ * else, calls saveToken to save it to the local storage
+ * @function setToken
+ * @param {string} next
+ * @param {string} replace
+ * @param {string} cb
+ * @returns {undefined}
+ */
 const onEnter = (next, replace, cb) => {
   if (localStorage.getItem('postit-token') !== null
     && next.location.pathname === '/') {

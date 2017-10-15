@@ -3,11 +3,11 @@ import thunk from 'redux-thunk';
 import { autoRehydrate } from 'redux-persist';
 import rootReducer from '../reducers';
 
-const configureStore = () => (
+const prodConfig = () => (
   compose(
     applyMiddleware(thunk),
     autoRehydrate()
   )(createStore)(rootReducer)
 );
 
-export default configureStore;
+export default prodConfig;

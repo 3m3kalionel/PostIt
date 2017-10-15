@@ -1,6 +1,6 @@
 import axios from 'axios';
-import setToken from '../utils/setToken';
 
+import setToken from '../utils/setToken';
 import { group, ERROR_OCCURRED } from './actionTypes';
 
 /**

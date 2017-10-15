@@ -1,10 +1,10 @@
 import moment from 'moment';
 
 /**
+ * converts the time to readable format
  * @method formatTime
  * @param {object} date 
  * @returns {string} returns the time the message is sent
- * @memberof MessageList
  */
 const formatTime = (date) => {
   if (date) {

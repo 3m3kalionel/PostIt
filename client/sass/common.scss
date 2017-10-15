@@ -16,9 +16,13 @@ body,
 }
 
 nav {
-  background-color: $base-color;
-  padding-left: 40px;
-  padding-right: 40px;
+    background-color: $base-color;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    li {
+    display: inline-block;
+  }
 }
 
 .tabs .indicator {
@@ -76,10 +80,6 @@ textarea {
     width: 100%;
 }
 
-nav li {
-  display: inline-block;
-}
-
 #signup form .row {
   line-height: 10px;
 }
@@ -99,7 +99,6 @@ nav li {
 }
 
 .main-card {
-  // width: 40%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -147,10 +146,6 @@ div#button-div {
     display: flex;
     width: calc(100% - 70px);
   }
-}
-
-#message-input:active {
-  border: green 3px solid;
 }
 
 div.card-content {
@@ -317,6 +312,7 @@ ul#slide-out a {
   border-bottom: 1px solid lightgrey;
   color: dimgrey;
   height: 65px;
+  cursor: pointer;
 }
 
 ul#slide-out a:hover {
@@ -489,4 +485,64 @@ div#not-found a {
   .modal {
     width: 70%;
   }
+}
+
+.modal .modal-content {
+  padding: 0;
+}
+
+div#modal-header {
+  padding: 12px 24px;
+  color: #2FA599;
+}
+
+div#modal-body,
+.modal .modal-footer {
+  background-color: #F5F1EE;
+  padding: 16px;
+}
+
+.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
+  margin: -5px -6px;
+}
+
+.auth-form,
+#reset-password,
+#forgot-password,
+.tabs .tab a:hover, .tabs .tab a.active, .tabs .tab a,
+ul#slide-out a,
+a.brand-logo,
+a.brand-logo.center {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
+}
+
+.card .card-content p.sender {
+  margin-top: -3px;
+}
+
+.card .card-content p.content {
+  margin-left: -14px;
+}
+
+.card .card-content p.priority {
+  margin-top: -3px;  
+}
+div#chat-input {
+  font-family: 'Playfair Display', serif;
+}
+
+ul#slide-out a {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+ul.member-list li span {
+    float: right;
+    margin-right: 27px;
+}
+
+button#add-button,
+button#create-button {
+  margin-right: 11px;
 }

@@ -1,5 +1,8 @@
 import models from '../models';
 
+import paginate from '../utils/paginate';
+
+
 const Group = models.Group;
 const User = models.User;
 const Message = models.Message;
@@ -14,7 +17,7 @@ module.exports = {
    * @param {object} res
    * @returns {object} created group profile
    */
-  create(req, res) {
+  createGroup(req, res) {
     models.sequelize.sync({ force: false }).then(() => Group
       .create({
         name: req.body.name,
@@ -41,14 +44,57 @@ module.exports = {
   * @param {object} res
   * @returns {array.object} a list of messages objects
   */
-  list(req, res) {
+  listMessages(req, res) {
     const groupId = req.params.groupid;
     Message
       .findAll({
         where: { groupId },
-        attributes: { exclude: ['createdAt', 'updatedAt'] }
+        attributes: { exclude: ['updatedAt'] }
       }).then(messages => res.status(200).json(messages))
       .catch(error => res.status(404).send(error.message));
+  },
+
+  /**
+   * searches for groups using the query passed in the request object
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response object containing success staus and message
+   */
+  searchAllGroups(req, res) {
+    const { name } = req.query;
+    const limit = req.query.limit || 3;
+    const offset = req.query.offset || 0;
+    if (isNaN(limit)) {
+      return res.status(422).json({
+        message: 'Please enter a VALID limit value'
+      });
+    } else if (isNaN(offset)) {
+      return res.status(422).json({
+        message: 'Please enter a VALID offset value'
+      });
+    }
+    Group.findAndCountAll({
+      where: {
+        name: {
+          $iLike: `%${name}%`
+        },
+      },
+      limit,
+      offset,
+      attributes: {
+        exclude: ['password', 'salt', 'createdAt', 'updatedAt']
+      }
+    }).then((groups) => {
+      const pagination = paginate({
+        limit,
+        offset,
+        rowCount: groups.count,
+      });
+      return res.status(200).json({
+        ...pagination,
+        groups: groups.rows
+      });
+    });
   },
 
   /**

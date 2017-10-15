@@ -51,7 +51,7 @@ export class MessageList extends Component {
         <li key={message.id}>
           <div className="card">
             <div className="card-content">
-              <p>{message.content}</p>
+              <p className="content">{message.content}</p>
               <p className="priority">{message.priority}</p>
               <p className="sender">{this.getUsername(message.userId)}</p>
               <p className="time-sent">{formatTime(message.createdAt)}</p>
@@ -63,7 +63,7 @@ export class MessageList extends Component {
       return (
         <div id="no-messages">
           <p>No group messages to display.
-             Select a group or click the<q>plus</q> button to start.</p>
+             Select a group or click the <q>plus</q> button to start.</p>
         </div>
       );
     }

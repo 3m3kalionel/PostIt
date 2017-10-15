@@ -8,11 +8,11 @@ import rootReducer from '../reducers';
 
 const logger = createLogger();
 
-const configureStore = () => (
+const devConfig = () => (
   composeWithDevTools(
     applyMiddleware(thunk, reduxImmutableStateInvariant(), logger),
     autoRehydrate()
   )(createStore)(rootReducer)
 );
 
-export default configureStore;
+export default devConfig;

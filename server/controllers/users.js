@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 import model from '../models';
-import mailResetLink from '../middleware/verify';
+import notify from '../utils/notify';
+import paginate from '../../server/utils/paginate';
 
 
 dotenv.config();
@@ -16,7 +17,7 @@ module.exports = {
    * @param {object} res
    * @returns {object} user
    */
-  create(req, res) {
+  createNewUser(req, res) {
     const username = req.body.username;
     const email = req.body.email;
     const phone = req.body.phone;
@@ -132,7 +133,7 @@ module.exports = {
    * @returns {object} object containing the total result count and
    * a list of user objects
    */
-  listAll(req, res) {
+  listAllUsers(req, res) {
     const { username } = req.query;
     const limit = req.query.limit || 3;
     const offset = req.query.offset || 0;
@@ -169,6 +170,78 @@ module.exports = {
   },
 
   /**
+   * searches for users using the query passed in the request object
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response object containing success staus and message
+   */
+  searchAllUsers(req, res) {
+    const { username } = req.query;
+    const limit = req.query.limit || 3;
+    const offset = req.query.offset || 0;
+    if (isNaN(limit)) {
+      return res.status(422).json({
+        message: 'Please enter a VALID limit value'
+      });
+    } else if (isNaN(offset)) {
+      return res.status(422).json({
+        message: 'Please enter a VALID offset value'
+      });
+    }
+    User.findAndCountAll({
+      where: {
+        username: {
+          $iLike: `%${username}%`
+        },
+      },
+      limit,
+      offset,
+      attributes: {
+        exclude: ['password', 'salt', 'createdAt', 'updatedAt']
+      }
+    }).then((users) => {
+      const pagination = paginate({
+        limit,
+        offset,
+        rowCount: users.count,
+      });
+      return res.status(200).json({
+        ...pagination,
+        users: users.rows
+      });
+    });
+  },
+
+  // /**
+  //  * verifies email validity and sends the user a password reset link
+  //  * @param {object} req
+  //  * @param {string} req.body.email
+  //  * @param {object} res
+  //  * @returns {object} response object containing success staus and message
+  //  */
+  // verifyUser(req, res) {
+  //   User.findOne({
+  //     where: {
+  //       email: req.body.email
+  //     }
+  //   }).then((user) => {
+  //     const token = jwt.sign({
+  //       email: user.email
+  //     },
+  //     process.env.JWT_SECRET,
+  //     { expiresIn: '1h' });
+  //     mailResetLink(user.username, user.email, token);
+  //     res.status(200).json({
+  //       message: 'Password reset link has been sent to your email'
+  //     });
+  //   }).catch(() => {
+  //     res.status(400).json({
+  //       message: 'User not found'
+  //     });
+  //   });
+  // },
+
+  /**
    * verifies email validity and sends the user a password reset link
    * @param {object} req
    * @param {string} req.body.email
@@ -186,7 +259,9 @@ module.exports = {
       },
       process.env.JWT_SECRET,
       { expiresIn: '1h' });
-      mailResetLink(user.username, user.email, token);
+      // mailResetLink(user.username, user.email, token);
+      const messageBody = { priority: 'none', content: '', members: [user] };
+      notify(messageBody, user, token);
       res.status(200).json({
         message: 'Password reset link has been sent to your email'
       });

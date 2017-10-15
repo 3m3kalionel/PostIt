@@ -12,7 +12,7 @@
     "client-test:watch": "npm run client-test --coverage --watch",
     "gulp-test": "NODE_ENV=test gulp test --timeout 15000",
     "migrate-test": "NODE_ENV=test sequelize db:migrate",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "migrate-production": "NODE_ENV=production sequelize db:migrate"
   },
   "jest": {

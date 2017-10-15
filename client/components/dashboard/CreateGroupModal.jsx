@@ -83,40 +83,46 @@ export class CreateGroupModal extends Component {
   render() {
     return (
       <div id="new-group" className="modal">
+
         <div className="modal-content">
-          <div className="row">
-            <form
-              id="create-group-modal"
-              className="col s12"
-              onSubmit={this.onSubmit}
-            >
-              <div className="row">
-                <div className="input-field col s12">
-                  <i className="material-icons prefix">account_circle</i>
-                  <input
-                    onChange={this.handleInputChange}
-                    id="name"
-                    value={this.state.name}
-                    type="text"
-                    required
-                  />
-                  <label htmlFor="icon_prefix">Group name</label>
-                </div>
-                <div className="input-field col s12">
-                  <i className="material-icons prefix">edit</i>
-                  <input
-                    onChange={this.handleInputChange}
-                    id="description"
-                    value={this.state.description}
-                    type="tel"
-                    required
-                  />
-                  <label htmlFor="icon_telephone">Description</label>
-                </div>
+          <div id="modal-header">
+            <h4 className="center">Create new group</h4>
+          </div>
+          <div id="modal-body">
+            <div className="row">
+              <form
+                id="create-group-modal"
+                className="col s12"
+                onSubmit={this.onSubmit}
+              >
                 <div className="row">
                   <div className="input-field col s12">
+                    <i className="material-icons prefix">account_circle</i>
+                    <input
+                      onChange={this.handleInputChange}
+                      id="name"
+                      value={this.state.name}
+                      type="text"
+                      required
+                    />
+                    <label htmlFor="icon_prefix">Group name</label>
+                  </div>
+                  <div className="input-field col s12">
+                    <i className="material-icons prefix">edit</i>
+                    <input
+                      onChange={this.handleInputChange}
+                      id="description"
+                      value={this.state.description}
+                      type="tel"
+                      required
+                    />
+                    <label htmlFor="icon_telephone">Description</label>
+                  </div>
+                  <div className="row">
+
                     <button
-                      className="btn cyan waves-effect waves-light right"
+                      className="btn waves-effect waves-light right"
+                      id="create-button"
                       type="submit"
                       name="action"
                     >Create
@@ -124,8 +130,8 @@ export class CreateGroupModal extends Component {
                     </button>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
         <div className="modal-footer">
@@ -134,7 +140,7 @@ export class CreateGroupModal extends Component {
             // eslint-disable-next-line
             className="modal-action modal-close waves-effect waves-green btn-flat"
             onClick={this.resetForm}
-          >Cancel</a>
+          >Close</a>
         </div>
       </div>
     );

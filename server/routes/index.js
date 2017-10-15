@@ -26,14 +26,14 @@ module.exports = (app) => {
 
   // An API route that allows users to sign up and create accounts
   app.post('/api/v1/user/signup', validateUser.signup, validateUser.signin,
-    usersController.create);
+    usersController.createNewUser);
 
   // An API route that allows users to sign up/sign in via their gmail accounts
   app.post('/api/v1/user/google_auth', usersController.googleAuth);
 
   // An API route that allow users create broadcast groups:
   app.post('/api/v1/group', authenticate, validateGroup.name,
-    validateGroup.isEmptyContent, groupsController.create);
+    validateGroup.isEmptyContent, groupsController.createGroup);
 
   // An API route that allow users add other users to groups:
   app.post('/api/v1/group/:groupid/user', authenticate,
@@ -44,13 +44,13 @@ module.exports = (app) => {
   // An API route that allows a logged in user post messages to created groups:
   app.post('/api/v1/group/:groupid/message', authenticate,
     validateGroup.validGroup, validateGroup.isGroupMember,
-    validateMessage.isEmpty, messagesController.create);
+    validateMessage.isEmpty, messagesController.createMessage);
 
   // An API route that allows a logged in user retrieve messages that have been
   // posted to groups he/she belongs to:
   app.get('/api/v1/group/:groupid/messages', authenticate,
     validateGroup.validGroup, validateGroup.isGroupMember,
-    groupsController.list);
+    groupsController.listMessages);
 
   // An API route that allows a logged in user list users in a group that he
   // belongs to
@@ -59,7 +59,7 @@ module.exports = (app) => {
     groupsController.listMembers);
 
   // An API route that allows a logged in user search for a user
-  app.get('/api/v1/users', usersController.listAll);
+  app.get('/api/v1/users', usersController.listAllUsers);
 
   // An API route that allows a logged in user list all groups that he
   // belongs to
@@ -69,7 +69,15 @@ module.exports = (app) => {
   // has forgotten his password
   app.post('/api/v1/user/verify', usersController.verifyUser);
 
+  // An API route that allows a user reset his password
   app.post('/api/v1/user/reset/:token', usersController.resetPassword);
+
+  // An API route that allows a user list all users in the application
+  app.get('/api/v1/users/search', usersController.searchAllUsers);
+
+  // An API route that allows a user list all groups in the application
+  app.get('/api/v1/groups/search',
+    authenticate, groupsController.searchAllGroups);
 
   // Root route
   if (process.env.NODE_ENV === 'production') {

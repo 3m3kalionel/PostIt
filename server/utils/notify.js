@@ -1,3 +1,5 @@
+
+
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import Jusibe from 'jusibe';
@@ -14,9 +16,6 @@ const tp = nodemailer.createTransport({
   debug: false
 }, {
   from: 'Post-IT <no-reply@pangalink.net>',
-  headers: {
-    'X-Laziness-level': 1000
-  }
 });
 
 const jusibe = new Jusibe(
@@ -30,19 +29,26 @@ const jusibe = new Jusibe(
 * @param {string} messageBody.content
 * @param {object} user
 * @param {string} user.email
+* @param {string} token
 * @returns {undefined}
 */
-function sendMail(messageBody, user) {
+function sendMail(messageBody, user, token) {
+  const url = `${process.env.URL}/${token}`;
+  // eslint-disable-next-line
+  const notificationMessage = `<strong>Hello,</strong> ${user.username}. <p>Here's a new notification from PostIt... </p>
+          <p>message: <b>${messageBody.content}</b></p>`;
+
+    // eslint-disable-next-line
+  const passwordresetMessage = `Hello, <strong>${user.username}. </strong> You requested a password rest.
+    Click this <a href=${url}> link</a> to update your password.</p>`;
+
   const message = {
     to: user.email,
 
     subject: 'PostIt-Alert',
 
     text: messageBody.content,
-    // eslint-disable-next-line
-    html: `<b>Hello,</b> ${user.username}. <p>Here's a new notification from PostIt... </p>
-          <p>message: <b>${messageBody.content}</b></p>`,
-    attachments: []
+    html: arguments.length === 2 ? notificationMessage : passwordresetMessage
   };
 
   winston.info('Sending Mail');
@@ -85,13 +91,11 @@ function sendText(messageBody, user) {
 /**
 * notifies a user based on the priority type
 * @param {object} messageBody
-* @param {string} messageBody.priority
-* @param {array.object} messageBody.members
 * @param {object} user
-* @param {string} user.phone
+* @param {array.object} token
 * @returns {undefined}
 */
-export default function notify(messageBody) {
+const notify = (messageBody, user, token) => {
   switch (messageBody.priority) {
     case 'critical':
       return messageBody.members.forEach((member) => {
@@ -105,6 +109,11 @@ export default function notify(messageBody) {
         sendMail(messageBody, member);
       });
     default:
-      return true;
+      if (token) {
+        sendMail(messageBody, user, token);
+        winston.info('notifying in-app users');
+      }
   }
-}
+};
+
+export default notify;

@@ -1,10 +1,10 @@
 import models from '../models';
-import notify from '../middleware/notify';
+import notify from '../utils/notify';
 
 const Message = models.Message;
 
 module.exports = {
-  create(req, res) {
+  createMessage(req, res) {
     /**
      *  creates a message and posts it to a group depending on the priority
      * @param {object} req
