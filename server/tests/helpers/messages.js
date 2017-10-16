@@ -1,10 +1,10 @@
 module.exports = {
-  validMessage1: {
+  testMessage: {
     content: 'Valid testing message',
     priority: 'normal'
   },
-  validMessage2: {
-    content: 'Testing another valid message',
+  emptyContentMessage: {
+    content: '',
     priority: 'normal'
   }
 };

@@ -15,7 +15,7 @@ module.exports = {
    * creates a new user along with a unique json web token
    * @param {object} req
    * @param {object} res
-   * @returns {object} user
+   * @returns {object} created user profile
    */
   createNewUser(req, res) {
     const username = req.body.username;
@@ -66,7 +66,7 @@ module.exports = {
    * signs a user in if the email exists
    * @param {object} req 
    * @param {object} res
-   * @returns {object} response object containing the new user profile
+   * @returns {object} object containing the new user profile
    */
   googleAuth(req, res) {
     User.findOne({ where: { email: req.body.email } })
@@ -138,11 +138,11 @@ module.exports = {
     const limit = req.query.limit || 3;
     const offset = req.query.offset || 0;
     if (isNaN(limit)) {
-      res.status(422).json({
+      return res.status(422).json({
         message: 'Please enter a VALID limit value'
       });
     } if (isNaN(offset)) {
-      res.status(422).json({
+      return res.status(422).json({
         message: 'Please enter a VALID offset value'
       });
     }
@@ -173,7 +173,7 @@ module.exports = {
    * searches for users using the query passed in the request object
    * @param {object} req
    * @param {object} res
-   * @returns {object} response object containing success staus and message
+   * @returns {object} object containing pagination metadata
    */
   searchAllUsers(req, res) {
     const { username } = req.query;
@@ -212,41 +212,12 @@ module.exports = {
     });
   },
 
-  // /**
-  //  * verifies email validity and sends the user a password reset link
-  //  * @param {object} req
-  //  * @param {string} req.body.email
-  //  * @param {object} res
-  //  * @returns {object} response object containing success staus and message
-  //  */
-  // verifyUser(req, res) {
-  //   User.findOne({
-  //     where: {
-  //       email: req.body.email
-  //     }
-  //   }).then((user) => {
-  //     const token = jwt.sign({
-  //       email: user.email
-  //     },
-  //     process.env.JWT_SECRET,
-  //     { expiresIn: '1h' });
-  //     mailResetLink(user.username, user.email, token);
-  //     res.status(200).json({
-  //       message: 'Password reset link has been sent to your email'
-  //     });
-  //   }).catch(() => {
-  //     res.status(400).json({
-  //       message: 'User not found'
-  //     });
-  //   });
-  // },
-
   /**
-   * verifies email validity and sends the user a password reset link
+   * verifies user's email and sends the user a password reset link
    * @param {object} req
    * @param {string} req.body.email
    * @param {object} res
-   * @returns {object} response object containing success staus and message
+   * @returns {object} response object containing a message
    */
   verifyUser(req, res) {
     User.findOne({
@@ -259,7 +230,6 @@ module.exports = {
       },
       process.env.JWT_SECRET,
       { expiresIn: '1h' });
-      // mailResetLink(user.username, user.email, token);
       const messageBody = { priority: 'none', content: '', members: [user] };
       notify(messageBody, user, token);
       res.status(200).json({
@@ -278,7 +248,7 @@ module.exports = {
    * @param {string} req.params.token
    * @param {string} req.body.newPassword
    * @param {object} res
-   * @returns {object} response object containing success staus and message  
+   * @returns {object} response object containing a  message  
    * a list of user objects
    */
   resetPassword(req, res) {

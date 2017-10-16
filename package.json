@@ -7,7 +7,7 @@
     "start": "node index.js",
     "start-dev": "NODE_ENV=development nodemon --exec babel-node -- index.js",
     "bundle-assets": "webpack -p --config=webpack.config.prod.js",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./tests/usertests.spec.js ./tests/grouptests.spec.js --compilers js:babel-core/register",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./server/tests/userTests.spec.js ./server/tests/groupTests.spec.js --compilers js:babel-core/register",
     "client-test": "jest --coverage",
     "client-test:watch": "npm run client-test --coverage --watch",
     "gulp-test": "NODE_ENV=test gulp test --timeout 15000",

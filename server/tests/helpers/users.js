@@ -1,43 +1,32 @@
 module.exports = {
-  validUser1: {
+  validUserIbrahim: {
     username: 'ibrahim',
     password: '12345678',
     email: 'ibrahim@andela.com',
     phone: '08030561550'
   },
-  validUser2: {
+  validUserConor: {
     username: 'conor',
     password: '12345678',
     email: 'conor@andela.com',
     phone: '08030561551'
   },
-  validUser10: {
+  validUserVictor: {
     username: 'victor',
     password: '12345678',
     email: 'victor@andela.com',
     phone: '08030561552'
   },
-  existingUsername: {
+  existingUsernameIbrahim: {
     username: 'ibrahim',
     password: '12345678',
     email: 'existingUsername@andela.com',
     phone: '887730375'
   },
-  validUser3: {
-    username: 'jon',
+  noUsername: {
     password: '12345678',
-    email: 'jon@andela.com',
-    phone: '08030561553'
-  },
-  rightUsernameWrongPassword: {
-    username: 'ibrahim',
-    password: '12345678889',
-    phone: '08030561554',
-  },
-  wrongUsername: {
-    username: 'lol',
-    password: 'e99ehkhee',
-    phone: '08030561555'
+    email: 'abc@andela.com',
+    phone: '08030561559'
   },
   emptyStringUsername: {
     username: '',
@@ -46,41 +35,19 @@ module.exports = {
     phone: '08030561556'
 
   },
-  invalidUser: {
-    username: 'invalid',
-    password: '12345678',
-    phone: '08030561557'
-  },
-  emptyStringEmailUser: {
-    username: 'invalid',
-    password: '12345678',
-    email: '',
-    phone: '08030561558'
-  },
-
-  noUsername: {
-    password: '12345678',
-    email: 'abc@andela.com',
-    phone: '08030561559'
-  },
-  notUniqueEmail: {
+  existingEmail: {
     username: 'oladi',
     password: '12345678',
     email: 'ibrahim@andela.com',
     phone: '08030561560'
   },
-  nullEmail: {
-    username: 'jonjones',
-    password: '12345678',
-    phone: '08030561561'
-  },
-  lessPasswordCharUser: {
-    username: 'userLessPassword',
+  fewCharPasswordUser: {
+    username: 'tooFewCharacters',
     password: '1234',
     email: 'userLessPassword@andela.com',
     phone: '08030561562'
   },
-  morePasswordCharUser: {
+  longPasswordCharUser: {
     username: 'userLessPassword',
     password: '123451234512345123452',
     email: 'userLessPassword@andela.com',
@@ -92,17 +59,21 @@ module.exports = {
     email: 'dummy',
     phone: '08030561564'
   },
-  poorFormatEmailUser2: {
-    username: 'dummy',
-    password: '12345678',
-    email: 'dummy@andela',
-    phone: '08030561565'
-  },
-  poorFormatEmailUser3: {
+  emptyStringPhoneNumberUser: {
     username: 'dummy',
     password: '12345678',
     email: 'dummy.andela.com',
-    phone: '08030561566'
+    phone: ''
+  },
+  rightUsernameWrongPassword: {
+    username: 'ibrahim',
+    password: '12345678889',
+    phone: '08030561554',
+  },
+  wrongUsername: {
+    username: 'lol',
+    password: 'e99ehkhee',
+    phone: '08030561555'
   },
   noPhoneNumber: {
     username: 'dummy',
@@ -110,10 +81,10 @@ module.exports = {
     email: 'dummy.andela.com',
     phone: ''
   },
-  emptyStringPhoneNumber: {
-    username: 'dummy',
+  emptyStringEmailUser: {
+    username: 'invalid',
     password: '12345678',
-    email: 'dummy.andela.com',
-    phone: ''
-  }
+    email: '',
+    phone: '08030561558'
+  },
 };

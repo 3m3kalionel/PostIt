@@ -39,7 +39,7 @@ function sendMail(messageBody, user, token) {
           <p>message: <b>${messageBody.content}</b></p>`;
 
     // eslint-disable-next-line
-  const passwordresetMessage = `Hello, <strong>${user.username}. </strong> You requested a password rest.
+  const passwordresetMessage = `Hello, <strong>${user.username}. </strong> You requested a password reset.
     Click this <a href=${url}> link</a> to update your password.</p>`;
 
   const message = {

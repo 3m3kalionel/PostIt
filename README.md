@@ -1,6 +1,9 @@
 # PostIt
 
-[![Build Status](https://travis-ci.org/3m3kalionel/PostIt.svg?branch=fixes/feedback)](https://travis-ci.org/3m3kalionel/PostIt) [![Coverage Status](https://coveralls.io/repos/github/3m3kalionel/PostIt/badge.svg?branch=fixes/feedback)](https://coveralls.io/github/3m3kalionel/PostIt?branch=fixes/feedback) [![Code Climate](https://codeclimate.com/github/3m3kalionel/PostIt/badges/gpa.svg)](https://codeclimate.com/github/3m3kalionel/PostIt)
+[![Build Status](https://travis-ci.org/3m3kalionel/PostIt.svg?branch=fixes/feedback)](https://travis-ci.org/3m3kalionel/PostIt)
+[![Coverage Status](https://coveralls.io/repos/github/3m3kalionel/PostIt/badge.svg?branch=fixes/feedback)]
+(https://coveralls.io/github/3m3kalionel/PostIt?branch=fixes/feedback) 
+[![Code Climate](https://codeclimate.com/github/3m3kalionel/PostIt/badges/gpa.svg)](https://codeclimate.com/github/3m3kalionel/PostIt)
 
 
 PostIt is an application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. It was developed using [node.js](https://nodejs.org/en/) with [Express](https://expressjs.com/) for routing and [PostgreSQL](https://www.postgresql.org/) for persisting data.

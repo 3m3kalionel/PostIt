@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import className from 'classnames';
 
 import MessageInput from './MessageInput';
-import MessageList from './MessageList';
+import MessageListComoponent from './MessageList';
 import AddUserModalForm from './AddUserModal';
 import CreateGroupModalForm from './CreateGroupModal';
 
@@ -39,7 +39,7 @@ class MessageArea extends Component {
   }
 
   /**
-   *
+   * display
    * @method renderMessageArea
    * @memberof MessageArea
    * @returns {object} a MessageArea component
@@ -126,7 +126,7 @@ class MessageArea extends Component {
     );
     return (
       <div id="chat-input">
-        <MessageList groupId={this.props.groupId} />
+        <MessageListComoponent groupId={this.props.groupId} />
         <MessageInput
           onSubmit={this.props.sendMessage}
           isVisible={this.state.isVisible}
@@ -138,7 +138,7 @@ class MessageArea extends Component {
   }
 
   /**
-   * 
+   * renders the addUserToGroup modal
    * @method renderUserModal
    * @returns {Object} a modal component
    * @memberof MessageArea
@@ -149,16 +149,6 @@ class MessageArea extends Component {
     );
   }
 
-  /**
-   * @method renderCreateGroupModal
-   * @returns {Component} a modal comoponent
-   * @memberof MessageArea
-   */
-  renderGroupModal() {
-    return (
-      <CreateGroupModalForm />
-    );
-  }
 
   /**
    * @returns {Object} component
@@ -169,7 +159,7 @@ class MessageArea extends Component {
       <div className="chat-container">
         {this.renderMessageArea()}
         {this.renderUserModal()}
-        {this.renderGroupModal()}
+        {<CreateGroupModalForm />}
       </div>
     );
   }

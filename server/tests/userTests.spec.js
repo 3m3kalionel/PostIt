@@ -1,7 +1,7 @@
 import chai from 'chai';
 import request from 'supertest';
-import app from '../app';
-import models from '../server/models';
+import app from '../../app';
+import models from '../../server/models';
 import user from './helpers/users';
 
 const expect = chai.expect;
@@ -17,40 +17,10 @@ describe('Sign up route', () => {
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.validUser1)
+      .send(user.validUserIbrahim)
       .end((err, res) => {
         expect(res.status).to.equal(201);
-        expect(res.body.user.username).to.equal(user.validUser1.username);
-        done();
-      });
-  });
-
-  it('creates a user on signup', (done) => {
-    request(app)
-      .post('/api/v1/user/signup')
-      .send(user.validUser2)
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        done();
-      });
-  });
-
-  it('creates a user on signup', (done) => {
-    request(app)
-      .post('/api/v1/user/signup')
-      .send(user.validUser3)
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        done();
-      });
-  });
-
-  it('creates a user on signup', (done) => {
-    request(app)
-      .post('/api/v1/user/signup')
-      .send(user.validUser10)
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
+        expect(res.body.user.username).to.equal(user.validUserIbrahim.username);
         done();
       });
   });
@@ -58,7 +28,7 @@ describe('Sign up route', () => {
   it('throws an error if username already exists', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.existingUsername)
+      .send(user.existingUsernameIbrahim)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.Error).to.equal('username must be unique');
@@ -91,7 +61,7 @@ describe('Sign up route', () => {
   it('throws an error if email already exists', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.notUniqueEmail)
+      .send(user.existingEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.Error).to.equal('email must be unique');
@@ -114,31 +84,19 @@ describe('Sign up route', () => {
     (done) => {
       request(app)
         .post('/api/v1/user/signup')
+        .send(user.emptyStringEmailUser)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please enter your email');
+          done();
+        });
+    });
+
+  it('throws an error if provided email address is an empty string',
+    (done) => {
+      request(app)
+        .post('/api/v1/user/signup')
         .send(user.poorFormatEmailUser)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.Error).to.equal('Invalid email address format');
-          done();
-        });
-    });
-
-  it('throws an error if poorly formatted email address is supplied',
-    (done) => {
-      request(app)
-        .post('/api/v1/user/signup')
-        .send(user.poorFormatEmailUser2)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.Error).to.equal('Invalid email address format');
-          done();
-        });
-    });
-
-  it('throws an error if poorly formatted email address is supplied',
-    (done) => {
-      request(app)
-        .post('/api/v1/user/signup')
-        .send(user.poorFormatEmailUser3)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.Error).to.equal('Invalid email address format');
@@ -149,7 +107,7 @@ describe('Sign up route', () => {
   it('rejects user with a password of less than 8 characters', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.lessPasswordCharUser)
+      .send(user.fewCharPasswordUser)
       .end((err, res) => {
         expect(res.status).to.equal(422);
         expect(res.body.Error).to.equal('Your password length should' +
@@ -161,7 +119,7 @@ describe('Sign up route', () => {
   it('rejects user with a password of more than 20 characters', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.lessPasswordCharUser)
+      .send(user.longPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(422);
         expect(res.body.Error).to.equal('Your password length should' +
@@ -173,7 +131,7 @@ describe('Sign up route', () => {
   it('throws an error if no phone number is supplied', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.emptyStringPhoneNumber)
+      .send(user.emptyStringPhoneNumberUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.message).to.equal('Please enter your phone number');
@@ -181,7 +139,7 @@ describe('Sign up route', () => {
       });
   });
 
-  it('throws an error if username is an empty string', (done) => {
+  it('throws an error if phone number is an empty string', (done) => {
     request(app)
       .post('/api/v1/user/signup')
       .send(user.noPhoneNumber)
@@ -197,7 +155,7 @@ describe('Authentication route', () => {
   it('logs in registered users', (done) => {
     request(app)
       .post('/api/v1/user/signin')
-      .send(user.validUser1)
+      .send(user.validUserIbrahim)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.equal('Login successful');
