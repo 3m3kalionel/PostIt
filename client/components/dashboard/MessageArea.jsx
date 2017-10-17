@@ -16,7 +16,7 @@ import CreateGroupModalForm from './CreateGroupModal';
 class MessageArea extends Component {
   /**
    * Creates an instance of CreateGroupModal
-   * @param {object} props 
+   * @param {object} props
    * @memberof MessageArea
    */
   constructor(props) {
@@ -27,6 +27,7 @@ class MessageArea extends Component {
   }
 
   /**
+   * updates the local state when show input changes value
    * @param {object} nextProps
    * @memberof MessageArea
    * @return {undefined}
@@ -39,7 +40,7 @@ class MessageArea extends Component {
   }
 
   /**
-   * display
+   * displays the message input area
    * @method renderMessageArea
    * @memberof MessageArea
    * @returns {object} a MessageArea component
@@ -83,6 +84,11 @@ class MessageArea extends Component {
       </div>
     );
 
+    /**
+    * displays the button for adding users to a group
+    * @memberof MessageArea
+    * @returns {undefined}
+    */
     const AddUserButton = () => (
       <li className={priorityClassName}>
         <a
@@ -101,6 +107,11 @@ class MessageArea extends Component {
       </li>
     );
 
+    /**
+    * displays the button for creating groups
+    * @memberof MessageArea
+    * @returns {undefined}
+    */
     const CreateGroupButton = () => (
       <li><a
         id="create-group-button"
@@ -112,6 +123,12 @@ class MessageArea extends Component {
       ><i className="large material-icons">group_add</i></a></li>
     );
 
+    /**
+    * fixed action button that renders the 
+    * add user button and creating group button
+    * @memberof MessageArea
+    * @returns {undefined}
+    */
     const AddButton = () => (
       <div className="fixed-action-btn add-btn">
         <a

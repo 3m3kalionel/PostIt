@@ -1,7 +1,7 @@
 import { member } from '../actions/actionTypes';
 
 /**
- * updates members in the store
+ * updates members in the store depending on the action type
  * @param {object} state
  * @param {object} action
  * @returns {object} state

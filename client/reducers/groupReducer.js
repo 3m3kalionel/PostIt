@@ -1,7 +1,7 @@
 import { group, member, message } from '../actions/actionTypes';
 
 /**
- * updates groups in the store
+ * updates groups in the store depending on the action type
  * @param {object} state
  * @param {object} action
  * @returns {object} state

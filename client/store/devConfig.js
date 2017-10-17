@@ -7,7 +7,10 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import rootReducer from '../reducers';
 
 const logger = createLogger();
-
+/**
+ * integrates redux dev tools with the app in development environment
+ * @returns {undefined}
+ */
 const devConfig = () => (
   composeWithDevTools(
     applyMiddleware(thunk, reduxImmutableStateInvariant(), logger),

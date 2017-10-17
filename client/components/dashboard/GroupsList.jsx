@@ -1,7 +1,11 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 
-
+/**
+ * React component that displays a list of groups a user belongs to
+ * @param {object} props
+ * @returns {undefined}
+*/
 const GroupsList = props => (
   <ul id="slide-out" className="side-nav fixed">
     <li className="bold no-padding center">

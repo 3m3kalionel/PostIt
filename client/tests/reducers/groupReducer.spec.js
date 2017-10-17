@@ -1,5 +1,6 @@
 import groupReducer from '../../reducers/groupReducer';
 import * as types from '../../actions/actionTypes';
+import * as mock from '../__mocks__/__mockData__';
 
 describe('group reducer', () => {
   it('should return the initial state', () => {
@@ -11,15 +12,11 @@ describe('group reducer', () => {
   it('should create a group when passed CREATE_SUCCESS', () => {
     expect(groupReducer({}, {
       type: types.group.CREATE_SUCCESS,
-      group: {
-        id: 1,
-        name: 'The dreamers, the believers',
-        description: 'Believers in the law of atttraction'
-      },
+      group: mock.group,
       message: 'Group created'
     })).toEqual(
       {
-        1: {
+        23: {
           members: [],
           message: 'Group created',
           messages: []
@@ -29,112 +26,73 @@ describe('group reducer', () => {
   });
 
   it('should add a member to a group when passed ADD_SUCCESS', () => {
+    const { email, id, phone, username } = mock.user;
+    const groupNumber = mock.group.id;
     expect(groupReducer({
-      1: {
+      [mock.group.id]: {
         members: [],
         messages: []
       }
     }, {
-      groupId: '1',
+      groupId: groupNumber,
       type: types.member.ADD_SUCCESS,
-      member: {
-        user: {
-          id: 2,
-          username: 'user2',
-          email: 'user2@gmail.com',
-          phone: '00000000002',
-        }
-      }
+      member: mock.user,
+      message: 'User successfully added'
     })).toEqual(
       {
-        1: {
+        [groupNumber]: {
           members: [
             {
-              user: {
-                id: 2,
-                username: 'user2',
-                email: 'user2@gmail.com',
-                phone: '00000000002',
-              }
+              email, id, phone, username
             }
           ],
-          messages: []
+          messages: [],
+          message: 'User successfully added'
         }
       }
     );
   });
 
   it('should list groups a member belongs to when passed LIST_SUCCESS', () => {
-    expect(groupReducer({
-      1: {
-        members: [
-          {
-            user: {
-              id: 2,
-              username: 'user2',
-              email: 'user2@gmail.com',
-              phone: '00000000002',
-            }
-          }
-        ],
-        messages: []
-      }
-    }, {
+    const groupNumber = mock.groups.groupWithMembers.id;
+    const initialState = {
+      [groupNumber]: mock.groups.groupWithMembers
+    };
+    expect(groupReducer(initialState, {
       groupId: '1',
       type: types.member.LIST_SUCCESS,
       list: [
         {
-          user: {
-            id: 2,
-            username: 'user2',
-            email: 'user2@gmail.com',
-            phone: '00000000002',
-          }
+          user: mock.user
         }
       ]
     })).toEqual(
       {
-        1: {
-          members: [
-            {
-              user: {
-                id: 2,
-                username: 'user2',
-                email: 'user2@gmail.com',
-                phone: '00000000002',
-              }
-            }
-          ],
-          messages: []
-        }
+        [groupNumber]: mock.groups.groupWithMembers
       }
     );
   });
 
   it('should create a message when passed CREATE_SUCCESS', () => {
+    const { id, content, userId, groupId, priority } = mock.message;
+    const groupNumber = mock.groups.emptyGroup.id;
     expect(groupReducer({
-      1: {
-        members: [],
-        messages: []
-      }
+      [groupNumber]: mock.groups.emptyGroup
     }, {
       type: types.message.CREATE_SUCCESS,
-      message: {
-        id: 20,
-        content: "hey everyone. how's it going",
-        userId: 20,
-        groupId: 1
-      }
+      message: mock.message
     })).toEqual(
       {
-        1: {
+        [groupNumber]: {
+          id: mock.groups.emptyGroup.id,
           members: [],
           messages: [
             {
-              id: 20,
-              content: "hey everyone. how's it going",
-              userId: 20,
-              groupId: 1
+              id,
+              content,
+              userId,
+              groupId,
+              priority
             }
           ]
         }
@@ -144,34 +102,16 @@ describe('group reducer', () => {
 
   it('should list a member\'s messages when passed LIST_SUCCESS', () => {
     expect(groupReducer({
-      1: {
-        members: [],
-        messages: []
-      }
+      [mock.groups.groupWithMessage.id]: mock.groups.groupWithMessage
     }, {
       type: types.message.LIST_SUCCESS,
-      groupId: '1',
+      groupId: '2',
       list: [
-        {
-          id: 14,
-          content: "hey everyone. how's it going",
-          userId: 11,
-          groupId: 3,
-        }
+        mock.message
       ]
     })).toEqual(
       {
-        1: {
-          members: [],
-          messages: [
-            {
-              id: 14,
-              content: "hey everyone. how's it going",
-              userId: 11,
-              groupId: 3,
-            }
-          ]
-        }
+        [mock.groups.groupWithMessage.id]: mock.groups.groupWithMessage
       }
     );
   });

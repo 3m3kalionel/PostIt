@@ -27,7 +27,7 @@ export const createMessage = (groupId, messageDetails) => dispatch => (
 /**
 * lists all the messages in a group a user belongs to
 * @param {number} groupid
-* @returns {array.object} action: type, list
+* @returns {object} action: type, list
 */
 export const listMessages = groupid => (
   dispatch => (

@@ -1,7 +1,7 @@
 import { user, group } from '../actions/actionTypes';
 
 /**
- * updates user in the store
+ * updates user in the store depending on the action type
  * @param {object} state
  * @param {object} action
  * @returns {object} state
@@ -21,7 +21,8 @@ const userReducer = (state = {}, action = {}) => {
         groups: [
           ...state.groups,
           action.group
-        ]
+        ],
+        message: action.message
       };
     case group.LIST_SUCCESS:
       return {

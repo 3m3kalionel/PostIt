@@ -1,5 +1,7 @@
 import userReducer from '../../reducers/userReducer';
 import * as types from '../../actions/actionTypes';
+import * as mock from '../__mocks__/__mockData__';
+
 
 describe('user reducer', () => {
   it('should return the initial state', () => {
@@ -9,27 +11,19 @@ describe('user reducer', () => {
   });
 
   it('should sign a user in when passed AUTH_SUCCESS', () => {
+    const { email, id, phone, username } = mock.users.validUserEmeka;
     expect(userReducer({}, {
       type: types.user.AUTH_SUCCESS,
-      user: {
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
-        groups: []
-      }
+      message: 'Successfully Authenticated',
+      user: mock.users.validUserEmeka
     })).toEqual(
       {
         isAuthenticated: true,
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
-        groups: []
+        email,
+        id,
+        phone,
+        username,
+        message: 'Successfully Authenticated'
       }
     );
   });
@@ -37,46 +31,20 @@ describe('user reducer', () => {
   it('should create a group when passed CREATE_GROUP_SUCCESS', () => {
     expect(userReducer(
       {
-        isAuthenticated: true,
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
+        user: mock.users.authenticatedUserLionel,
         groups: []
       },
       {
         type: types.group.CREATE_SUCCESS,
-        group: {
-          success: true,
-          message: 'Group created',
-          group: {
-            id: 4,
-            name: 'The dreamers, the believers',
-            description: 'Believers in the law of atttraction',
-          }
-        }
+        group: mock.groups.sampleGroup,
+        message: 'Group created successfully'
       })).toEqual(
       {
-        isAuthenticated: true,
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
+        user: mock.users.authenticatedUserLionel,
         groups: [
-          {
-            success: true,
-            message: 'Group created',
-            group: {
-              id: 4,
-              name: 'The dreamers, the believers',
-              description: 'Believers in the law of atttraction',
-            }
-          }
-        ]
+          mock.groups.sampleGroup
+        ],
+        message: 'Group created successfully'
       }
     );
   });
@@ -84,57 +52,21 @@ describe('user reducer', () => {
   it('should list a user\'s groups when passed LIST_GROUP_SUCCESS', () => {
     expect(userReducer(
       {
-        isAuthenticated: true,
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
+        user: mock.users.authenticatedUserLionel,
         groups: [
-          {
-            success: true,
-            message: 'Group created',
-            group: {
-              id: 4,
-              name: 'The dreamers, the believers',
-              description: 'Believers in the law of atttraction',
-            }
-          }
+          mock.groups.sampleGroup
         ]
       },
       {
         type: types.group.LIST_SUCCESS,
         list: [
-          {
-            success: true,
-            message: 'Group created',
-            group: {
-              id: 4,
-              name: 'The dreamers, the believers',
-              description: 'Believers in the law of atttraction',
-            }
-          }
+          mock.groups.sampleGroup
         ]
       })).toEqual(
       {
-        isAuthenticated: true,
-        user: {
-          id: 11,
-          username: 'user1',
-          email: 'user1@gmail.com',
-          phone: '00000000001',
-        },
+        user: mock.users.authenticatedUserLionel,
         groups: [
-          {
-            success: true,
-            message: 'Group created',
-            group: {
-              id: 4,
-              name: 'The dreamers, the believers',
-              description: 'Believers in the law of atttraction',
-            }
-          }
+          mock.groups.sampleGroup
         ]
       }
     );

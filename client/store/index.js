@@ -1,5 +1,5 @@
-const store = process.env.NODE_ENV === 'production'
+const index = process.env.NODE_ENV === 'production'
   ? require('./prodConfig').default()
   : require('./devConfig').default();
 
-export default store;
+export default index;

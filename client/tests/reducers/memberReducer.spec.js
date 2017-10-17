@@ -1,5 +1,6 @@
 import memberReducer from '../../reducers/memberReducer';
 import * as types from '../../actions/actionTypes';
+import * as mock from '../__mocks__/__mockData__';
 
 describe('member reducer', () => {
   it('should return the initial state', () => {
@@ -12,22 +13,12 @@ describe('member reducer', () => {
     expect(memberReducer({}, {
       type: types.member.SEARCH_SUCCESS,
       list: [
-        {
-          id: 17,
-          username: 'terungwa',
-          email: 'terungwa@gmail.com',
-          phone: 98765232
-        }
+        mock.users.validUserEmeka
       ]
     })).toEqual(
       {
         result: [
-          {
-            id: 17,
-            username: 'terungwa',
-            email: 'terungwa@gmail.com',
-            phone: 98765232
-          }
+          mock.users.validUserEmeka
         ]
       }
     );

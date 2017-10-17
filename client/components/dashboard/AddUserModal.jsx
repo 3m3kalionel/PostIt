@@ -8,7 +8,7 @@ import { addMember, searchUsers, clearMemberSearchList }
   from '../../actions/memberActions';
 
 /**
- * React component that adds a registered user to a groups
+ * React component that adds a registered user to a group
  * @class AddUserModal
  * @extends {Component}
  */
@@ -252,11 +252,18 @@ AddUserModal.defaultProps = {
   error: {},
   groupId: PropTypes.oneOfType([React.PropTypes.number,
     React.PropTypes.string]),
+  userGroups: null,
+  message: null
 };
 
 AddUserModal.propTypes = {
+  userGroups: PropTypes.arrayOf(PropTypes.object),
   groupId: PropTypes.string,
-  group: PropTypes.oneOfType([PropTypes.object]),
+  group: PropTypes.shape({
+    members: PropTypes.arrayOf(PropTypes.object),
+    message: PropTypes.arrayOf(PropTypes.object)
+  }),
+  message: PropTypes.string,
   error: PropTypes.shape({
     message: PropTypes.string
   }).isRequired,

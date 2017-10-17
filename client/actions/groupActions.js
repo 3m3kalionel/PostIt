@@ -29,7 +29,7 @@ export const createGroup = groupDetails => (
 
 /**
 * lists all the groups a user belongs to
-* @returns {array.object} action: type, list
+* @returns {object} action: type, list
 */
 export const listGroups = () => (dispatch) => {
   setToken();

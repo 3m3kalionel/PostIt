@@ -1,7 +1,7 @@
 import { ERROR_OCCURRED } from '../actions/actionTypes';
 
 /**
- * updates errors in the store
+ * updates errors in the store depending on the action type
  * @param {object} state
  * @param {object} action
  * @returns {object} state
