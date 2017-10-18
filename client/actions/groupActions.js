@@ -33,11 +33,12 @@ export const createGroup = groupDetails => (
 */
 export const listGroups = () => (dispatch) => {
   setToken();
-  return axios.get('/api/v1/groups')
+  return axios.get('/api/v1/groups/search?name=&limit=&offset=')
     .then(({ data }) => {
+      console.log(data);
       dispatch({
         type: group.LIST_SUCCESS,
-        list: data
+        list: data.groups
       });
       return data;
     })

@@ -62,7 +62,7 @@ module.exports = {
    */
   searchAllGroups(req, res) {
     const { name } = req.query;
-    const limit = req.query.limit || 3;
+    const limit = req.query.limit || 100;
     const offset = req.query.offset || 0;
     if (isNaN(limit)) {
       return res.status(422).json({
