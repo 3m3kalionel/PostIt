@@ -34,23 +34,6 @@ export class AddUserModal extends Component {
   }
 
   /**
-   * @param {object} nextProps
-   * @memberof AddUserModal
-   * @return {undefined}
-   */
-  componentWillReceiveProps(nextProps) {
-    const { members: memberList } = this.props.group;
-    const { members: newMemberList } = nextProps.group;
-
-    if (memberList && newMemberList && newMemberList.length >
-      memberList.length) {
-      this.setState({
-        query: ''
-      });
-    }
-  }
-
-  /**
   * performs an action on the click of a button
   * @method onClick
   * @param {object} event
@@ -65,7 +48,6 @@ export class AddUserModal extends Component {
           Materialize.toast(this.props.error.message, 3000, 'error-toast');
         } else {
           Materialize.toast(this.props.group.message, 3000, 'success-toast');
-          this.resetForm();
         }
       });
   }
@@ -137,9 +119,9 @@ export class AddUserModal extends Component {
     const paginationClassname = className({
       hidden: this.state.query.length < 1
     });
-    const searchComponent = Object.keys(searchResults).length ?
-      searchResults.rows.map((result) => {
-        const member = this.props.group.members.some(groupMember =>
+    const searchComponent = searchResults.pageSize > 0 ?
+      searchResults.users.map((result) => {
+        const member = group.members.some(groupMember =>
           groupMember.username === result.username);
         const buttonText = member ? 'Member' : 'Add';
         return (
@@ -197,8 +179,7 @@ export class AddUserModal extends Component {
                         nextLabel={'>'}
                         breakLabel={<a href="">...</a>}
                         breakClassName={'break-me'}
-                        pageCount={Math.ceil(searchResults.count /
-                        this.state.limit)}
+                        pageCount={searchResults.totalPageCount}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
                         onPageChange={this.handlePageClick}
@@ -232,9 +213,7 @@ const mapStateToProps = (state, ownProps) => ({
   userGroups: state.user.groups,
   error: state.errors.error,
   group: state.groups[ownProps.groupId],
-  group1: state.groups,
   searchResults: state.members.result,
-  groupName: state.groups
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -261,16 +240,15 @@ AddUserModal.propTypes = {
   groupId: PropTypes.string,
   group: PropTypes.shape({
     members: PropTypes.arrayOf(PropTypes.object),
-    message: PropTypes.arrayOf(PropTypes.object)
+    message: PropTypes.string
   }),
-  message: PropTypes.string,
   error: PropTypes.shape({
     message: PropTypes.string
   }).isRequired,
   search: PropTypes.func.isRequired,
   addMember: PropTypes.func.isRequired,
   clearSearchList: PropTypes.func.isRequired,
-  searchResults: PropTypes.shape([])
+  searchResults: PropTypes.shape({})
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUserModal);

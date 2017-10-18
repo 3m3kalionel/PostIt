@@ -58,13 +58,6 @@ module.exports = (app) => {
     validateGroup.validGroup, validateGroup.isGroupMember,
     groupsController.listMembers);
 
-  // An API route that allows a logged in user search for a user
-  app.get('/api/v1/users', usersController.listAllUsers);
-
-  // An API route that allows a logged in user list all groups that he
-  // belongs to
-  app.get('/api/v1/groups', authenticate, groupsController.listGroups);
-
   // An API route that verifies a registered user that
   // has forgotten his password
   app.post('/api/v1/user/verify', usersController.verifyUser);

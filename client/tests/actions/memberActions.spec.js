@@ -95,7 +95,7 @@ describe('async actions', () => {
 
   it('creates SEARCH_SUCCESS when search users is called successfully', () => {
     nock('http://localhost')
-      .get('/api/v1/users')
+      .get('/api/v1/users/search')
       .query({ username: 'e', limit: 3, offset: 0 })
       .reply(200, list);
 
@@ -114,7 +114,7 @@ describe('async actions', () => {
 
   it('creates ERROR_OCCURRED when searchUsers fails', () => {
     nock('http://localhost')
-      .get('/api/v1/users')
+      .get('/api/v1/users/search')
       .query({ username: 'e', limit: 3, offset: 0 })
       .reply(400, {});
 

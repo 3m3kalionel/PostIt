@@ -39,8 +39,24 @@ function sendMail(messageBody, user, token) {
           <p>message: <b>${messageBody.content}</b></p>`;
 
     // eslint-disable-next-line
-  const passwordresetMessage = `Hello, <strong>${user.username}. </strong> You requested a password reset.
-    Click this <a href=${url}> link</a> to update your password.</p>`;
+  const passwordresetMessage = `<body style="max-width:100%; color: #000;">
+<div style="background-color:#2FA599; padding:10px; color:white; height: 60px;">
+<h3 style="text-align: center; font-size: 40px; margin-top: 5px;">PostIt!</h3>
+</div>
+<div style="outline: 0px solid black; padding-left: 20px; padding-right: 30px; box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);">
+<div>
+<h1><strong>Hello, ${user.username}. </strong></h1>
+<h4>We received a request for a password reset on your PostIt Account.</h4>
+</div>
+<p>If you didn't make such request, please ignore this email. Otherwise, please click the button below to reset your password</p>
+<div style="align-items: center; width: 100%">
+<a href=${url} style="width: 150px; padding:10px 0; text-decoration: none; cursor: pointer !important; display: block; border: 1px solid #2FA599; background-color: #fff; color: #2FA599; font-size: 18px; margin: auto; text-align: center">Reset Password</a>
+    </div>
+    <p style="text-align: right;">Regards, the PostIt team.</p>
+    <br>
+    <br>
+</div>
+</body>`;
 
   const message = {
     to: user.email,

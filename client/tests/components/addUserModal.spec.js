@@ -43,7 +43,11 @@ describe('Give the add user modal is mounted', () => {
 
   it('should render button to add user if user is not a group member', () => {
     enzymeWrapper.setProps({
-      searchResults: { rows: [user] }
+      searchResults: {
+        totalPageCount: 3,
+        users: [user],
+        pageSize: 1
+      }
     });
     expect(enzymeWrapper.find('#add-button').exists()).toBe(true);
     expect(enzymeWrapper.find('#member-text').exists()).toBe(false);
@@ -60,7 +64,11 @@ describe('Give the add user modal is mounted', () => {
         group: {
           members: [user]
         },
-        searchResults: { rows: [user] }
+        searchResults: {
+          totalPageCount: 3,
+          users: [user],
+          pageSize: 1
+        }
       });
       expect(enzymeWrapper.find('#member-text').exists()).toBe(true);
       expect(enzymeWrapper.find('#add-button').exists()).toBe(false);

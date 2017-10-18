@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router';
 
 /**
@@ -15,14 +16,6 @@ class DashboardNavbar extends Component {
    */
   componentDidMount() {
     $('.button-collapse').sideNav();
-    $('#logout-button').tooltip({
-      delay: 50,
-      tooltip: 'Logout',
-      position: 'bottom',
-    });
-    $('.my-logout').click(() => {
-      $('#logout-button').tooltip('remove');
-    });
   }
 
   /**
@@ -41,13 +34,16 @@ class DashboardNavbar extends Component {
           ><i className="material-icons">menu</i></a>
           <ul className="right">
             <li id="logout-button">
-              <Link className="my-logout" to="logout">
+              <Link to="logout">
                 <i
-                  className="material-icons large tooltipped"
+                  className="material-icons large"
                   data-delay="50"
-                  data-tooltip="Logout"
+                  data-tip="Logout"
                 >exit_to_app
-                </i></Link></li>
+                </i>
+              </Link>
+              <ReactTooltip id="logout-tooltip" place="top" type="error" />
+            </li>
           </ul>
         </div>
       </nav>

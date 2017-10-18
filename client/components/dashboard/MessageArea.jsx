@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import className from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
 import MessageInput from './MessageInput';
 import MessageListComoponent from './MessageList';
@@ -97,13 +98,14 @@ class MessageArea extends Component {
           className="btn-floating modal-trigger tooltipped float-button"
           data-position="left"
           data-delay="50"
-          data-tooltip="add user to group"
+          data-tip="add user to group"
         >
           <i
             className="large material-icons"
           >person_add
           </i>
         </a>
+        <ReactTooltip type="error" />
       </li>
     );
 
@@ -113,14 +115,22 @@ class MessageArea extends Component {
     * @returns {undefined}
     */
     const CreateGroupButton = () => (
-      <li><a
-        id="create-group-button"
-        href="#new-group"
-        className="btn-floating modal-trigger tooltipped float-button"
-        data-position="left"
-        data-delay="50"
-        data-tooltip="create group"
-      ><i className="large material-icons">group_add</i></a></li>
+      <li>
+        <a
+          id="create-group-button"
+          href="#new-group"
+          className="btn-floating modal-trigger tooltipped float-button"
+          data-position="left"
+          data-delay="50"
+          data-tip="create group"
+        >
+          <i
+            className="large material-icons"
+          >group_add
+          </i>
+        </a>
+        <ReactTooltip type="error" />
+      </li>
     );
 
     /**

@@ -5,6 +5,12 @@ module.exports = {
     email: 'ibrahim@andela.com',
     phone: '08030561550'
   },
+  validUserOkoro: {
+    username: 'okoro',
+    password: '12345678',
+    email: 'okoro@andela.com',
+    phone: '0803056155550'
+  },
   validUserConor: {
     username: 'conor',
     password: '12345678',

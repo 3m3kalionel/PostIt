@@ -127,51 +127,6 @@ module.exports = {
   /**
    * searches for users using the query passed in the request object
    * @param {object} req
-   * @param {number} req.query.limit
-   * @param {number} req.query.offset
-   * @param {object} res
-   * @returns {object} object containing the total result count and
-   * a list of user objects
-   */
-  listAllUsers(req, res) {
-    const { username } = req.query;
-    const limit = req.query.limit || 3;
-    const offset = req.query.offset || 0;
-    if (isNaN(limit)) {
-      return res.status(422).json({
-        message: 'Please enter a VALID limit value'
-      });
-    } if (isNaN(offset)) {
-      return res.status(422).json({
-        message: 'Please enter a VALID offset value'
-      });
-    }
-    User.findAndCountAll({
-      where: {
-        username: {
-          $iLike: `%${username}%`
-        }
-      },
-      limit,
-      offset,
-      attributes: {
-        exclude: ['password', 'salt', 'createdAt',
-          'updatedAt', 'email', 'phone', 'verificationCode']
-      }
-    })
-      .then((result) => {
-        res.status(200).json(result);
-      })
-      .catch((error) => {
-        res.status(404).json({
-          error
-        });
-      });
-  },
-
-  /**
-   * searches for users using the query passed in the request object
-   * @param {object} req
    * @param {object} res
    * @returns {object} object containing pagination metadata
    */
@@ -204,12 +159,13 @@ module.exports = {
         limit,
         offset,
         rowCount: users.count,
+        pageSize: users.rows.length
       });
       return res.status(200).json({
         ...pagination,
         users: users.rows
       });
-    });
+    }).catch(error => res.status(404).send(error.message));
   },
 
   /**

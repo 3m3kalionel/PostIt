@@ -1,26 +1,62 @@
 import chai from 'chai';
 import request from 'supertest';
+import winston from 'winston';
+import bcrypt from 'bcrypt';
+
 import app from '../../app';
 import models from '../../server/models';
 import user from './helpers/users';
+import PromiseBased from './helpers/promisify';
+
+
+const salt = bcrypt.genSaltSync(10);
+
+const hashedUsers = ([
+  user.validUserIbrahim,
+  user.validUserConor,
+  user.validUserVictor
+])
+  .map((thisUser) => {
+    const returnedUser = {
+      ...thisUser,
+      salt,
+      password: bcrypt.hashSync(thisUser.password, salt)
+    };
+    return returnedUser;
+  });
 
 const expect = chai.expect;
+let userTokenLionel;
+
+const promisify = new PromiseBased(app, request);
 
 describe('Sign up route', () => {
   before((done) => {
-    models.sequelize.sync({ force: true }).then(() => {
-      done(null);
-    }).catch((errors) => {
-      done(errors);
-    });
+    models.sequelize.sync({ force: true })
+      .then(() => models.User.bulkCreate(hashedUsers))
+      .then(() => promisify.signin(user.validUserIbrahim))
+      .then((token) => {
+        userTokenLionel = token;
+        return promisify.signin(user.validUserConor);
+      }, (err) => {
+        winston.error('<< test errors >>', err);
+      })
+      .then(() => promisify.signin(user.validUserVictor))
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        winston.error('<< test errors >>', err);
+        done();
+      });
   });
   it('creates a user on signup', (done) => {
     request(app)
       .post('/api/v1/user/signup')
-      .send(user.validUserIbrahim)
+      .send(user.validUserOkoro)
       .end((err, res) => {
         expect(res.status).to.equal(201);
-        expect(res.body.user.username).to.equal(user.validUserIbrahim.username);
+        expect(res.body.user.username).to.equal(user.validUserOkoro.username);
         done();
       });
   });
@@ -110,8 +146,8 @@ describe('Sign up route', () => {
       .send(user.fewCharPasswordUser)
       .end((err, res) => {
         expect(res.status).to.equal(422);
-        expect(res.body.Error).to.equal('Your password length should' +
-        ' be between EIGHT and TWENTY characters');
+        expect(res.body.Error).to.equal(
+          'Your password length should be between EIGHT and TWENTY characters');
         done();
       });
   });
@@ -122,8 +158,8 @@ describe('Sign up route', () => {
       .send(user.longPasswordCharUser)
       .end((err, res) => {
         expect(res.status).to.equal(422);
-        expect(res.body.Error).to.equal('Your password length should' +
-        ' be between EIGHT and TWENTY characters');
+        expect(res.body.Error).to.equal(
+          'Your password length should be between EIGHT and TWENTY characters');
         done();
       });
   });
@@ -184,5 +220,40 @@ describe('Authentication route', () => {
         done();
       });
   });
+  it('allows a logged in user search all users in the application', (done) => {
+    request(app)
+      .get('/api/v1/users/search')
+      .set('x-access-token', userTokenLionel)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an.instanceof(Object);
+        done();
+      });
+  });
+
+  it(`throws an error if a non-integer limit value is entered when
+   searching for users`, (done) => {
+      request(app)
+        .get('/api/v1/users/search?username=m&limit=boy')
+        .set('x-access-token', userTokenLionel)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.message).to.equal('Please enter a VALID limit value');
+          done();
+        });
+    });
+
+  it(`throws an error if a non-integer offset value is entered when
+   searching for users`, (done) => {
+      request(app)
+        .get('/api/v1/users/search?username=m&offset=boy')
+        .set('x-access-token', userTokenLionel)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.message).to.equal(
+            'Please enter a VALID offset value');
+          done();
+        });
+    });
 });
 

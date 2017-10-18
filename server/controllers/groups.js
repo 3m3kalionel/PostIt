@@ -82,19 +82,20 @@ module.exports = {
       limit,
       offset,
       attributes: {
-        exclude: ['password', 'salt', 'createdAt', 'updatedAt']
+        exclude: ['createdAt', 'updatedAt']
       }
     }).then((groups) => {
       const pagination = paginate({
         limit,
         offset,
         rowCount: groups.count,
+        pageSize: groups.rows.length
       });
       return res.status(200).json({
         ...pagination,
         groups: groups.rows
       });
-    });
+    }).catch(error => res.status(404).send(error.message));
   },
 
   /**
@@ -127,31 +128,6 @@ module.exports = {
   },
 
   /**
-   * lists groups that a user belongs to
-   * @param {object} req
-   * @param {object} res
-   * @returns {array.object} a list of group objects
-   */
-  listGroups(req, res) {
-    const userId = req.decoded.id;
-    User.findOne({ where: { id: userId } })
-      .then((user) => {
-        user
-          .getGroups({
-            where: { },
-            attributes: {
-              exclude: ['description', 'createdAt',
-                'updatedAt']
-            }
-          }).then(groups => res.status(200).json(groups.map(group => ({
-            name: group.name,
-            id: group.id
-          }))
-          ));
-      }).catch(error => res.status(500).send(error.message));
-  },
-
-  /**
    * adds a new user to a group
    * @param {object} req
    * @param {object} res
@@ -172,6 +148,6 @@ module.exports = {
             user: { id, username, email }
           }));
       });
-    }).catch(error => res.status(500).send(error));
+    }).catch(error => res.status(500).send(error.message));
   }
 };

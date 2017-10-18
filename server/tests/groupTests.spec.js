@@ -7,6 +7,7 @@ import models from '../../server/models';
 import group from './helpers/groups';
 import user from './helpers/users';
 import message from './helpers/messages';
+import PromiseBased from './helpers/promisify';
 
 
 const salt = bcrypt.genSaltSync(10);
@@ -27,34 +28,22 @@ const hashedUsers = ([
 
 const expect = chai.expect;
 let userTokenLionel;
-let userTokenEmeka;
-let userToken3;
 let userTokenNonMember;
 
-const promisify = currentUser => new Promise((resolve) => {
-  request(app)
-    .post('/api/v1/user/signin')
-    .send(currentUser)
-    .end((err, res) => {
-      resolve(res.body.token);
-    });
-});
+const promisify = new PromiseBased(app, request);
 
 describe('group route', () => {
   before((done) => {
     models.sequelize.sync({ force: true })
       .then(() => models.User.bulkCreate(hashedUsers))
-      .then(() => promisify(user.validUserIbrahim))
+      .then(() => promisify.signin(user.validUserIbrahim))
       .then((token) => {
         userTokenLionel = token;
-        return promisify(user.validUserConor);
+        return promisify.signin(user.validUserConor);
       }, (err) => {
         winston.error('<< test errors >>', err);
       })
-      .then((token) => {
-        userToken3 = token;
-        return promisify(user.validUserVictor);
-      })
+      .then(() => promisify.signin(user.validUserVictor))
       .then((token) => {
         userTokenNonMember = token;
         done();
@@ -124,8 +113,8 @@ describe('group route', () => {
         .send(group.noGroupDescription)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('Please provide a description'
-          + ' about the group');
+          expect(res.body.message).to.equal(
+            'Please provide a description about the group');
           done();
         });
     });
@@ -143,19 +132,19 @@ describe('group route', () => {
         });
     });
 
-  it('throws an error if the id of the user to be added to a group' +
-'is not a number',
-  (done) => {
-    request(app)
-      .post('/api/v1/group/1/user')
-      .set('x-access-token', userTokenLionel)
-      .send({ userId: '235t' })
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to.equal('Please enter a VALID userId');
-        done();
-      });
-  });
+  it(`throws an error if the id of the user to be added to a group
+is not a number`,
+    (done) => {
+      request(app)
+        .post('/api/v1/group/1/user')
+        .set('x-access-token', userTokenLionel)
+        .send({ userId: '235t' })
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.message).to.equal('Please enter a VALID userId');
+          done();
+        });
+    });
 
   it('throws an error if a non-group member adds a user to a group', (done) => {
     request(app)
@@ -169,18 +158,18 @@ describe('group route', () => {
       });
   });
 
-  it('throws an error if an existing group member is added' +
-  'to the same group', (done) => {
-    request(app)
-      .post('/api/v1/group/1/user')
-      .set('x-access-token', userTokenLionel)
-      .send({ userId: 2 })
-      .end((err, res) => {
-        expect(res.status).to.equal(409);
-        expect(res.body.message).to.equal('user already exists');
-        done();
-      });
-  });
+  it(`throws an error if an existing group member is added
+  to the same group`, (done) => {
+      request(app)
+        .post('/api/v1/group/1/user')
+        .set('x-access-token', userTokenLionel)
+        .send({ userId: 2 })
+        .end((err, res) => {
+          expect(res.status).to.equal(409);
+          expect(res.body.message).to.equal('user already exists');
+          done();
+        });
+    });
 
   it('throws an error if an unregistered member is added to a group',
     (done) => {
@@ -281,29 +270,30 @@ describe('group route', () => {
       });
   });
 
-  it('throws an error if a non-integer limit value is entered when ' +
-   'searching for groups', (done) => {
-    request(app)
-      .get('/api/v1/groups/search?name=m&limit=boy')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to.equal('Please enter a VALID limit value');
-        done();
-      });
-  });
+  it(`throws an error if a non-integer limit value is entered when 
+    searching for groups`, (done) => {
+      request(app)
+        .get('/api/v1/groups/search?name=m&limit=boy')
+        .set('x-access-token', userTokenLionel)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.message).to.equal('Please enter a VALID limit value');
+          done();
+        });
+    });
 
-  it('throws an error if a non-integer offset value is entered when ' +
-   'searching for groups', (done) => {
-    request(app)
-      .get('/api/v1/groups/search?name=m&offset=boy')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to.equal('Please enter a VALID offset value');
-        done();
-      });
-  });
+  it(`throws an error if a non-integer offset value is entered when
+   searching for groups`, (done) => {
+      request(app)
+        .get('/api/v1/groups/search?name=m&offset=boy')
+        .set('x-access-token', userTokenLionel)
+        .end((err, res) => {
+          expect(res.status).to.equal(422);
+          expect(res.body.message).to.equal(
+            'Please enter a VALID offset value');
+          done();
+        });
+    });
 
   it('allows a logged in user see all members of groups he/she belongs to',
     (done) => {
@@ -347,88 +337,6 @@ describe('group route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('group does not exist');
-          done();
-        });
-    });
-
-  it('allows a logged in user list all groups he/she belongs to', (done) => {
-    request(app)
-      .get('/api/v1/groups')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an.instanceof(Array);
-        done();
-      });
-  });
-
-  it('allows a logged in user search all users in the application', (done) => {
-    request(app)
-      .get('/api/v1/users/search')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an.instanceof(Object);
-        done();
-      });
-  });
-
-  it('throws an error if a non-integer limit value is entered when ' +
-   'searching for users', (done) => {
-    request(app)
-      .get('/api/v1/users/search?username=m&limit=boy')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to.equal('Please enter a VALID limit value');
-        done();
-      });
-  });
-
-  it('throws an error if a non-integer offset value is entered when ' +
-   'searching for users', (done) => {
-    request(app)
-      .get('/api/v1/users/search?username=m&offset=boy')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to.equal('Please enter a VALID offset value');
-        done();
-      });
-  });
-
-  it('allows a logged in user search for users in the application', (done) => {
-    request(app)
-      .get('/api/v1/users?username=i')
-      .set('x-access-token', userTokenLionel)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an.instanceof(Object);
-        done();
-      });
-  });
-
-  it('throws an error if a non integer offset is entered in the search',
-    (done) => {
-      request(app)
-        .get('/api/v1/users?username=i&offset=girl')
-        .set('x-access-token', userTokenLionel)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          expect(res.body.message).to.equal(
-            'Please enter a VALID offset value');
-          done();
-        });
-    });
-
-  it('throws an error if a non integer limit is entered in the search',
-    (done) => {
-      request(app)
-        .get('/api/v1/users?username=i&limit=girl')
-        .set('x-access-token', userTokenLionel)
-        .end((err, res) => {
-          expect(res.status).to.equal(422);
-          expect(res.body.message).to.equal('Please enter a VALID limit value');
           done();
         });
     });

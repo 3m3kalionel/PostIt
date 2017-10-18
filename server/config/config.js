@@ -16,7 +16,8 @@ module.exports = {
     password: 'orokoakeme',
     database: 'postitdbtests',
     host: '127.0.0.1',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
   production1: {
     use_env_variable: process.env.DATABASE_URL,
