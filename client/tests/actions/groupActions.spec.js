@@ -55,8 +55,8 @@ describe('async actions', () => {
 
   it('cretes LIST_SUCCESS when list groups is called successfully', () => {
     nock('http://localhost')
-      .get('/api/v1/groups')
-      .reply(200, list);
+      .get('/api/v1/groups/search?name=&limit=&offset=')
+      .reply(200, { groups: list });
 
     const expectedActions = [
       {
@@ -72,13 +72,13 @@ describe('async actions', () => {
 
   it('cretes ERROR_OCCURRED when listGroups fails', () => {
     nock('http://localhost')
-      .get('/api/v1/groups')
+      .get('/api/v1/groups/search?name=&limit=&offset=')
       .reply(400, {});
 
     const expectedActions = [
       {
         type: types.ERROR_OCCURRED,
-        error: {}
+        error: {},
       }
     ];
     const store = mockStore({});
